@@ -1,6 +1,6 @@
 #LongingFastForward
 
-![Installation visualisation](installation-inside-w300.png)
+![Installation visualisation](LongingFastForward/Shared Resources/images/installation-inside-w300.png)
 
 This is the software for an Artistic Research Station that will run on the Northwestern Coast of Greenland. This art project is called 'Longing Fast Forward'.
 
