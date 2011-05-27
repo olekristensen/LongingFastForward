@@ -53,43 +53,49 @@
 
 
 
-- (NSObjectController *) researchStation {
+- (LFFResearchStation *) researchStation {
 	
-	if (researchStation) return researchStation;
+	if (![managedObjectContext isConnected]) {
+		return nil;
+	} else {
+		if (researchStation) return researchStation;
+		
+		[researchStationController fetch:nil];
+		
+		if ([[researchStationController arrangedObjects] count] == 0) {
+			
+			NSLog(@"count of objects %i",[[researchStationController arrangedObjects] count]);
+			
+			BXEntityDescription* entity;
+			NSDictionary* values;
+			
+			entity= [[managedObjectContext databaseObjectModel] entityForTable: @"CameraSettings"];
+			values = [[NSDictionary alloc]init];
+			NSManagedObject *newCameraSettings = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
+			
+			
+			entity = [[managedObjectContext databaseObjectModel] entityForTable: @"ResearchStation"];
+			values = [NSDictionary dictionaryWithObject: newCameraSettings forKey: @"cameraSettingsTarget"];
+			researchStation = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
+			
+			return researchStation;
+			
+		}
+		
+		// clear superflouus research station entries
+		
+		if ([[researchStationController arrangedObjects] count] > 0) {
+			
+			[researchStationController removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [[researchStationController arrangedObjects] count]-1)]];
+			researchStation = [[researchStationController arrangedObjects] objectAtIndex:0];
+		}
 	
-	[researchStationController fetch:nil];
-	
-	if ([[researchStationController arrangedObjects] count] == 0) {
-		
-		NSLog(@"count of objects %i",[[researchStationController arrangedObjects] count]);
-		
-		BXEntityDescription* entity;
-		NSDictionary* values;
-		
-		entity= [[managedObjectContext databaseObjectModel] entityForTable: @"CameraSettings"];
-		values = [[NSDictionary alloc]init];
-		NSManagedObject *newCameraSettings = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
-		
-		
-		entity = [[managedObjectContext databaseObjectModel] entityForTable: @"ResearchStation"];
-		values = [NSDictionary dictionaryWithObject: newCameraSettings forKey: @"cameraSettingsTarget"];
-		researchStation = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
-		
+		NSLog(researchStation.location);
 		return researchStation;
-		
+
+	
 	}
 	
-	// clear superflouus research station entries
-	
-	if ([[researchStationController arrangedObjects] count] > 0) {
-		
-		[researchStationController removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [[researchStationController arrangedObjects] count]-1)]];
-		researchStation = [[researchStationController arrangedObjects] objectAtIndex:0];
-	}
-	
-	[researchStation faultKey:@"location"];
-	
-	return researchStation;
 }
 
 
@@ -191,6 +197,7 @@
 
 	if([managedObjectContext isConnected]){
 		[researchStationController setContent:nil];
+		[researchStationController setSelectedObjects:nil];
 		[managedObjectContext disconnect];
  		[researchStation release];
 		researchStation = nil;

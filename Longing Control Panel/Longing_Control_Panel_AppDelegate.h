@@ -18,7 +18,7 @@
 {
     NSWindow *window;
 	IBOutlet BXDatabaseContext *managedObjectContext;
-	IBOutlet LFFResearchStation *researchStation;
+	LFFResearchStation *researchStation;
 	IBOutlet BXSynchronizedArrayController *researchStationController;
 	
 	IBOutlet NSToolbarItem * connectionToolbarItem;

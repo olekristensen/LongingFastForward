@@ -231,8 +231,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -269,25 +267,25 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
-								<string>7F2B5682138B0E1900BC1530</string>
+								<string>7F4F6B9313901E0000EB13DA</string>
 								<string>080E96DDFE201D6D7F000001</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
 								<string>29B97323FDCFA39411CA2CEA</string>
 								<string>1058C7A0FEA54F0111CA2CBB</string>
-								<string>7F2B568F138B0FBE00BC1530</string>
 								<string>1058C7A2FEA54F0111CA2CBB</string>
 								<string>7F2B4BB3138AC59E00BC1530</string>
 								<string>19C28FACFE9D520D11CA2CBB</string>
 								<string>1C37FBAC04509CD000000102</string>
-								<string>7FDE54B1138D5AA000FE0296</string>
+								<string>7F4F6774138E7F5600EB13DA</string>
+								<string>7F4F6B65139019AD00EB13DA</string>
+								<string>7F4F6B66139019AD00EB13DA</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>19</integer>
-									<integer>18</integer>
-									<integer>17</integer>
+									<integer>3</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -309,7 +307,7 @@
 							<real>610</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 59 1920 1119 0 0 1920 1178 </string>
+						<string>8 59 1920 1119 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -325,7 +323,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>7FE2E259138ABCEB00792184</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Longing_Control_Panel_Prefix.pch</string>
+								<string>asm Auto::Zone::block_allocate  0x00007fff85a8a020</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -333,11 +331,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>7FE2E25A138ABCEB00792184</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Longing_Control_Panel_Prefix.pch</string>
+										<string>asm Auto::Zone::block_allocate  0x00007fff85a8a020</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7FDE5523138D5E7F00FE0296</string>
+										<string>7F4F6E5F1390239700EB13DA</string>
 										<key>history</key>
 										<array>
 											<string>7F2B56FF138B2A0600BC1530</string>
@@ -353,13 +351,14 @@
 											<string>7FDE4A38138D0ED300FE0296</string>
 											<string>7FDE4A6B138D102F00FE0296</string>
 											<string>7FDE4AAA138D11DF00FE0296</string>
-											<string>7FDE4B0D138D18FA00FE0296</string>
 											<string>7FDE4B30138D40C800FE0296</string>
 											<string>7FDE4D64138D450D00FE0296</string>
-											<string>7FDE4D9B138D472300FE0296</string>
-											<string>7FDE54C0138D5B7400FE0296</string>
-											<string>7FDE54C1138D5B7400FE0296</string>
-											<string>7FDE5522138D5E7F00FE0296</string>
+											<string>7F4F6A391390108600EB13DA</string>
+											<string>7F4F6AE2139016CE00EB13DA</string>
+											<string>7F4F6B28139018AA00EB13DA</string>
+											<string>7F4F6B29139018AA00EB13DA</string>
+											<string>7F4F6B7113901A6000EB13DA</string>
+											<string>7F4F6B8F13901DB700EB13DA</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -373,18 +372,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1288, 794}}</string>
+								<string>{{0, 0}, {1288, 789}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 59 1920 1119 0 0 1920 1178 </string>
+								<string>8 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>794pt</string>
+							<string>789pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>279pt</string>
+							<string>284pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -398,7 +397,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1288, 252}}</string>
+										<string>{{10, 27}, {1288, 257}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -452,9 +451,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1288, 252}}</string>
+										<string>{{10, 27}, {1288, 257}}</string>
 										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
+										<string>8 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -482,11 +481,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7FDE54C5138D5B7400FE0296</string>
+				<string>7F4F6A42139010A300EB13DA</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>7FDE54C6138D5B7400FE0296</string>
+				<string>7F4F6A43139010A300EB13DA</string>
 				<string>7FE2E259138ABCEB00792184</string>
-				<string>7FDE54C7138D5B7400FE0296</string>
+				<string>7F4F6A44139010A300EB13DA</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -635,13 +634,13 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7FDE4A44138D0ED800FE0296</string>
+				<string>7F4F6A45139010A300EB13DA</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>7FDE4A45138D0ED800FE0296</string>
-				<string>7FDE4A46138D0ED800FE0296</string>
-				<string>7FDE4A47138D0ED800FE0296</string>
-				<string>7FDE4A48138D0ED800FE0296</string>
+				<string>7F4F6A46139010A300EB13DA</string>
+				<string>7F4F6A47139010A300EB13DA</string>
+				<string>7F4F6A48139010A300EB13DA</string>
+				<string>7F4F6A49139010A300EB13DA</string>
 				<string>7FE2E259138ABCEB00792184</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
@@ -676,10 +675,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>7F4F6E601390239700EB13DA</string>
+		<string>7F4F6A4B139010A300EB13DA</string>
+		<string>7F4F6A4C139010A300EB13DA</string>
 		<string>/Users/ole/Development/LongingFastForward/Longing Control Panel/Longing Control Panel.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 59 1920 1119 0 0 1920 1178 </string>
+	<string>8 59 1920 1119 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

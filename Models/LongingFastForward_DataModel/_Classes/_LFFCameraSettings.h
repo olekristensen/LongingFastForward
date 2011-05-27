@@ -6,7 +6,7 @@
 
 @class LFFResearchStation;
 @class LFFCameraAngle;
-@class LFFImageHDR;
+@class LFFImageLDR;
 
 
 
@@ -295,7 +295,7 @@
 
 
 
-@property (nonatomic, retain) LFFImageHDR* imageLDR;
+@property (nonatomic, retain) LFFImageLDR* imageLDR;
 //- (BOOL)validateImageLDR:(id*)value_ error:(NSError**)error_;
 
 
@@ -537,8 +537,8 @@
 
 
 
-- (LFFImageHDR*)primitiveImageLDR;
-- (void)setPrimitiveImageLDR:(LFFImageHDR*)value;
+- (LFFImageLDR*)primitiveImageLDR;
+- (void)setPrimitiveImageLDR:(LFFImageLDR*)value;
 
 
 @end

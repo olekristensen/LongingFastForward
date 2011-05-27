@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7446970DB6B7EA00F9684A /* MainMenu.xib */; };
 		77C8280E06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */; };
-		7F2B5687138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */; };
 		7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
 		7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
 		7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
@@ -17,8 +16,8 @@
 		7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301DE138C0F9C003FBB0D /* Shared Resources */; };
 		7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FA138C1016003FBB0D /* LFFConnected.png */; };
 		7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FB138C1016003FBB0D /* LFFDisconnected.png */; };
+		7F4F6BD213901E0000EB13DA /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 7F4F6B9313901E0000EB13DA /* Models */; };
 		7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
-		7FDE54BD138D5ADC00FE0296 /* LongingFastForward_DataModel in Resources */ = {isa = PBXBuildFile; fileRef = 7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -69,13 +68,12 @@
 		77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Longing_Control_Panel_AppDelegate.h; sourceTree = "<group>"; };
 		77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Longing_Control_Panel_AppDelegate.m; sourceTree = "<group>"; };
 		7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LongingFastForward.xcodeproj; path = ../LongingFastForward.xcodeproj; sourceTree = SOURCE_ROOT; };
-		7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LongingFastForward_DataModel; path = ../Models/LongingFastForward_DataModel; sourceTree = SOURCE_ROOT; };
-		7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = LongingFastForward_DataModel.xcdatamodel; path = ../Models/LongingFastForward_DataModel.xcdatamodel; sourceTree = SOURCE_ROOT; };
 		7F2B568F138B0FBE00BC1530 /* BaseTen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTen.framework; path = /Library/Frameworks/BaseTen.framework; sourceTree = "<absolute>"; };
 		7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTenAppKit.framework; path = /Library/Frameworks/BaseTenAppKit.framework; sourceTree = "<absolute>"; };
 		7F4301DE138C0F9C003FBB0D /* Shared Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Shared Resources"; path = "../Shared Resources"; sourceTree = SOURCE_ROOT; };
 		7F4301FA138C1016003FBB0D /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFConnected.png; sourceTree = "<group>"; };
 		7F4301FB138C1016003FBB0D /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFDisconnected.png; sourceTree = "<group>"; };
+		7F4F6B9313901E0000EB13DA /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Models; path = ../Models; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Longing_Control_Panel-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = "Longing_Control_Panel-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Longing Control Panel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Longing Control Panel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -135,7 +133,7 @@
 		29B97314FDCFA39411CA2CEA /* Longing Control Panel */ = {
 			isa = PBXGroup;
 			children = (
-				7F2B5682138B0E1900BC1530 /* Models */,
+				7F4F6B9313901E0000EB13DA /* Models */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -182,15 +180,6 @@
 				7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		7F2B5682138B0E1900BC1530 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */,
-				7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,7 +255,7 @@
 				7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */,
 				7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */,
 				7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */,
-				7FDE54BD138D5ADC00FE0296 /* LongingFastForward_DataModel in Resources */,
+				7F4F6BD213901E0000EB13DA /* Models in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +268,6 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				77C8280E06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m in Sources */,
-				7F2B5687138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
