@@ -1,0 +1,106 @@
+
+1   POSTGRESQL
+______________
+    
+    use version < 9 because of baseten.
+    8.4.8 is in the contrib library
+    
+    Before running the installation, please ensure that your system is 
+    configured to allow the use of larger amounts of shared memory. Note that
+    this does not 'reserve' any memory so it is safe to configure much higher
+    values than you might initially need. You can do this by editting the 
+    file /etc/sysctl.conf - e.g.
+    
+    % sudo vi /etc/sysctl.conf
+    
+    On a MacBook Pro with 2GB of RAM, the author's sysctl.conf contains:
+    
+    kern.sysv.shmmax=1610612736
+    kern.sysv.shmall=393216
+    kern.sysv.shmmin=1
+    kern.sysv.shmmni=32
+    kern.sysv.shmseg=8
+    kern.maxprocperuid=512
+    kern.maxproc=2048
+    
+    Note that (kern.sysv.shmall * 4096) should be greater than or equal to
+    kern.sysv.shmmax. kern.sysv.shmmax must also be a multiple of 4096.
+    
+    Once you have edited (or created) the file, reboot before continuing with 
+    the installation. If you wish to check the settings currently being used by 
+    the kernel, you can use the sysctl utility:
+    
+    % sysctl -a
+    
+    The database server can now be installed.
+    
+    For more information on PostgreSQL's use of shared memory, please see:
+    
+    http://www.postgresql.org/docs/current/static/kernel-resources.html#SYSVIPC
+    
+    
+    SETUP DATABASE
+__________________    
+        
+    CREATE ROLE longing LOGIN
+      ENCRYPTED PASSWORD 'md54eaac136d705edd77820c191a4cb3626'
+      SUPERUSER INHERIT CREATEDB CREATEROLE;
+    UPDATE pg_authid SET rolcatupdate=false WHERE rolname='longing';
+    
+    
+    CREATE DATABASE longing
+      WITH OWNER = longing
+           ENCODING = 'UTF8'
+           TABLESPACE = pg_default
+           LC_COLLATE = 'C'
+           LC_CTYPE = 'C'
+           CONNECTION LIMIT = -1;
+
+    
+    
+    ADD TO pg_hba.conf
+______________________
+    
+    # ADDED BY OLE Access for local network
+    host    all         all         192.168.0.0/16        md5
+
+
+
+2   HOMEBREW
+____________
+
+    Install homebrew from the tools dir
+    
+
+
+3   DOXYGEN
+___________
+
+    $ brew install doxygen
+    
+    
+    
+4   MERCURIAL
+_____________
+
+    Install mercurial from the tools dir
+
+
+
+5   BASETEN
+___________
+
+    $ hg clone ssh://hg@bitbucket.org/mka/baseten
+    in the contrib library
+    
+    Build the lib with Xcode 3
+    
+    Remove 'exit_on_error' in --without-latex if clause in create_release_dmg.sh
+    
+    run create_release_dmg.sh
+
+    install frameworks
+    
+    
+    
+    

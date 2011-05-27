@@ -1,0 +1,749 @@
+// !$*UTF8*$!
+{
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 44}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 7FE2E24C138ABCE300792184 /* Longing Capture Client */;
+		activeTarget = 8D1107260486CEB800E47090 /* Longing Capture Client */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* Longing Capture Client */,
+		);
+		codeSenseManager = 7FE2E258138ABCEA00792184 /* Code sense */;
+		executables = (
+			7FE2E24C138ABCE300792184 /* Longing Capture Client */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1336,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1296,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 328011011;
+			PBXWorkspaceStateSaveDate = 328011011;
+		};
+		perUserProjectItems = {
+			7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50CD138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50CD138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50CF138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50CF138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50D1138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D1138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50D3138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D3138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50D5138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D5138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50D7138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D7138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50D9138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D9138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50DB138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50DB138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50DD138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50DD138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */;
+			7F2B5345138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5345138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5346138AFFC300BC1530 /* PlistBookmark */ = 7F2B5346138AFFC300BC1530 /* PlistBookmark */;
+			7F2B5348138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5348138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5349138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5349138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B534B138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B534B138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B534D138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B534D138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B534F138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B534F138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5351138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5351138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5352138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5352138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5353138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5353138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5354138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5354138AFFC300BC1530 /* PBXTextBookmark */;
+			7F2B5667138B099B00BC1530 /* PBXTextBookmark */ = 7F2B5667138B099B00BC1530 /* PBXTextBookmark */;
+			7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */ = 7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */;
+			7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */ = 7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */;
+			7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */ = 7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 7FE2E257138ABCEA00792184 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 278}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* Longing_Capture_Client_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 175}";
+		};
+	};
+	77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavSelRange = "{299, 253}";
+			sepNavVisRange = "{0, 558}";
+		};
+	};
+	77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 1742}}";
+			sepNavSelRange = "{2431, 66}";
+			sepNavVisRange = "{2089, 2195}";
+		};
+	};
+	7F2B4D2D138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel */ = {
+		uiCtxt = {
+			"Xdesign Model Editor Bookmark Key" = {
+				UIContextForDetailArea = {
+					_indexOfSelectedPane = 0;
+					_indexOfSelectedView = 1;
+				};
+				UIContextForEntityArea = {
+					_indexOfSelectedView = 0;
+					chosenTableColumnns = (
+						"ET Entity",
+						"ET Abstract",
+						"ET Class",
+					);
+					chosenTableColumnns_sortDirections = (
+						YES,
+					);
+					chosenTableColumnns_sortKeys = (
+						name,
+					);
+					chosenTableColumnns_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableWidths = (
+						103.000000,
+						22.000000,
+						188.080078,
+					);
+				};
+				UIContextForLayoutManager = {
+					detailSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {1028, 220}}",
+							"{{1033, 0}, {540, 220}}",
+						);
+					};
+					diagramSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {1573, 220}}",
+							"{{0, 225}, {1573, 543}}",
+						);
+					};
+					tableSplitGeometry = {
+						_collapsingFrameDimension = 0;
+						_indexOfCollapsedView = 0;
+						_percentageOfCollapsedView = 0;
+						isCollapsed = yes;
+						sizes = (
+							"{{0, 0}, {338, 218}}",
+							"{{343, 0}, {683, 218}}",
+						);
+					};
+				};
+				UIContextForPropertyArea = {
+					_indexOfSelectedView = 0;
+					chosenTableColumnnFRTs = (
+						"FT Fetch Request",
+						"FT Predicate",
+					);
+					chosenTableColumnnFRTs_sortDirections = (
+						YES,
+					);
+					chosenTableColumnnFRTs_sortKeys = (
+						name,
+					);
+					chosenTableColumnnFRTs_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableColumnnsAT = (
+						"AT Attribute",
+						"AT Type",
+					);
+					chosenTableColumnnsAT_sortDirections = (
+						YES,
+					);
+					chosenTableColumnnsAT_sortKeys = (
+						name,
+					);
+					chosenTableColumnnsAT_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableColumnnsFPT = (
+						"FP FetchedProperty",
+						"FP Destination",
+						"FP Predicate",
+					);
+					chosenTableColumnnsFPT_sortDirections = (
+						YES,
+					);
+					chosenTableColumnnsFPT_sortKeys = (
+						name,
+					);
+					chosenTableColumnnsFPT_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableColumnnsPT = (
+						"PT Property",
+						"PT Kind",
+						"PT SharedKeyOne",
+					);
+					chosenTableColumnnsPT_sortDirections = (
+						YES,
+					);
+					chosenTableColumnnsPT_sortKeys = (
+						name,
+					);
+					chosenTableColumnnsPT_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableColumnnsRT = (
+						"RT Relationship",
+						"RT Destination",
+					);
+					chosenTableColumnnsRT_sortDirections = (
+						YES,
+					);
+					chosenTableColumnnsRT_sortKeys = (
+						name,
+					);
+					chosenTableColumnnsRT_sortSelectors = (
+						"_xdcaseInsensitiveNumericCompare:",
+					);
+					chosenTableWidthsAT = (
+						128.000000,
+						64.000000,
+					);
+					chosenTableWidthsFPT = (
+						128.000000,
+						64.000000,
+						144.764160,
+					);
+					chosenTableWidthsFRT = (
+						128.000000,
+						249.764160,
+					);
+					chosenTableWidthsPT = (
+						128.000000,
+						108.110840,
+						420.570801,
+					);
+					chosenTableWidthsRT = (
+						128.000000,
+						64.000000,
+					);
+				};
+				"xdesign model browser state key - shown/hidden" = 1;
+				"xdesign model diagram view visible rect key" = "{{-394, 0}, {1558, 528}}";
+			};
+		};
+	};
+	7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50CC138AEF4C00BC1530 /* LFFCaptureSession.m */;
+		name = "LFFCaptureSession.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 99;
+		vrLoc = 0;
+	};
+	7F2B50CC138AEF4C00BC1530 /* LFFCaptureSession.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCaptureSession.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCaptureSession.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50CD138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50CE138AEF4C00BC1530 /* LFFCaptureSession.h */;
+		name = "LFFCaptureSession.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 117;
+		vrLoc = 0;
+	};
+	7F2B50CE138AEF4C00BC1530 /* LFFCaptureSession.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCaptureSession.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCaptureSession.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50CF138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50D0138AEF4C00BC1530 /* LFFCaptureClient.m */;
+		name = "LFFCaptureClient.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 97;
+		vrLoc = 0;
+	};
+	7F2B50D0138AEF4C00BC1530 /* LFFCaptureClient.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCaptureClient.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCaptureClient.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50D1138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50D2138AEF4C00BC1530 /* LFFCameraStats.m */;
+		name = "LFFCameraStats.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 93;
+		vrLoc = 0;
+	};
+	7F2B50D2138AEF4C00BC1530 /* LFFCameraStats.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCameraStats.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraStats.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50D3138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50D4138AEF4C00BC1530 /* LFFCameraStats.h */;
+		name = "LFFCameraStats.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 108;
+		vrLoc = 0;
+	};
+	7F2B50D4138AEF4C00BC1530 /* LFFCameraStats.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraStats.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraStats.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50D5138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50D6138AEF4C00BC1530 /* LFFCameraSettings.m */;
+		name = "LFFCameraSettings.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 99;
+		vrLoc = 0;
+	};
+	7F2B50D6138AEF4C00BC1530 /* LFFCameraSettings.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCameraSettings.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraSettings.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50D7138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50D8138AEF4C00BC1530 /* LFFCameraSettings.h */;
+		name = "LFFCameraSettings.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 117;
+		vrLoc = 0;
+	};
+	7F2B50D8138AEF4C00BC1530 /* LFFCameraSettings.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraSettings.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraSettings.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50D9138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50DA138AEF4C00BC1530 /* LFFCameraProfile.m */;
+		name = "LFFCameraProfile.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 97;
+		vrLoc = 0;
+	};
+	7F2B50DA138AEF4C00BC1530 /* LFFCameraProfile.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCameraProfile.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraProfile.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50DB138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50DC138AEF4C00BC1530 /* LFFCameraProfile.h */;
+		name = "LFFCameraProfile.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 114;
+		vrLoc = 0;
+	};
+	7F2B50DC138AEF4C00BC1530 /* LFFCameraProfile.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraProfile.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraProfile.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50DD138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50DE138AEF4C00BC1530 /* LFFCameraDevice.m */;
+		name = "LFFCameraDevice.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 95;
+		vrLoc = 0;
+	};
+	7F2B50DE138AEF4C00BC1530 /* LFFCameraDevice.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCameraDevice.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraDevice.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50E0138AEF4C00BC1530 /* LFFCameraDevice.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraDevice.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraDevice.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50E2138AEF4C00BC1530 /* LFFCameraAngle.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFCameraAngle.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraAngle.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B50E4138AEF4C00BC1530 /* LFFCameraAngle.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraAngle.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraAngle.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E6138AEF4C00BC1530 /* LFFResearchStation.h */;
+		name = "LFFResearchStation.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 120;
+		vrLoc = 0;
+	};
+	7F2B50E6138AEF4C00BC1530 /* LFFResearchStation.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFResearchStation.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFResearchStation.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E8138AEF4C00BC1530 /* LFFResearchStation.m */;
+		name = "LFFResearchStation.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 72;
+		vrLoc = 0;
+	};
+	7F2B50E8138AEF4C00BC1530 /* LFFResearchStation.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFResearchStation.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFResearchStation.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B5345138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 44;
+		vrLoc = 0;
+	};
+	7F2B5346138AFFC300BC1530 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Longing_Capture_Client-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/ole/Development/LongingFastForward/Longing Capture Client/Longing_Capture_Client-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	7F2B5348138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 278;
+		vrLoc = 0;
+	};
+	7F2B5349138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B534A138AFFC300BC1530 /* _LFFCameraAngle.m */;
+		name = "_LFFCameraAngle.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1233;
+		vrLoc = 0;
+	};
+	7F2B534A138AFFC300BC1530 /* _LFFCameraAngle.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = _LFFCameraAngle.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraAngle.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B534B138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B534C138AFFC300BC1530 /* _LFFCameraDevice.h */;
+		name = "_LFFCameraDevice.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1200;
+		vrLoc = 0;
+	};
+	7F2B534C138AFFC300BC1530 /* _LFFCameraDevice.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = _LFFCameraDevice.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraDevice.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B534D138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B534E138AFFC300BC1530 /* _LFFCameraDevice.m */;
+		name = "_LFFCameraDevice.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1188;
+		vrLoc = 0;
+	};
+	7F2B534E138AFFC300BC1530 /* _LFFCameraDevice.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = _LFFCameraDevice.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraDevice.m;
+		sourceTree = "<absolute>";
+	};
+	7F2B534F138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B5350138AFFC300BC1530 /* _LFFCameraProfile.h */;
+		name = "_LFFCameraProfile.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 841;
+		vrLoc = 0;
+	};
+	7F2B5350138AFFC300BC1530 /* _LFFCameraProfile.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = _LFFCameraProfile.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraProfile.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B5351138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E0138AEF4C00BC1530 /* LFFCameraDevice.h */;
+		name = "LFFCameraDevice.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 111;
+		vrLoc = 0;
+	};
+	7F2B5352138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E2138AEF4C00BC1530 /* LFFCameraAngle.m */;
+		name = "LFFCameraAngle.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 93;
+		vrLoc = 0;
+	};
+	7F2B5353138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E4138AEF4C00BC1530 /* LFFCameraAngle.h */;
+		name = "LFFCameraAngle.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 108;
+		vrLoc = 0;
+	};
+	7F2B5354138AFFC300BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B5355138AFFC300BC1530 /* _LFFCameraAngle.h */;
+		name = "_LFFCameraAngle.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1402;
+		vrLoc = 0;
+	};
+	7F2B5355138AFFC300BC1530 /* _LFFCameraAngle.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = _LFFCameraAngle.h;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraAngle.h;
+		sourceTree = "<absolute>";
+	};
+	7F2B5667138B099B00BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* Longing_Capture_Client_Prefix.pch */;
+		name = "Longing_Capture_Client_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 175;
+		vrLoc = 0;
+	};
+	7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */;
+		name = "Longing_Capture_Client_AppDelegate.h: 14";
+		rLen = 253;
+		rLoc = 299;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */;
+		name = "Longing_Capture_Client_AppDelegate.m: 81";
+		rLen = 66;
+		rLoc = 2431;
+		rType = 0;
+		vrLen = 2195;
+		vrLoc = 2089;
+	};
+	7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */;
+		name = "Longing_Capture_Client_AppDelegate.m: 81";
+		rLen = 66;
+		rLoc = 2431;
+		rType = 0;
+		vrLen = 2195;
+		vrLoc = 2089;
+	};
+	7FE2E24C138ABCE300792184 /* Longing Capture Client */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "Longing Capture Client";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	7FE2E257138ABCEA00792184 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	7FE2E258138ABCEA00792184 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	8D1107260486CEB800E47090 /* Longing Capture Client */ = {
+		activeExec = 0;
+		executables = (
+			7FE2E24C138ABCE300792184 /* Longing Capture Client */,
+		);
+	};
+}

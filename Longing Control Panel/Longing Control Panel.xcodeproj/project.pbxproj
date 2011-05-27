@@ -1,0 +1,403 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7446970DB6B7EA00F9684A /* MainMenu.xib */; };
+		77C8280E06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */; };
+		7F2B5687138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */; };
+		7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
+		7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
+		7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
+		7F2B5695138B0FF700BC1530 /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
+		7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301DE138C0F9C003FBB0D /* Shared Resources */; };
+		7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FA138C1016003FBB0D /* LFFConnected.png */; };
+		7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FB138C1016003FBB0D /* LFFDisconnected.png */; };
+		7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
+		7FDE54BD138D5ADC00FE0296 /* LongingFastForward_DataModel in Resources */ = {isa = PBXBuildFile; fileRef = 7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F2B4BB8138AC59E00BC1530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7F2B4B1B138AC32F00BC1530;
+			remoteInfo = LongingFastForward;
+		};
+		7F2B4BBA138AC5B100BC1530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530;
+			remoteInfo = LongingFastForward;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7F2B5696138B101500BC1530 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */,
+				7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */,
+				7F2B5695138B0FF700BC1530 /* BaseTenAppKit.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2F7446980DB6B7EA00F9684A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* Longing_Control_Panel_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Longing_Control_Panel_Prefix.pch; sourceTree = "<group>"; };
+		77C82804067257F0000B614F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Longing_Control_Panel_AppDelegate.h; sourceTree = "<group>"; };
+		77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Longing_Control_Panel_AppDelegate.m; sourceTree = "<group>"; };
+		7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LongingFastForward.xcodeproj; path = ../LongingFastForward.xcodeproj; sourceTree = SOURCE_ROOT; };
+		7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LongingFastForward_DataModel; path = ../Models/LongingFastForward_DataModel; sourceTree = SOURCE_ROOT; };
+		7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = LongingFastForward_DataModel.xcdatamodel; path = ../Models/LongingFastForward_DataModel.xcdatamodel; sourceTree = SOURCE_ROOT; };
+		7F2B568F138B0FBE00BC1530 /* BaseTen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTen.framework; path = /Library/Frameworks/BaseTen.framework; sourceTree = "<absolute>"; };
+		7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTenAppKit.framework; path = /Library/Frameworks/BaseTenAppKit.framework; sourceTree = "<absolute>"; };
+		7F4301DE138C0F9C003FBB0D /* Shared Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Shared Resources"; path = "../Shared Resources"; sourceTree = SOURCE_ROOT; };
+		7F4301FA138C1016003FBB0D /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFConnected.png; sourceTree = "<group>"; };
+		7F4301FB138C1016003FBB0D /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFDisconnected.png; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Longing_Control_Panel-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = "Longing_Control_Panel-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Longing Control Panel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Longing Control Panel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */,
+				7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */,
+				77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B568F138B0FBE00BC1530 /* BaseTen.framework */,
+				7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */,
+				77C82804067257F0000B614F /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Longing Control Panel.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Longing Control Panel */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B5682138B0E1900BC1530 /* Models */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "Longing Control Panel";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Longing_Control_Panel_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7F4301DE138C0F9C003FBB0D /* Shared Resources */,
+				7F4301FA138C1016003FBB0D /* LFFConnected.png */,
+				7F4301FB138C1016003FBB0D /* LFFDisconnected.png */,
+				8D1107310486CEB800E47090 /* Longing_Control_Panel-Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				2F7446970DB6B7EA00F9684A /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F2B4BB4138AC59E00BC1530 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F2B5682138B0E1900BC1530 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B5686138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel */,
+				7F2B5684138B0E5800BC1530 /* LongingFastForward_DataModel */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Longing Control Panel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26FC0A840875C7B200E6366F /* Build configuration list for PBXNativeTarget "Longing Control Panel" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				7F2B5696138B101500BC1530 /* Copy Frameworks */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F2B4BBB138AC5B100BC1530 /* PBXTargetDependency */,
+			);
+			name = "Longing Control Panel";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Longing Control Panel";
+			productReference = 8D1107320486CEB800E47090 /* Longing Control Panel.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 26FC0A880875C7B200E6366F /* Build configuration list for PBXProject "Longing Control Panel" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Longing Control Panel */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7F2B4BB4138AC59E00BC1530 /* Products */;
+					ProjectRef = 7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Longing Control Panel */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LongingFastForward.framework;
+			remoteRef = 7F2B4BB8138AC59E00BC1530 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */,
+				7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */,
+				7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */,
+				7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */,
+				7FDE54BD138D5ADC00FE0296 /* LongingFastForward_DataModel in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				77C8280E06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m in Sources */,
+				7F2B5687138B0E6800BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F2B4BBB138AC5B100BC1530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LongingFastForward;
+			targetProxy = 7F2B4BBA138AC5B100BC1530 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2F7446970DB6B7EA00F9684A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2F7446980DB6B7EA00F9684A /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		26FC0A850875C7B200E6366F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Longing_Control_Panel_Prefix.pch;
+				INFOPLIST_FILE = "Longing_Control_Panel-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Longing Control Panel";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		26FC0A860875C7B200E6366F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Longing_Control_Panel_Prefix.pch;
+				INFOPLIST_FILE = "Longing_Control_Panel-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Longing Control Panel";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		26FC0A890875C7B200E6366F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		26FC0A8A0875C7B200E6366F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		26FC0A840875C7B200E6366F /* Build configuration list for PBXNativeTarget "Longing Control Panel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26FC0A850875C7B200E6366F /* Debug */,
+				26FC0A860875C7B200E6366F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26FC0A880875C7B200E6366F /* Build configuration list for PBXProject "Longing Control Panel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26FC0A890875C7B200E6366F /* Debug */,
+				26FC0A8A0875C7B200E6366F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

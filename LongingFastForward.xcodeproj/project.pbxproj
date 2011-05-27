@@ -1,0 +1,733 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		7FE2E279138ABDB400792184 /* Apps */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7FE2E280138ABDE300792184 /* Build configuration list for PBXAggregateTarget "Apps" */;
+			buildPhases = (
+			);
+			dependencies = (
+				7F2B4B88138AC46F00BC1530 /* PBXTargetDependency */,
+				7FE2E27D138ABDC500792184 /* PBXTargetDependency */,
+				7FE2E27F138ABDC500792184 /* PBXTargetDependency */,
+			);
+			name = Apps;
+			productName = Apps;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		7F2B4B26138AC3EB00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B4B25138AC3C900BC1530 /* LongingFastForward_DataModel.xcdatamodel */; };
+		7F4301DB138C0F7B003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301D5138C0F7B003FBB0D /* Shared Resources */; };
+		7F4301F8138C0FF7003FBB0D /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301F6138C0FF7003FBB0D /* LFFConnected.png */; };
+		7F4301F9138C0FF7003FBB0D /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301F7138C0FF7003FBB0D /* LFFDisconnected.png */; };
+		7F4F66DE138D5F4300EB13DA /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
+		7F4F66DF138D5F4400EB13DA /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
+		7F4F66F9138D5FA700EB13DA /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
+		7F4F66FA138D5FA700EB13DA /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
+		7FDE4DDA138D47A300FE0296 /* _LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DDB138D47A300FE0296 /* _LFFCameraAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */; };
+		7FDE4DDC138D47A300FE0296 /* _LFFCameraDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DDD138D47A300FE0296 /* _LFFCameraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB0138D47A300FE0296 /* _LFFCameraDevice.m */; };
+		7FDE4DDE138D47A300FE0296 /* _LFFCameraProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB1138D47A300FE0296 /* _LFFCameraProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DDF138D47A300FE0296 /* _LFFCameraProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB2138D47A300FE0296 /* _LFFCameraProfile.m */; };
+		7FDE4DE0138D47A300FE0296 /* _LFFCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB3138D47A300FE0296 /* _LFFCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DE1138D47A300FE0296 /* _LFFCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB4138D47A300FE0296 /* _LFFCameraSettings.m */; };
+		7FDE4DE2138D47A300FE0296 /* _LFFCameraStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB5138D47A300FE0296 /* _LFFCameraStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DE3138D47A300FE0296 /* _LFFCameraStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB6138D47A300FE0296 /* _LFFCameraStats.m */; };
+		7FDE4DE4138D47A300FE0296 /* _LFFCaptureClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB7138D47A300FE0296 /* _LFFCaptureClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DE5138D47A300FE0296 /* _LFFCaptureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB8138D47A300FE0296 /* _LFFCaptureClient.m */; };
+		7FDE4DE6138D47A300FE0296 /* _LFFCaptureSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB9138D47A300FE0296 /* _LFFCaptureSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DE7138D47A300FE0296 /* _LFFCaptureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBA138D47A300FE0296 /* _LFFCaptureSession.m */; };
+		7FDE4DE8138D47A300FE0296 /* _LFFEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBB138D47A300FE0296 /* _LFFEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DE9138D47A300FE0296 /* _LFFEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBC138D47A300FE0296 /* _LFFEvent.m */; };
+		7FDE4DEA138D47A300FE0296 /* _LFFImageHDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBD138D47A300FE0296 /* _LFFImageHDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DEB138D47A300FE0296 /* _LFFImageHDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBE138D47A300FE0296 /* _LFFImageHDR.m */; };
+		7FDE4DEC138D47A300FE0296 /* _LFFLoggingEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBF138D47A300FE0296 /* _LFFLoggingEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DED138D47A300FE0296 /* _LFFLoggingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC0138D47A300FE0296 /* _LFFLoggingEntity.m */; };
+		7FDE4DEE138D47A300FE0296 /* _LFFResearchStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC1138D47A300FE0296 /* _LFFResearchStation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DEF138D47A300FE0296 /* _LFFResearchStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC2138D47A300FE0296 /* _LFFResearchStation.m */; };
+		7FDE4DF0138D47A300FE0296 /* LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC4138D47A300FE0296 /* LFFCameraAngle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DF1138D47A300FE0296 /* LFFCameraAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC5138D47A300FE0296 /* LFFCameraAngle.m */; };
+		7FDE4DF2138D47A300FE0296 /* LFFCameraDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC6138D47A300FE0296 /* LFFCameraDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DF3138D47A300FE0296 /* LFFCameraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC7138D47A300FE0296 /* LFFCameraDevice.m */; };
+		7FDE4DF4138D47A300FE0296 /* LFFCameraProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC8138D47A300FE0296 /* LFFCameraProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DF5138D47A300FE0296 /* LFFCameraProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC9138D47A300FE0296 /* LFFCameraProfile.m */; };
+		7FDE4DF6138D47A300FE0296 /* LFFCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DCA138D47A300FE0296 /* LFFCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DF7138D47A300FE0296 /* LFFCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DCB138D47A300FE0296 /* LFFCameraSettings.m */; };
+		7FDE4DF8138D47A300FE0296 /* LFFCameraStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DCC138D47A300FE0296 /* LFFCameraStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DF9138D47A300FE0296 /* LFFCameraStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DCD138D47A300FE0296 /* LFFCameraStats.m */; };
+		7FDE4DFA138D47A300FE0296 /* LFFCaptureClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DCE138D47A300FE0296 /* LFFCaptureClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DFB138D47A300FE0296 /* LFFCaptureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DCF138D47A300FE0296 /* LFFCaptureClient.m */; };
+		7FDE4DFC138D47A300FE0296 /* LFFCaptureSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD0138D47A300FE0296 /* LFFCaptureSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DFD138D47A300FE0296 /* LFFCaptureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD1138D47A300FE0296 /* LFFCaptureSession.m */; };
+		7FDE4DFE138D47A300FE0296 /* LFFEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD2138D47A300FE0296 /* LFFEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4DFF138D47A300FE0296 /* LFFEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD3138D47A300FE0296 /* LFFEvent.m */; };
+		7FDE4E00138D47A300FE0296 /* LFFImageHDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD4138D47A300FE0296 /* LFFImageHDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4E01138D47A300FE0296 /* LFFImageHDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD5138D47A300FE0296 /* LFFImageHDR.m */; };
+		7FDE4E02138D47A300FE0296 /* LFFLoggingEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD6138D47A300FE0296 /* LFFLoggingEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4E03138D47A300FE0296 /* LFFLoggingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD7138D47A300FE0296 /* LFFLoggingEntity.m */; };
+		7FDE4E04138D47A300FE0296 /* LFFResearchStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD8138D47A300FE0296 /* LFFResearchStation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDE4E05138D47A300FE0296 /* LFFResearchStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD9138D47A300FE0296 /* LFFResearchStation.m */; };
+		7FDE53A6138D532C00FE0296 /* LongingFastForward_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */; };
+		7FDE5470138D58CE00FE0296 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F2B4B87138AC46F00BC1530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530;
+			remoteInfo = LongingFastForward;
+		};
+		7FE2E26B138ABD3600792184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = "Longing Capture Client";
+		};
+		7FE2E277138ABD6A00792184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = "Longing Control Panel";
+		};
+		7FE2E27C138ABDC500792184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = "Longing Capture Client";
+		};
+		7FE2E27E138ABDC500792184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = "Longing Control Panel";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7FDE5465138D581E00FE0296 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				7F4F66F9138D5FA700EB13DA /* BaseTen.framework in Copy Frameworks */,
+				7F4F66FA138D5FA700EB13DA /* BaseTenAppKit.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7F2B4B1B138AC32F00BC1530 /* LongingFastForward.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LongingFastForward.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F2B4B1D138AC32F00BC1530 /* LongingFastForward-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LongingFastForward-Info.plist"; path = "../LongingFastForward-Info.plist"; sourceTree = "<group>"; };
+		7F2B4B25138AC3C900BC1530 /* LongingFastForward_DataModel.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = LongingFastForward_DataModel.xcdatamodel; path = Models/LongingFastForward_DataModel.xcdatamodel; sourceTree = SOURCE_ROOT; };
+		7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7F4301D5138C0F7B003FBB0D /* Shared Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Shared Resources"; path = "../Shared Resources"; sourceTree = "<group>"; };
+		7F4301F6138C0FF7003FBB0D /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFConnected.png; sourceTree = "<group>"; };
+		7F4301F7138C0FF7003FBB0D /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFDisconnected.png; sourceTree = "<group>"; };
+		7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraAngle.h; sourceTree = "<group>"; };
+		7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraAngle.m; sourceTree = "<group>"; };
+		7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDevice.h; sourceTree = "<group>"; };
+		7FDE4DB0138D47A300FE0296 /* _LFFCameraDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraDevice.m; sourceTree = "<group>"; };
+		7FDE4DB1138D47A300FE0296 /* _LFFCameraProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraProfile.h; sourceTree = "<group>"; };
+		7FDE4DB2138D47A300FE0296 /* _LFFCameraProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraProfile.m; sourceTree = "<group>"; };
+		7FDE4DB3138D47A300FE0296 /* _LFFCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraSettings.h; sourceTree = "<group>"; };
+		7FDE4DB4138D47A300FE0296 /* _LFFCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraSettings.m; sourceTree = "<group>"; };
+		7FDE4DB5138D47A300FE0296 /* _LFFCameraStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraStats.h; sourceTree = "<group>"; };
+		7FDE4DB6138D47A300FE0296 /* _LFFCameraStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraStats.m; sourceTree = "<group>"; };
+		7FDE4DB7138D47A300FE0296 /* _LFFCaptureClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCaptureClient.h; sourceTree = "<group>"; };
+		7FDE4DB8138D47A300FE0296 /* _LFFCaptureClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCaptureClient.m; sourceTree = "<group>"; };
+		7FDE4DB9138D47A300FE0296 /* _LFFCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCaptureSession.h; sourceTree = "<group>"; };
+		7FDE4DBA138D47A300FE0296 /* _LFFCaptureSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCaptureSession.m; sourceTree = "<group>"; };
+		7FDE4DBB138D47A300FE0296 /* _LFFEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFEvent.h; sourceTree = "<group>"; };
+		7FDE4DBC138D47A300FE0296 /* _LFFEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFEvent.m; sourceTree = "<group>"; };
+		7FDE4DBD138D47A300FE0296 /* _LFFImageHDR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFImageHDR.h; sourceTree = "<group>"; };
+		7FDE4DBE138D47A300FE0296 /* _LFFImageHDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFImageHDR.m; sourceTree = "<group>"; };
+		7FDE4DBF138D47A300FE0296 /* _LFFLoggingEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFLoggingEntity.h; sourceTree = "<group>"; };
+		7FDE4DC0138D47A300FE0296 /* _LFFLoggingEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFLoggingEntity.m; sourceTree = "<group>"; };
+		7FDE4DC1138D47A300FE0296 /* _LFFResearchStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFResearchStation.h; sourceTree = "<group>"; };
+		7FDE4DC2138D47A300FE0296 /* _LFFResearchStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFResearchStation.m; sourceTree = "<group>"; };
+		7FDE4DC4138D47A300FE0296 /* LFFCameraAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraAngle.h; sourceTree = "<group>"; };
+		7FDE4DC5138D47A300FE0296 /* LFFCameraAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraAngle.m; sourceTree = "<group>"; };
+		7FDE4DC6138D47A300FE0296 /* LFFCameraDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraDevice.h; sourceTree = "<group>"; };
+		7FDE4DC7138D47A300FE0296 /* LFFCameraDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraDevice.m; sourceTree = "<group>"; };
+		7FDE4DC8138D47A300FE0296 /* LFFCameraProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraProfile.h; sourceTree = "<group>"; };
+		7FDE4DC9138D47A300FE0296 /* LFFCameraProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraProfile.m; sourceTree = "<group>"; };
+		7FDE4DCA138D47A300FE0296 /* LFFCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraSettings.h; sourceTree = "<group>"; };
+		7FDE4DCB138D47A300FE0296 /* LFFCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraSettings.m; sourceTree = "<group>"; };
+		7FDE4DCC138D47A300FE0296 /* LFFCameraStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraStats.h; sourceTree = "<group>"; };
+		7FDE4DCD138D47A300FE0296 /* LFFCameraStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraStats.m; sourceTree = "<group>"; };
+		7FDE4DCE138D47A300FE0296 /* LFFCaptureClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCaptureClient.h; sourceTree = "<group>"; };
+		7FDE4DCF138D47A300FE0296 /* LFFCaptureClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCaptureClient.m; sourceTree = "<group>"; };
+		7FDE4DD0138D47A300FE0296 /* LFFCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCaptureSession.h; sourceTree = "<group>"; };
+		7FDE4DD1138D47A300FE0296 /* LFFCaptureSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCaptureSession.m; sourceTree = "<group>"; };
+		7FDE4DD2138D47A300FE0296 /* LFFEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFEvent.h; sourceTree = "<group>"; };
+		7FDE4DD3138D47A300FE0296 /* LFFEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFEvent.m; sourceTree = "<group>"; };
+		7FDE4DD4138D47A300FE0296 /* LFFImageHDR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFImageHDR.h; sourceTree = "<group>"; };
+		7FDE4DD5138D47A300FE0296 /* LFFImageHDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageHDR.m; sourceTree = "<group>"; };
+		7FDE4DD6138D47A300FE0296 /* LFFLoggingEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFLoggingEntity.h; sourceTree = "<group>"; };
+		7FDE4DD7138D47A300FE0296 /* LFFLoggingEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFLoggingEntity.m; sourceTree = "<group>"; };
+		7FDE4DD8138D47A300FE0296 /* LFFResearchStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFResearchStation.h; sourceTree = "<group>"; };
+		7FDE4DD9138D47A300FE0296 /* LFFResearchStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFResearchStation.m; sourceTree = "<group>"; };
+		7FDE50C6138D4F2900FE0296 /* BaseTen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTen.framework; path = /Library/Frameworks/BaseTen.framework; sourceTree = "<absolute>"; };
+		7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTenAppKit.framework; path = /Library/Frameworks/BaseTenAppKit.framework; sourceTree = "<absolute>"; };
+		7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LongingFastForward_Prefix.pch; sourceTree = "<group>"; };
+		7FDE54F0138D5D0F00FE0296 /* human.h.motemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = human.h.motemplate; sourceTree = "<group>"; };
+		7FDE54F1138D5D0F00FE0296 /* human.m.motemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = human.m.motemplate; sourceTree = "<group>"; };
+		7FDE54F2138D5D0F00FE0296 /* machine.h.motemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = machine.h.motemplate; sourceTree = "<group>"; };
+		7FDE54F3138D5D0F00FE0296 /* machine.m.motemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = machine.m.motemplate; sourceTree = "<group>"; };
+		7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Longing Capture Client.xcodeproj"; path = "Longing Capture Client/Longing Capture Client.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Longing Control Panel.xcodeproj"; path = "Longing Control Panel/Longing Control Panel.xcodeproj"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F2B4B19138AC32F00BC1530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FDE5470138D58CE00FE0296 /* Cocoa.framework in Frameworks */,
+				7F4F66DE138D5F4300EB13DA /* BaseTenAppKit.framework in Frameworks */,
+				7F4F66DF138D5F4400EB13DA /* BaseTen.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		29B97314FDCFA39411CA2CEA /* LongingFastForward */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE53A4138D532C00FE0296 /* Sources */,
+				7F43FF64138BFBB7003FBB0D /* Views */,
+				7F2B4B24138AC3C900BC1530 /* Models */,
+				7FE2E25F138ABCF100792184 /* Apps */,
+				7F2B4B9B138AC51700BC1530 /* Resources */,
+				7F2B4B8C138AC4C300BC1530 /* Linked Frameworks */,
+				7F2B4B1C138AC32F00BC1530 /* Products */,
+			);
+			name = LongingFastForward;
+			sourceTree = "<group>";
+		};
+		7F2B4B1C138AC32F00BC1530 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B4B1B138AC32F00BC1530 /* LongingFastForward.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F2B4B24138AC3C900BC1530 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE54F0138D5D0F00FE0296 /* human.h.motemplate */,
+				7FDE54F1138D5D0F00FE0296 /* human.m.motemplate */,
+				7FDE54F2138D5D0F00FE0296 /* machine.h.motemplate */,
+				7FDE54F3138D5D0F00FE0296 /* machine.m.motemplate */,
+				7FDE4DAB138D47A300FE0296 /* LongingFastForward_DataModel */,
+				7F2B4B25138AC3C900BC1530 /* LongingFastForward_DataModel.xcdatamodel */,
+			);
+			path = Models;
+			sourceTree = SOURCE_ROOT;
+		};
+		7F2B4B8C138AC4C300BC1530 /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE50C6138D4F2900FE0296 /* BaseTen.framework */,
+				7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */,
+				7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		7F2B4B9B138AC51700BC1530 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7F4301D5138C0F7B003FBB0D /* Shared Resources */,
+				7F4301F6138C0FF7003FBB0D /* LFFConnected.png */,
+				7F4301F7138C0FF7003FBB0D /* LFFDisconnected.png */,
+				7F2B4B1D138AC32F00BC1530 /* LongingFastForward-Info.plist */,
+			);
+			name = Resources;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7F43FF64138BFBB7003FBB0D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7FDE4DAB138D47A300FE0296 /* LongingFastForward_DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE4DAC138D47A300FE0296 /* _Classes */,
+				7FDE4DC3138D47A300FE0296 /* Classes */,
+			);
+			path = LongingFastForward_DataModel;
+			sourceTree = "<group>";
+		};
+		7FDE4DAC138D47A300FE0296 /* _Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */,
+				7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */,
+				7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */,
+				7FDE4DB0138D47A300FE0296 /* _LFFCameraDevice.m */,
+				7FDE4DB1138D47A300FE0296 /* _LFFCameraProfile.h */,
+				7FDE4DB2138D47A300FE0296 /* _LFFCameraProfile.m */,
+				7FDE4DB3138D47A300FE0296 /* _LFFCameraSettings.h */,
+				7FDE4DB4138D47A300FE0296 /* _LFFCameraSettings.m */,
+				7FDE4DB5138D47A300FE0296 /* _LFFCameraStats.h */,
+				7FDE4DB6138D47A300FE0296 /* _LFFCameraStats.m */,
+				7FDE4DB7138D47A300FE0296 /* _LFFCaptureClient.h */,
+				7FDE4DB8138D47A300FE0296 /* _LFFCaptureClient.m */,
+				7FDE4DB9138D47A300FE0296 /* _LFFCaptureSession.h */,
+				7FDE4DBA138D47A300FE0296 /* _LFFCaptureSession.m */,
+				7FDE4DBB138D47A300FE0296 /* _LFFEvent.h */,
+				7FDE4DBC138D47A300FE0296 /* _LFFEvent.m */,
+				7FDE4DBD138D47A300FE0296 /* _LFFImageHDR.h */,
+				7FDE4DBE138D47A300FE0296 /* _LFFImageHDR.m */,
+				7FDE4DBF138D47A300FE0296 /* _LFFLoggingEntity.h */,
+				7FDE4DC0138D47A300FE0296 /* _LFFLoggingEntity.m */,
+				7FDE4DC1138D47A300FE0296 /* _LFFResearchStation.h */,
+				7FDE4DC2138D47A300FE0296 /* _LFFResearchStation.m */,
+			);
+			path = _Classes;
+			sourceTree = "<group>";
+		};
+		7FDE4DC3138D47A300FE0296 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE4DC4138D47A300FE0296 /* LFFCameraAngle.h */,
+				7FDE4DC5138D47A300FE0296 /* LFFCameraAngle.m */,
+				7FDE4DC6138D47A300FE0296 /* LFFCameraDevice.h */,
+				7FDE4DC7138D47A300FE0296 /* LFFCameraDevice.m */,
+				7FDE4DC8138D47A300FE0296 /* LFFCameraProfile.h */,
+				7FDE4DC9138D47A300FE0296 /* LFFCameraProfile.m */,
+				7FDE4DCA138D47A300FE0296 /* LFFCameraSettings.h */,
+				7FDE4DCB138D47A300FE0296 /* LFFCameraSettings.m */,
+				7FDE4DCC138D47A300FE0296 /* LFFCameraStats.h */,
+				7FDE4DCD138D47A300FE0296 /* LFFCameraStats.m */,
+				7FDE4DCE138D47A300FE0296 /* LFFCaptureClient.h */,
+				7FDE4DCF138D47A300FE0296 /* LFFCaptureClient.m */,
+				7FDE4DD0138D47A300FE0296 /* LFFCaptureSession.h */,
+				7FDE4DD1138D47A300FE0296 /* LFFCaptureSession.m */,
+				7FDE4DD2138D47A300FE0296 /* LFFEvent.h */,
+				7FDE4DD3138D47A300FE0296 /* LFFEvent.m */,
+				7FDE4DD4138D47A300FE0296 /* LFFImageHDR.h */,
+				7FDE4DD5138D47A300FE0296 /* LFFImageHDR.m */,
+				7FDE4DD6138D47A300FE0296 /* LFFLoggingEntity.h */,
+				7FDE4DD7138D47A300FE0296 /* LFFLoggingEntity.m */,
+				7FDE4DD8138D47A300FE0296 /* LFFResearchStation.h */,
+				7FDE4DD9138D47A300FE0296 /* LFFResearchStation.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		7FDE53A4138D532C00FE0296 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		7FE2E25F138ABCF100792184 /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */,
+				7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */,
+			);
+			name = Apps;
+			sourceTree = "<group>";
+		};
+		7FE2E268138ABD3600792184 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7FE2E26C138ABD3600792184 /* Longing Capture Client.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7FE2E274138ABD6A00792184 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7FE2E278138ABD6A00792184 /* Longing Control Panel.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7F2B4B16138AC32F00BC1530 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FDE4DDA138D47A300FE0296 /* _LFFCameraAngle.h in Headers */,
+				7FDE4DDC138D47A300FE0296 /* _LFFCameraDevice.h in Headers */,
+				7FDE4DDE138D47A300FE0296 /* _LFFCameraProfile.h in Headers */,
+				7FDE4DE0138D47A300FE0296 /* _LFFCameraSettings.h in Headers */,
+				7FDE4DE2138D47A300FE0296 /* _LFFCameraStats.h in Headers */,
+				7FDE4DE4138D47A300FE0296 /* _LFFCaptureClient.h in Headers */,
+				7FDE4DE6138D47A300FE0296 /* _LFFCaptureSession.h in Headers */,
+				7FDE4DE8138D47A300FE0296 /* _LFFEvent.h in Headers */,
+				7FDE4DEA138D47A300FE0296 /* _LFFImageHDR.h in Headers */,
+				7FDE4DEC138D47A300FE0296 /* _LFFLoggingEntity.h in Headers */,
+				7FDE4DEE138D47A300FE0296 /* _LFFResearchStation.h in Headers */,
+				7FDE4DF0138D47A300FE0296 /* LFFCameraAngle.h in Headers */,
+				7FDE4DF2138D47A300FE0296 /* LFFCameraDevice.h in Headers */,
+				7FDE4DF4138D47A300FE0296 /* LFFCameraProfile.h in Headers */,
+				7FDE4DF6138D47A300FE0296 /* LFFCameraSettings.h in Headers */,
+				7FDE4DF8138D47A300FE0296 /* LFFCameraStats.h in Headers */,
+				7FDE4DFA138D47A300FE0296 /* LFFCaptureClient.h in Headers */,
+				7FDE4DFC138D47A300FE0296 /* LFFCaptureSession.h in Headers */,
+				7FDE4DFE138D47A300FE0296 /* LFFEvent.h in Headers */,
+				7FDE4E00138D47A300FE0296 /* LFFImageHDR.h in Headers */,
+				7FDE4E02138D47A300FE0296 /* LFFLoggingEntity.h in Headers */,
+				7FDE4E04138D47A300FE0296 /* LFFResearchStation.h in Headers */,
+				7FDE53A6138D532C00FE0296 /* LongingFastForward_Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7F2B4B1A138AC32F00BC1530 /* LongingFastForward */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F2B4B20138AC32F00BC1530 /* Build configuration list for PBXNativeTarget "LongingFastForward" */;
+			buildPhases = (
+				7F2B4D7A138ADC0F00BC1530 /* Generate Model Files */,
+				7F2B4B17138AC32F00BC1530 /* Resources */,
+				7FDE5465138D581E00FE0296 /* Copy Frameworks */,
+				7F2B4B16138AC32F00BC1530 /* Headers */,
+				7F2B4B18138AC32F00BC1530 /* Sources */,
+				7F2B4B19138AC32F00BC1530 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LongingFastForward;
+			productName = LongingFastForward;
+			productReference = 7F2B4B1B138AC32F00BC1530 /* LongingFastForward.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 26FC0A880875C7B200E6366F /* Build configuration list for PBXProject "LongingFastForward" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* LongingFastForward */;
+			productRefGroup = 7F2B4B1C138AC32F00BC1530 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7FE2E268138ABD3600792184 /* Products */;
+					ProjectRef = 7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */;
+				},
+				{
+					ProductGroup = 7FE2E274138ABD6A00792184 /* Products */;
+					ProjectRef = 7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				7F2B4B1A138AC32F00BC1530 /* LongingFastForward */,
+				7FE2E279138ABDB400792184 /* Apps */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7FE2E26C138ABD3600792184 /* Longing Capture Client.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Longing Capture Client.app";
+			remoteRef = 7FE2E26B138ABD3600792184 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7FE2E278138ABD6A00792184 /* Longing Control Panel.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Longing Control Panel.app";
+			remoteRef = 7FE2E277138ABD6A00792184 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F2B4B17138AC32F00BC1530 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F4301DB138C0F7B003FBB0D /* Shared Resources in Resources */,
+				7F4301F8138C0FF7003FBB0D /* LFFConnected.png in Resources */,
+				7F4301F9138C0FF7003FBB0D /* LFFDisconnected.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7F2B4D7A138ADC0F00BC1530 /* Generate Model Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Models/LongingFastForward_DataModel.xcdatamodel",
+			);
+			name = "Generate Model Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mogenerator --base-class BXDatabaseObject \\\n--model $SRCROOT/Models/LongingFastForward_DataModel.xcdatamodel \\\n--template-path $SRCROOT/Models \\\n--machine-dir $SRCROOT/Models/LongingFastForward_DataModel/_Classes \\\n--human-dir $SRCROOT/Models/LongingFastForward_DataModel/Classes";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F2B4B18138AC32F00BC1530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F2B4B26138AC3EB00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */,
+				7FDE4DDB138D47A300FE0296 /* _LFFCameraAngle.m in Sources */,
+				7FDE4DDD138D47A300FE0296 /* _LFFCameraDevice.m in Sources */,
+				7FDE4DDF138D47A300FE0296 /* _LFFCameraProfile.m in Sources */,
+				7FDE4DE1138D47A300FE0296 /* _LFFCameraSettings.m in Sources */,
+				7FDE4DE3138D47A300FE0296 /* _LFFCameraStats.m in Sources */,
+				7FDE4DE5138D47A300FE0296 /* _LFFCaptureClient.m in Sources */,
+				7FDE4DE7138D47A300FE0296 /* _LFFCaptureSession.m in Sources */,
+				7FDE4DE9138D47A300FE0296 /* _LFFEvent.m in Sources */,
+				7FDE4DEB138D47A300FE0296 /* _LFFImageHDR.m in Sources */,
+				7FDE4DED138D47A300FE0296 /* _LFFLoggingEntity.m in Sources */,
+				7FDE4DEF138D47A300FE0296 /* _LFFResearchStation.m in Sources */,
+				7FDE4DF1138D47A300FE0296 /* LFFCameraAngle.m in Sources */,
+				7FDE4DF3138D47A300FE0296 /* LFFCameraDevice.m in Sources */,
+				7FDE4DF5138D47A300FE0296 /* LFFCameraProfile.m in Sources */,
+				7FDE4DF7138D47A300FE0296 /* LFFCameraSettings.m in Sources */,
+				7FDE4DF9138D47A300FE0296 /* LFFCameraStats.m in Sources */,
+				7FDE4DFB138D47A300FE0296 /* LFFCaptureClient.m in Sources */,
+				7FDE4DFD138D47A300FE0296 /* LFFCaptureSession.m in Sources */,
+				7FDE4DFF138D47A300FE0296 /* LFFEvent.m in Sources */,
+				7FDE4E01138D47A300FE0296 /* LFFImageHDR.m in Sources */,
+				7FDE4E03138D47A300FE0296 /* LFFLoggingEntity.m in Sources */,
+				7FDE4E05138D47A300FE0296 /* LFFResearchStation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F2B4B88138AC46F00BC1530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F2B4B1A138AC32F00BC1530 /* LongingFastForward */;
+			targetProxy = 7F2B4B87138AC46F00BC1530 /* PBXContainerItemProxy */;
+		};
+		7FE2E27D138ABDC500792184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Longing Capture Client";
+			targetProxy = 7FE2E27C138ABDC500792184 /* PBXContainerItemProxy */;
+		};
+		7FE2E27F138ABDC500792184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Longing Control Panel";
+			targetProxy = 7FE2E27E138ABDC500792184 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		26FC0A890875C7B200E6366F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		26FC0A8A0875C7B200E6366F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		7F2B4B1E138AC32F00BC1530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILD_DIR)/Release",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Sources/LongingFastForward_Prefix.pch;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				INFOPLIST_FILE = "LongingFastForward-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					BaseTen,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LongingFastForward;
+			};
+			name = Debug;
+		};
+		7F2B4B1F138AC32F00BC1530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
+					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILD_DIR)/Release",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Sources/LongingFastForward_Prefix.pch;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				INFOPLIST_FILE = "LongingFastForward-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					BaseTen,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LongingFastForward;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		7FE2E27A138ABDB400792184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Apps;
+			};
+			name = Debug;
+		};
+		7FE2E27B138ABDB400792184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Apps;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		26FC0A880875C7B200E6366F /* Build configuration list for PBXProject "LongingFastForward" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26FC0A890875C7B200E6366F /* Debug */,
+				26FC0A8A0875C7B200E6366F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F2B4B20138AC32F00BC1530 /* Build configuration list for PBXNativeTarget "LongingFastForward" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F2B4B1E138AC32F00BC1530 /* Debug */,
+				7F2B4B1F138AC32F00BC1530 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7FE2E280138ABDE300792184 /* Build configuration list for PBXAggregateTarget "Apps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FE2E27A138ABDB400792184 /* Debug */,
+				7FE2E27B138ABDB400792184 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,6 @@
+[submodule "Tools/homebrew"]
+	path = Tools/homebrew
+	url = git://github.com/mxcl/homebrew.git
+[submodule "Tools/mogenerator"]
+	path = Tools/mogenerator
+	url = git://github.com/rentzsch/mogenerator.git

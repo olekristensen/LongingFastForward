@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Longing Capture Client' target in the 'Longing Capture Client' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
