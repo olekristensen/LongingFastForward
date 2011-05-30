@@ -2,8 +2,8 @@
 {
 	01207E3C0A4235F400D047C5 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {978, 515}}";
-			sepNavSelRange = "{1013, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {978, 499}}";
+			sepNavSelRange = "{483, 510}";
 			sepNavVisRange = "{0, 1311}";
 		};
 	};
@@ -14,29 +14,24 @@
 		name = Malvar_He_Cutler_Bayer_DemosaicingFilter.m;
 		path = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/Malvar_He_Cutler_Bayer_DemosaicingFilter.m";
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1335, 1157}}";
-			sepNavSelRange = "{2735, 0}";
-			sepNavVisRange = "{1929, 982}";
-		};
 	};
 	01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {870, 1209}}";
+			sepNavIntBoundsRect = "{{0, 0}, {870, 1222}}";
 			sepNavSelRange = "{54, 0}";
-			sepNavVisRange = "{0, 1500}";
+			sepNavVisRange = "{0, 1478}";
 		};
 	};
 	01EF28710659A5A50035FD02 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {985, 515}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 230}";
+			sepNavIntBoundsRect = "{{0, 0}, {870, 499}}";
+			sepNavSelRange = "{194, 0}";
+			sepNavVisRange = "{0, 197}";
 		};
 	};
 	089C1669FE841209C02AAC07 /* Project object */ = {
 		activeArchitecturePreference = ppc;
-		activeBuildConfigurationName = Deploy;
+		activeBuildConfigurationName = Deployment;
 		activeTarget = 8D57630D048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing */;
 		addToTargets = (
 		);
@@ -124,22 +119,23 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 328467274;
-			PBXWorkspaceStateSaveDate = 328467274;
+			PBXPerProjectTemplateStateSaveDate = 328470193;
+			PBXWorkspaceStateSaveDate = 328470193;
 		};
 		perUserProjectItems = {
 			7F4F6FA71393E45B00EB13DA /* PBXTextBookmark */ = 7F4F6FA71393E45B00EB13DA /* PBXTextBookmark */;
-			7F4F703F1393F0C600EB13DA /* PBXTextBookmark */ = 7F4F703F1393F0C600EB13DA /* PBXTextBookmark */;
-			7F4F70621393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70621393FA4A00EB13DA /* PBXTextBookmark */;
 			7F4F70631393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70631393FA4A00EB13DA /* PBXTextBookmark */;
 			7F4F70641393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70641393FA4A00EB13DA /* PBXTextBookmark */;
-			7F4F70651393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70651393FA4A00EB13DA /* PBXTextBookmark */;
-			7F4F70661393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70661393FA4A00EB13DA /* PBXTextBookmark */;
-			7F4F70671393FA4A00EB13DA /* PlistBookmark */ = 7F4F70671393FA4A00EB13DA /* PlistBookmark */;
-			7F4F70681393FA4A00EB13DA /* PBXTextBookmark */ = 7F4F70681393FA4A00EB13DA /* PBXTextBookmark */;
 			7FB0C7F1139407C100FE20A3 /* PBXTextBookmark */ = 7FB0C7F1139407C100FE20A3 /* PBXTextBookmark */;
-			7FB0C7F2139407C100FE20A3 /* PlistBookmark */ = 7FB0C7F2139407C100FE20A3 /* PlistBookmark */;
-			7FB0C810139408D800FE20A3 /* PlistBookmark */ = 7FB0C810139408D800FE20A3 /* PlistBookmark */;
+			7FF5CFF71394128400FC4FAD /* PBXTextBookmark */ = 7FF5CFF71394128400FC4FAD /* PBXTextBookmark */;
+			7FF5CFF81394128400FC4FAD /* PBXTextBookmark */ = 7FF5CFF81394128400FC4FAD /* PBXTextBookmark */;
+			7FF5CFF91394128400FC4FAD /* PBXTextBookmark */ = 7FF5CFF91394128400FC4FAD /* PBXTextBookmark */;
+			7FF5CFFA1394128400FC4FAD /* PBXTextBookmark */ = 7FF5CFFA1394128400FC4FAD /* PBXTextBookmark */;
+			7FF5CFFB1394128400FC4FAD /* PlistBookmark */ = 7FF5CFFB1394128400FC4FAD /* PlistBookmark */;
+			7FF5CFFD1394128400FC4FAD /* PlistBookmark */ = 7FF5CFFD1394128400FC4FAD /* PlistBookmark */;
+			7FF5CFFE1394128400FC4FAD /* PBXTextBookmark */ = 7FF5CFFE1394128400FC4FAD /* PBXTextBookmark */;
+			7FF5CFFF1394128400FC4FAD /* PlistBookmark */ = 7FF5CFFF1394128400FC4FAD /* PlistBookmark */;
+			7FF5D0001394128400FC4FAD /* PlistBookmark */ = 7FF5D0001394128400FC4FAD /* PlistBookmark */;
 		};
 		sourceControlManager = 7F4F6F801393DE3600EB13DA /* Source Control */;
 		userBuildSettings = {
@@ -147,9 +143,9 @@
 	};
 	089C167EFE841241C02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {870, 515}}";
-			sepNavSelRange = "{194, 0}";
-			sepNavVisRange = "{0, 203}";
+			sepNavIntBoundsRect = "{{0, 0}, {870, 499}}";
+			sepNavSelRange = "{147, 77}";
+			sepNavVisRange = "{0, 227}";
 		};
 	};
 	7F4F6F801393DE3600EB13DA /* Source Control */ = {
@@ -183,16 +179,6 @@
 		path = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/QuartzCore.framework/Versions/A/Headers/CIFilter.h;
 		sourceTree = "<absolute>";
 	};
-	7F4F703F1393F0C600EB13DA /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 089C167EFE841241C02AAC07 /* English */;
-		name = "InfoPlist.strings: 4";
-		rLen = 0;
-		rLoc = 194;
-		rType = 0;
-		vrLen = 203;
-		vrLoc = 0;
-	};
 	7F4F70431393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {870, 520}}";
@@ -218,18 +204,8 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {870, 520}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1242}";
+			sepNavVisRange = "{3, 1239}";
 		};
-	};
-	7F4F70621393FA4A00EB13DA /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 01207E3C0A4235F400D047C5 /* English */;
-		name = "index.html: 19";
-		rLen = 0;
-		rLoc = 1013;
-		rType = 0;
-		vrLen = 1311;
-		vrLoc = 0;
 	};
 	7F4F70631393FA4A00EB13DA /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -251,51 +227,6 @@
 		vrLen = 1227;
 		vrLoc = 0;
 	};
-	7F4F70651393FA4A00EB13DA /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 01EF28710659A5A50035FD02 /* English */;
-		name = "Description.strings: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 230;
-		vrLoc = 0;
-	};
-	7F4F70661393FA4A00EB13DA /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */;
-		name = "Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel: 1";
-		rLen = 0;
-		rLoc = 54;
-		rType = 0;
-		vrLen = 1500;
-		vrLoc = 0;
-	};
-	7F4F70671393FA4A00EB13DA /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 01EF2743065982E90035FD02 /* Description.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-			CIPlugInFilterList,
-			Malvar_He_Cutler_Bayer_Demosaicing,
-			CIFilterAttributes,
-			CIAttributeFilterDisplayName,
-		);
-		name = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/Description.plist";
-		rLen = 0;
-		rLoc = 9223372036854775808;
-	};
-	7F4F70681393FA4A00EB13DA /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7F4F70461393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m */;
-		name = "Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1242;
-		vrLoc = 0;
-	};
 	7FB0C7F1139407C100FE20A3 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 015B28FA0A3B0C860008075E /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m */;
@@ -306,23 +237,103 @@
 		vrLen = 982;
 		vrLoc = 1929;
 	};
-	7FB0C7F2139407C100FE20A3 /* PlistBookmark */ = {
+	7FF5CFF71394128400FC4FAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 01EF28710659A5A50035FD02 /* English */;
+		name = "Description.strings: 2";
+		rLen = 0;
+		rLoc = 194;
+		rType = 0;
+		vrLen = 197;
+		vrLoc = 0;
+	};
+	7FF5CFF81394128400FC4FAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */;
+		name = "Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel: 1";
+		rLen = 0;
+		rLoc = 54;
+		rType = 0;
+		vrLen = 1478;
+		vrLoc = 0;
+	};
+	7FF5CFF91394128400FC4FAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 01207E3C0A4235F400D047C5 /* English */;
+		name = "index.html: 14";
+		rLen = 510;
+		rLoc = 483;
+		rType = 0;
+		vrLen = 1311;
+		vrLoc = 0;
+	};
+	7FF5CFFA1394128400FC4FAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F4F70461393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m */;
+		name = "Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1239;
+		vrLoc = 3;
+	};
+	7FF5CFFB1394128400FC4FAD /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 7FF5CFFC1394128400FC4FAD /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/ole/Library/Graphics/Image Units/Malvar_He_Cutler_Bayer_Demosaicing.plugin/Contents/Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	7FF5CFFC1394128400FC4FAD /* Info.plist */ = {
+		isa = PBXFileReference;
+		name = Info.plist;
+		path = "/Users/ole/Library/Graphics/Image Units/Malvar_He_Cutler_Bayer_Demosaicing.plugin/Contents/Info.plist";
+		sourceTree = "<absolute>";
+	};
+	7FF5CFFD1394128400FC4FAD /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 01EF2743065982E90035FD02 /* Description.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/Description.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	7FF5CFFE1394128400FC4FAD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C167EFE841241C02AAC07 /* English */;
+		name = "InfoPlist.strings: 4";
+		rLen = 77;
+		rLoc = 147;
+		rType = 0;
+		vrLen = 227;
+		vrLoc = 0;
+	};
+	7FF5CFFF1394128400FC4FAD /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 8D576317048677EA00EA77CD /* Info.plist */;
 		fallbackIsa = PBXBookmark;
 		isK = 0;
 		kPath = (
+			CFBundleIdentifier,
 		);
 		name = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/Info.plist";
 		rLen = 0;
 		rLoc = 9223372036854775807;
 	};
-	7FB0C810139408D800FE20A3 /* PlistBookmark */ = {
+	7FF5D0001394128400FC4FAD /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 8D576317048677EA00EA77CD /* Info.plist */;
 		fallbackIsa = PBXBookmark;
 		isK = 0;
 		kPath = (
+			CFBundleInfoDictionaryVersion,
 		);
 		name = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/Info.plist";
 		rLen = 0;

@@ -18,7 +18,7 @@
 					<string>CICategoryHighDynamicRange</string>
 				</array>
 				<key>CIAttributeFilterDisplayName</key>
-				<string>Malvar_He_Cutler_Bayer_DemosaicingFilter</string>
+				<string>Malvar_He_Cutler_Bayer_DemosaicingFilterName</string>
 				<key>CIAttributeReferenceDocumentation</key>
 				<string>index</string>
 			</dict>
