@@ -21,6 +21,8 @@
 	NSAssert (nil != managedObjectContext, @"Longing_Control_Panel_AppDelegate's outlets were not set up correctly.");
 	[managedObjectContext setLogsQueries:YES];
 	
+	databaseUrlFromNib = [managedObjectContext databaseURI];
+	
 	[self updateConnectionToolbarItem];
 }
 
@@ -199,6 +201,7 @@
 		[researchStationController setContent:nil];
 		[researchStationController setSelectedObjects:nil];
 		[managedObjectContext disconnect];
+		[managedObjectContext setDatabaseURI:databaseUrlFromNib];
  		[researchStation release];
 		researchStation = nil;
 		NSLog(@"disconnecting");

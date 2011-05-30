@@ -1,0 +1,369 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		011CF8670A3B1433006B162D /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011CF8660A3B1433006B162D /* ApplicationServices.framework */; };
+		01207E3F0A42360100D047C5 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 01207E3E0A42360100D047C5 /* index.html */; };
+		019B76F906B5B49B000EAC1F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 019B76F806B5B49B000EAC1F /* QuartzCore.framework */; };
+		01A864A8066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */; };
+		01DC14E4071DFB0300341A39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DC14E1071DFB0300341A39 /* Foundation.framework */; };
+		01EF2744065982E90035FD02 /* Description.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF2743065982E90035FD02 /* Description.plist */; };
+		01EF28860659A5DC0035FD02 /* Description.strings in Resources */ = {isa = PBXBuildFile; fileRef = 01EF28850659A5DC0035FD02 /* Description.strings */; };
+		7F4F70471393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F70431393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h */; };
+		7F4F70481393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F70441393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m */; };
+		7F4F70491393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F70451393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h */; };
+		7F4F704A1393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F70461393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m */; };
+		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
+		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		011CF8660A3B1433006B162D /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		01207E3C0A4235F400D047C5 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = English; path = English.lproj/index.html; sourceTree = "<group>"; };
+		019B76F806B5B49B000EAC1F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel; sourceTree = "<group>"; };
+		01DC14E1071DFB0300341A39 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		01EF2743065982E90035FD02 /* Description.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Description.plist; sourceTree = "<group>"; };
+		01EF28710659A5A50035FD02 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Description.strings; sourceTree = "<group>"; };
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		7F4F70431393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malvar_He_Cutler_Bayer_DemosaicingFilter.h; sourceTree = SOURCE_ROOT; };
+		7F4F70441393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Malvar_He_Cutler_Bayer_DemosaicingFilter.m; sourceTree = SOURCE_ROOT; };
+		7F4F70451393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h; sourceTree = SOURCE_ROOT; };
+		7F4F70461393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m; sourceTree = SOURCE_ROOT; };
+		7FB0C60C1394070100FE20A3 /* Core Image Filter Test.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = "Core Image Filter Test.qtz"; sourceTree = "<group>"; };
+		7FB0C60D1394070100FE20A3 /* Image Unit Performance Test.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = "Image Unit Performance Test.qtz"; sourceTree = "<group>"; };
+		7FB0C7FF139407FE00FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; name = Malvar_He_Cutler_Bayer_Demosaicing.plugin; path = "../../../../../../Library/Graphics/Image Units/Malvar_He_Cutler_Bayer_Demosaicing.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = Malvar_He_Cutler_Bayer_Demosaicing.plugin; path = "/Users/ole/Development/LongingFastForward/Image Units/Malvar-He-Cutler Bayer Demosaicing/build/Deploy/Malvar_He_Cutler_Bayer_Demosaicing.plugin"; sourceTree = "<absolute>"; };
+		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
+				019B76F906B5B49B000EAC1F /* QuartzCore.framework in Frameworks */,
+				01DC14E4071DFB0300341A39 /* Foundation.framework in Frameworks */,
+				011CF8670A3B1433006B162D /* ApplicationServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Malvar_He_Cutler_Bayer_Demosaicing */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C60C1394070100FE20A3 /* Core Image Filter Test.qtz */,
+				7FB0C60D1394070100FE20A3 /* Image Unit Performance Test.qtz */,
+				7F4F703B1393F0C100EB13DA /* Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = Malvar_He_Cutler_Bayer_Demosaicing;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				011CF8660A3B1433006B162D /* ApplicationServices.framework */,
+				01DC14E1071DFB0300341A39 /* Foundation.framework */,
+				019B76F806B5B49B000EAC1F /* QuartzCore.framework */,
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				01207E3E0A42360100D047C5 /* index.html */,
+				8D576317048677EA00EA77CD /* Info.plist */,
+				8D5B49A704867FD3000E48DA /* InfoPlist.strings */,
+				01EF28850659A5DC0035FD02 /* Description.strings */,
+				01A864A7066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel */,
+				01EF2743065982E90035FD02 /* Description.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C7FF139407FE00FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F4F703B1393F0C100EB13DA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7F4F70431393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h */,
+				7F4F70441393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m */,
+				7F4F70451393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h */,
+				7F4F70461393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8D57630E048677EA00EA77CD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F4F70471393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.h in Headers */,
+				7F4F70491393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01DF4BB8089FE5FF00154B16 /* Build configuration list for PBXNativeTarget "Malvar_He_Cutler_Bayer_Demosaicing" */;
+			buildPhases = (
+				8D57630E048677EA00EA77CD /* Headers */,
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576311048677EA00EA77CD /* Sources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+				8D576315048677EA00EA77CD /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Malvar_He_Cutler_Bayer_Demosaicing;
+			productInstallPath = "$(HOME)/Library/Graphics/Image Units";
+			productName = CIDemoFilterPlugin;
+			productReference = 8D576316048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 01DF4BBC089FE5FF00154B16 /* Build configuration list for PBXProject "Malvar-He-Cutler Bayer Demosaicing" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* Malvar_He_Cutler_Bayer_Demosaicing */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */,
+				01EF2744065982E90035FD02 /* Description.plist in Resources */,
+				01EF28860659A5DC0035FD02 /* Description.strings in Resources */,
+				01A864A8066FDF20005BB3E4 /* Malvar_He_Cutler_Bayer_DemosaicingFilterKernel.cikernel in Resources */,
+				01207E3F0A42360100D047C5 /* index.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		8D576315048677EA00EA77CD /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F4F70481393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingFilter.m in Sources */,
+				7F4F704A1393F0CF00EB13DA /* Malvar_He_Cutler_Bayer_DemosaicingPlugInLoader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		01207E3E0A42360100D047C5 /* index.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01207E3C0A4235F400D047C5 /* English */,
+			);
+			name = index.html;
+			sourceTree = "<group>";
+		};
+		01EF28850659A5DC0035FD02 /* Description.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01EF28710659A5A50035FD02 /* English */,
+			);
+			name = Description.strings;
+			sourceTree = "<group>";
+		};
+		8D5B49A704867FD3000E48DA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		01DF4BB9089FE5FF00154B16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Image Units";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = Malvar_He_Cutler_Bayer_Demosaicing;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		01DF4BBA089FE5FF00154B16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc64,
+					ppc,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Image Units";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = Malvar_He_Cutler_Bayer_Demosaicing;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		01DF4BBD089FE5FF00154B16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		01DF4BBE089FE5FF00154B16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					"$(ARCHS_STANDARD_32_64_BIT)",
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		7F4F6FB61393E4F800EB13DA /* Deploy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					"$(ARCHS_STANDARD_32_64_BIT)",
+				);
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Deploy;
+		};
+		7F4F6FB71393E4F800EB13DA /* Deploy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc64,
+					ppc,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Image Units";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = Malvar_He_Cutler_Bayer_Demosaicing;
+				SEPARATE_STRIP = YES;
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Deploy;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01DF4BB8089FE5FF00154B16 /* Build configuration list for PBXNativeTarget "Malvar_He_Cutler_Bayer_Demosaicing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01DF4BB9089FE5FF00154B16 /* Debug */,
+				01DF4BBA089FE5FF00154B16 /* Release */,
+				7F4F6FB71393E4F800EB13DA /* Deploy */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01DF4BBC089FE5FF00154B16 /* Build configuration list for PBXProject "Malvar-He-Cutler Bayer Demosaicing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01DF4BBD089FE5FF00154B16 /* Debug */,
+				01DF4BBE089FE5FF00154B16 /* Release */,
+				7F4F6FB61393E4F800EB13DA /* Deploy */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

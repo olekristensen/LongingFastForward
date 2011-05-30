@@ -14,6 +14,7 @@
 			);
 			dependencies = (
 				7F2B4B88138AC46F00BC1530 /* PBXTargetDependency */,
+				7FB0C8F61394096300FE20A3 /* PBXTargetDependency */,
 				7FE2E27D138ABDC500792184 /* PBXTargetDependency */,
 				7FE2E27F138ABDC500792184 /* PBXTargetDependency */,
 			);
@@ -90,6 +91,20 @@
 			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530;
 			remoteInfo = LongingFastForward;
 		};
+		7FB0C8F01394094100FE20A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7FB0C8EE1394094100FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */;
+			remoteInfo = Malvar_He_Cutler_Bayer_Demosaicing;
+		};
+		7FB0C8F51394096300FE20A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing */;
+			remoteInfo = Malvar_He_Cutler_Bayer_Demosaicing;
+		};
 		7FE2E26B138ABD3600792184 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7FE2E262138ABD3600792184 /* Longing Capture Client.xcodeproj */;
@@ -146,6 +161,7 @@
 		7F4F6A7A139015E400EB13DA /* LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageLDR.m; sourceTree = "<group>"; };
 		7F4F6A861390160100EB13DA /* _LFFImageLDR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFImageLDR.h; sourceTree = "<group>"; };
 		7F4F6A871390160100EB13DA /* _LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFImageLDR.m; sourceTree = "<group>"; };
+		7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; path = "Malvar-He-Cutler Bayer Demosaicing/Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; sourceTree = "<group>"; };
 		7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraAngle.h; sourceTree = "<group>"; };
 		7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraAngle.m; sourceTree = "<group>"; };
 		7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDevice.h; sourceTree = "<group>"; };
@@ -224,6 +240,7 @@
 				7F43FF64138BFBB7003FBB0D /* Views */,
 				7F2B4B24138AC3C900BC1530 /* Models */,
 				7FE2E25F138ABCF100792184 /* Apps */,
+				7FB0C83C1394090B00FE20A3 /* Image Units */,
 				7F2B4B8C138AC4C300BC1530 /* Linked Frameworks */,
 				7F2B4B1C138AC32F00BC1530 /* Products */,
 			);
@@ -266,6 +283,22 @@
 			children = (
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7FB0C83C1394090B00FE20A3 /* Image Units */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */,
+			);
+			path = "Image Units";
+			sourceTree = "<group>";
+		};
+		7FB0C8E91394094100FE20A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C8F11394094100FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7FDE4DAB138D47A300FE0296 /* LongingFastForward_DataModel */ = {
@@ -459,6 +492,10 @@
 					ProductGroup = 7FE2E274138ABD6A00792184 /* Products */;
 					ProjectRef = 7FE2E26E138ABD6A00792184 /* Longing Control Panel.xcodeproj */;
 				},
+				{
+					ProductGroup = 7FB0C8E91394094100FE20A3 /* Products */;
+					ProjectRef = 7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -469,6 +506,14 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		7FB0C8F11394094100FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			name = Malvar_He_Cutler_Bayer_Demosaicing.plugin;
+			path = build/Deploy/Malvar_He_Cutler_Bayer_Demosaicing.plugin;
+			remoteRef = 7FB0C8F01394094100FE20A3 /* PBXContainerItemProxy */;
+			sourceTree = "<group>";
+		};
 		7FE2E26C138ABD3600792184 /* Longing Capture Client.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -554,6 +599,11 @@
 			isa = PBXTargetDependency;
 			target = 7F2B4B1A138AC32F00BC1530 /* LongingFastForward */;
 			targetProxy = 7F2B4B87138AC46F00BC1530 /* PBXContainerItemProxy */;
+		};
+		7FB0C8F61394096300FE20A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Malvar_He_Cutler_Bayer_Demosaicing;
+			targetProxy = 7FB0C8F51394096300FE20A3 /* PBXContainerItemProxy */;
 		};
 		7FE2E27D138ABDC500792184 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

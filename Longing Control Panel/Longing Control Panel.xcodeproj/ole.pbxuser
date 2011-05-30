@@ -161,6 +161,13 @@
 			7F4F6E5B1390239100EB13DA /* PBXTextBookmark */ = 7F4F6E5B1390239100EB13DA /* PBXTextBookmark */;
 			7F4F6E5F1390239700EB13DA /* PBXTextBookmark */ = 7F4F6E5F1390239700EB13DA /* PBXTextBookmark */;
 			7F4F6E64139023E700EB13DA /* PBXTextBookmark */ = 7F4F6E64139023E700EB13DA /* PBXTextBookmark */;
+			7F4F6E711391651900EB13DA /* PBXTextBookmark */ = 7F4F6E711391651900EB13DA /* PBXTextBookmark */;
+			7F4F6E721391651900EB13DA /* PBXTextBookmark */ = 7F4F6E721391651900EB13DA /* PBXTextBookmark */;
+			7F4F6E741391651900EB13DA /* PBXTextBookmark */ = 7F4F6E741391651900EB13DA /* PBXTextBookmark */;
+			7F4F6E781391657400EB13DA /* PBXTextBookmark */ = 7F4F6E781391657400EB13DA /* PBXTextBookmark */;
+			7F4F6E791391657400EB13DA /* PBXTextBookmark */ = 7F4F6E791391657400EB13DA /* PBXTextBookmark */;
+			7F4F6E7A1391657400EB13DA /* PBXTextBookmark */ = 7F4F6E7A1391657400EB13DA /* PBXTextBookmark */;
+			7F4F6E7B1391657400EB13DA /* PBXTextBookmark */ = 7F4F6E7B1391657400EB13DA /* PBXTextBookmark */;
 			7FDE4A38138D0ED300FE0296 = 7FDE4A38138D0ED300FE0296 /* PBXTextBookmark */;
 			7FDE4A6B138D102F00FE0296 = 7FDE4A6B138D102F00FE0296 /* PBXTextBookmark */;
 			7FDE4AAA138D11DF00FE0296 = 7FDE4AAA138D11DF00FE0296 /* PBXTextBookmark */;
@@ -193,16 +200,16 @@
 	};
 	77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1859, 536}}";
-			sepNavSelRange = "{847, 0}";
-			sepNavVisRange = "{0, 941}";
+			sepNavIntBoundsRect = "{{0, 0}, {1227, 734}}";
+			sepNavSelRange = "{675, 0}";
+			sepNavVisRange = "{0, 971}";
 		};
 	};
 	77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1859, 3159}}";
-			sepNavSelRange = "{6563, 0}";
-			sepNavVisRange = "{6327, 1018}";
+			sepNavIntBoundsRect = "{{0, 0}, {1227, 3224}}";
+			sepNavSelRange = "{6718, 0}";
+			sepNavVisRange = "{6251, 1388}";
 		};
 	};
 	7F2B56FF138B2A0600BC1530 /* PBXTextBookmark */ = {
@@ -391,7 +398,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 192";
 		rLen = 0;
-		rLoc = 6463;
+		rLoc = 6523;
 		rType = 0;
 		vrLen = 1297;
 		vrLoc = 6137;
@@ -401,7 +408,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 196";
 		rLen = 0;
-		rLoc = 6655;
+		rLoc = 6775;
 		rType = 0;
 		vrLen = 1414;
 		vrLoc = 5865;
@@ -426,7 +433,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 196";
 		rLen = 0;
-		rLoc = 6655;
+		rLoc = 6775;
 		rType = 0;
 		vrLen = 1304;
 		vrLoc = 3043;
@@ -436,7 +443,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 119";
 		rLen = 0;
-		rLoc = 3763;
+		rLoc = 3823;
 		rType = 0;
 		vrLen = 1854;
 		vrLoc = 2742;
@@ -456,7 +463,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 113";
 		rLen = 0;
-		rLoc = 3636;
+		rLoc = 3696;
 		rType = 0;
 		vrLen = 1434;
 		vrLoc = 0;
@@ -466,7 +473,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 209";
 		rLen = 0;
-		rLoc = 6889;
+		rLoc = 7009;
 		rType = 0;
 		vrLen = 1875;
 		vrLoc = 1219;
@@ -476,7 +483,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 209";
 		rLen = 0;
-		rLoc = 6889;
+		rLoc = 7009;
 		rType = 0;
 		vrLen = 2163;
 		vrLoc = 1219;
@@ -486,7 +493,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 209";
 		rLen = 0;
-		rLoc = 6889;
+		rLoc = 7009;
 		rType = 0;
 		vrLen = 1553;
 		vrLoc = 1541;
@@ -523,7 +530,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 75";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 2196;
 		vrLoc = 1341;
@@ -563,7 +570,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 209";
 		rLen = 0;
-		rLoc = 6889;
+		rLoc = 7009;
 		rType = 0;
 		vrLen = 1732;
 		vrLoc = 1474;
@@ -638,7 +645,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 75";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1386;
 		vrLoc = 0;
@@ -966,7 +973,7 @@
 		fRef = 77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */;
 		name = "Longing_Control_Panel_AppDelegate.h: 30";
 		rLen = 0;
-		rLoc = 829;
+		rLoc = 859;
 		rType = 0;
 		vrLen = 950;
 		vrLoc = 0;
@@ -1021,7 +1028,7 @@
 		fRef = 77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */;
 		name = "Longing_Control_Panel_AppDelegate.h: 30";
 		rLen = 0;
-		rLoc = 847;
+		rLoc = 877;
 		rType = 0;
 		vrLen = 946;
 		vrLoc = 0;
@@ -1031,7 +1038,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 56";
 		rLen = 0;
-		rLoc = 1362;
+		rLoc = 1422;
 		rType = 0;
 		vrLen = 1946;
 		vrLoc = 1258;
@@ -1041,7 +1048,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 56";
 		rLen = 0;
-		rLoc = 1362;
+		rLoc = 1422;
 		rType = 0;
 		vrLen = 1946;
 		vrLoc = 1258;
@@ -1051,7 +1058,7 @@
 		fRef = 77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */;
 		name = "Longing_Control_Panel_AppDelegate.h: 30";
 		rLen = 0;
-		rLoc = 847;
+		rLoc = 877;
 		rType = 0;
 		vrLen = 946;
 		vrLoc = 0;
@@ -1061,7 +1068,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 89";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 2235;
 		vrLoc = 1384;
@@ -1071,7 +1078,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 89";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1983;
 		vrLoc = 1179;
@@ -1081,7 +1088,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 89";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1829;
 		vrLoc = 1364;
@@ -1091,7 +1098,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 95";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1894;
 		vrLoc = 1210;
@@ -1101,7 +1108,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 98";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1789;
 		vrLoc = 1216;
@@ -1111,7 +1118,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 98";
 		rLen = 0;
-		rLoc = 2841;
+		rLoc = 2901;
 		rType = 0;
 		vrLen = 1864;
 		vrLoc = 1219;
@@ -1121,7 +1128,7 @@
 		fRef = 77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */;
 		name = "Longing_Control_Panel_AppDelegate.h: 30";
 		rLen = 0;
-		rLoc = 847;
+		rLoc = 877;
 		rType = 0;
 		vrLen = 941;
 		vrLoc = 0;
@@ -1131,7 +1138,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 93";
 		rLen = 0;
-		rLoc = 2807;
+		rLoc = 2867;
 		rType = 0;
 		vrLen = 1599;
 		vrLoc = 2032;
@@ -1141,7 +1148,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1018;
 		vrLoc = 6327;
@@ -1151,7 +1158,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1584;
 		vrLoc = 5829;
@@ -1820,7 +1827,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1376;
 		vrLoc = 6143;
@@ -1830,7 +1837,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1018;
 		vrLoc = 6327;
@@ -1867,7 +1874,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1348;
 		vrLoc = 6143;
@@ -1877,10 +1884,97 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 200";
 		rLen = 0;
-		rLoc = 6563;
+		rLoc = 6623;
 		rType = 0;
 		vrLen = 1348;
 		vrLoc = 6143;
+	};
+	7F4F6E711391651900EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
+		name = "Longing_Control_Panel_AppDelegate.m: 200";
+		rLen = 0;
+		rLoc = 6623;
+		rType = 0;
+		vrLen = 1018;
+		vrLoc = 6327;
+	};
+	7F4F6E721391651900EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F4F6E731391651900EB13DA /* BXSynchronizedArrayController.m */;
+		name = "BXSynchronizedArrayController.m: 499";
+		rLen = 0;
+		rLoc = 13513;
+		rType = 0;
+		vrLen = 1419;
+		vrLoc = 12871;
+	};
+	7F4F6E731391651900EB13DA /* BXSynchronizedArrayController.m */ = {
+		isa = PBXFileReference;
+		name = BXSynchronizedArrayController.m;
+		path = /Users/ole/Development/LongingFastForward/Contrib/baseten/BaseTenAppKit/Sources/BXSynchronizedArrayController.m;
+		sourceTree = "<absolute>";
+	};
+	7F4F6E741391651900EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F4F6E751391651900EB13DA /* BXSynchronizedArrayController.m */;
+		name = "BXSynchronizedArrayController.m: 499";
+		rLen = 0;
+		rLoc = 13513;
+		rType = 0;
+		vrLen = 1415;
+		vrLoc = 12871;
+	};
+	7F4F6E751391651900EB13DA /* BXSynchronizedArrayController.m */ = {
+		isa = PBXFileReference;
+		name = BXSynchronizedArrayController.m;
+		path = /Users/ole/Development/LongingFastForward/Contrib/baseten/BaseTenAppKit/Sources/BXSynchronizedArrayController.m;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1227, 10023}}";
+			sepNavSelRange = "{13513, 0}";
+			sepNavVisRange = "{17061, 1749}";
+		};
+	};
+	7F4F6E781391657400EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F4F6E751391651900EB13DA /* BXSynchronizedArrayController.m */;
+		name = "BXSynchronizedArrayController.m: 499";
+		rLen = 0;
+		rLoc = 13513;
+		rType = 0;
+		vrLen = 1749;
+		vrLoc = 17061;
+	};
+	7F4F6E791391657400EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280B06725ACE000B614F /* Longing_Control_Panel_AppDelegate.h */;
+		name = "Longing_Control_Panel_AppDelegate.h: 26";
+		rLen = 0;
+		rLoc = 675;
+		rType = 0;
+		vrLen = 971;
+		vrLoc = 0;
+	};
+	7F4F6E7A1391657400EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
+		name = "Longing_Control_Panel_AppDelegate.m: 200";
+		rLen = 0;
+		rLoc = 6623;
+		rType = 0;
+		vrLen = 1386;
+		vrLoc = 0;
+	};
+	7F4F6E7B1391657400EB13DA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
+		name = "Longing_Control_Panel_AppDelegate.m: 204";
+		rLen = 0;
+		rLoc = 6718;
+		rType = 0;
+		vrLen = 1388;
+		vrLoc = 6251;
 	};
 	7FDE4A38138D0ED300FE0296 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1990,7 +2084,7 @@
 		fRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */;
 		name = "Longing_Control_Panel_AppDelegate.m: 195";
 		rLen = 0;
-		rLoc = 6601;
+		rLoc = 6721;
 		rType = 0;
 		vrLen = 1795;
 		vrLoc = 5463;

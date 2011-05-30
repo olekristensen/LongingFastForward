@@ -23,6 +23,8 @@
 	
 	IBOutlet NSToolbarItem * connectionToolbarItem;
     
+	NSURL *databaseUrlFromNib;
+	
 }
 
 @property (nonatomic, retain) IBOutlet NSWindow *window;
