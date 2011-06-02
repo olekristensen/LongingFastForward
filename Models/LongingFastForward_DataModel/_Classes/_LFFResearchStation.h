@@ -4,7 +4,7 @@
 #import <BaseTen/BaseTen.h>
 #import "LFFLoggingEntity.h"
 
-@class LFFCameraSettings;
+@class LFFResearchStationCameraSettings;
 @class LFFCaptureClient;
 
 
@@ -27,7 +27,7 @@
 
 
 
-@property (nonatomic, retain) LFFCameraSettings* cameraSettingsTarget;
+@property (nonatomic, retain) LFFResearchStationCameraSettings* cameraSettingsTarget;
 //- (BOOL)validateCameraSettingsTarget:(id*)value_ error:(NSError**)error_;
 
 
@@ -59,8 +59,8 @@
 
 
 
-- (LFFCameraSettings*)primitiveCameraSettingsTarget;
-- (void)setPrimitiveCameraSettingsTarget:(LFFCameraSettings*)value;
+- (LFFResearchStationCameraSettings*)primitiveCameraSettingsTarget;
+- (void)setPrimitiveCameraSettingsTarget:(LFFResearchStationCameraSettings*)value;
 
 
 

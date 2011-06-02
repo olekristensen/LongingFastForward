@@ -8,52 +8,86 @@
 
 #import "Longing_Capture_Client_AppDelegate.h"
 #import <BaseTen/BaseTen.h>
+#import <BaseTen/BXLogger.h>
 
 @implementation Longing_Capture_Client_AppDelegate
 
-@synthesize window, managedObjectContext;
+@synthesize window, managedObjectContext, captureClientController;
 
-- (void) awakeFromNib
++ (void)initialize{
+	
+    [self setupDefaults];
+}
+
++ (void)setupDefaults
 {
+    NSString *userDefaultsValuesPath;
+    NSDictionary *userDefaultsValuesDict;
+    NSDictionary *initialValuesDict;
+    NSArray *resettableUserDefaultsKeys;
+	
+    // load the default values for the user defaults
+    userDefaultsValuesPath=[[NSBundle mainBundle] pathForResource:@"UserDefaults"
+														   ofType:@"plist"];
+    userDefaultsValuesDict=[NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
+	
+    // set them in the standard user defaults
+    [[NSUserDefaults standardUserDefaults] registerDefaults:userDefaultsValuesDict];
+	
+    // if your application supports resetting a subset of the defaults to
+    // factory values, you should set those values
+    // in the shared user defaults controller
+    resettableUserDefaultsKeys=[NSArray arrayWithObjects:@"captureClientName",nil];
+    initialValuesDict=[userDefaultsValuesDict dictionaryWithValuesForKeys:resettableUserDefaultsKeys];
+	
+    // Set the initial values in the shared user defaults controller
+    [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValuesDict];
+}
+
+- (void) awakeFromNib {
+	BXLogSetLevel(kBXLogLevelDebug);
 	NSAssert (nil != managedObjectContext, @"Longing_Capture_Client_AppDelegate's outlets were not set up correctly.");
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+#pragma mark Database Delegate
+
+- (void) databaseContextConnectionSucceeded: (BXDatabaseContext *) ctx
+{	
+	
+	NSString * captureClientName = [[NSUserDefaults standardUserDefaults] stringForKey:@"captureClientName"];
+	NSString * defaultCaptureClientName = [[[NSUserDefaultsController sharedUserDefaultsController] initialValues] objectForKey:@"captureClientName"];
+	
+	if ([captureClientName isEqualToString:defaultCaptureClientName ]) {
+		captureClientController = [[LFFCaptureClientController alloc] initWithCaptureClientName:@""];
+	} else {
+		captureClientController = [[LFFCaptureClientController alloc] initWithCaptureClientName:captureClientName];
+	}
+	
+	if (captureClientController != nil) {
+		[[NSUserDefaults standardUserDefaults] setValue:[[captureClientController captureClient] name] forKey:@"captureClientName"];
+	} else {
+		dispatch_async(dispatch_get_main_queue(), ^{[self presentCaptureClientSelectionSheet];});
+	}
+	
+	[self updateConnectionToolbarItem];
+}
+
+- (void) databaseContext: (BXDatabaseContext *) context lostConnection: (NSError *) error
 {
-	return YES;
+	
+	NSLog(@"lostConnection");
+	//FIXME: do something about this; not just logging.
+	if ([NSApp presentError: error])
+		BXLogInfo (@"Reconnected.");
+	else
+	{
+		BXLogInfo (@"Failed to reconnect.");
+		[context setAllowReconnecting: NO];
+	}
+	[self updateConnectionToolbarItem];
 }
 
 
-/**
-    Returns the support directory for the application, used to store the Core Data
-    store file.  This code uses a directory named "Longing_Capture_Client" for
-    the content, either in the NSApplicationSupportDirectory location or (if the
-    former cannot be found), the system's temporary directory.
- */
-
-- (NSString *)applicationSupportDirectory {
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    return [basePath stringByAppendingPathComponent:@"Longing_Capture_Client"];
-}
-
-/**
-    Returns the NSUndoManager for the application.  In this case, the manager
-    returned is that of the managed object context for the application.
- */
- 
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-    return [[self managedObjectContext] undoManager];
-}
-
-
-/**
-    Performs the save action for the application, which is to send the save:
-    message to the application's managed object context.  Any encountered errors
-    are presented to the user.
- */
- 
 - (IBAction) saveAction:(id)sender {
 
     NSError *error = nil;
@@ -67,13 +101,107 @@
     }
 }
 
+#pragma mark Capture Client Selection Sheet
 
-/**
-    Implementation of the applicationShouldTerminate: method, used here to
-    handle the saving of changes in the application managed object context
-    before the application terminates.
- */
- 
+-(void)presentCaptureClientSelectionSheet{
+	[NSApp beginSheet: captureClientSelectionSheet
+	   modalForWindow: window
+		modalDelegate: self
+	   didEndSelector: @selector(didEndCaptureClientSelectionSheet:returnCode:contextInfo:)
+		  contextInfo: nil];
+}
+
+-(NSString*)captureClientSelectionSheetCloseButtonText{
+	if (captureClientController == nil) {
+		return @"Quit";
+	} else {
+		return @"Cancel";
+	}
+}
+
+-(BOOL)captureClientSelectionSheetEnabled{
+	if ([[captureClientArrayController arrangedObjects] count] == 0) {
+		return NO;
+	} else {
+		return YES;
+	}
+}
+
+
+- (IBAction)closeCaptureClientSelectionSheet: (id)sender
+{
+    [NSApp endSheet:captureClientSelectionSheet];
+}
+
+- (void)didEndCaptureClientSelectionSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:self];
+	if (captureClientController == nil) {
+		[NSApp terminate:self];
+	}
+}
+
+#pragma mark Toolbar
+
+- (IBAction)connectionAction:sender
+{
+	[sender setEnabled:NO];
+	
+	if([managedObjectContext isConnected]){
+		[captureClientController setContent:nil];
+		[captureClientController setSelectedObjects:nil];
+		[managedObjectContext disconnect];
+		[managedObjectContext setDatabaseURI:databaseUrlFromNib];
+ 		[captureClientController release];
+		captureClientController = nil;
+		NSLog(@"disconnecting");
+	} else {
+		//		if ([managedObjectContext canConnect]){
+		[managedObjectContext connect:nil];
+		//		}
+		NSLog(@"connecting");
+		
+	}
+	[self updateConnectionToolbarItem];
+	
+}
+
+- (void) updateConnectionToolbarItem{
+	if([managedObjectContext isConnected]){
+		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFConnected"]];
+		[connectionToolbarItem setLabel:@"Disconnect"];
+		[connectionToolbarItem setEnabled:YES];
+		NSLog(@"ToolbarConnected");
+	} else {
+		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFDisconnected"]];
+		[connectionToolbarItem setLabel:@"Connect"];
+		[connectionToolbarItem setEnabled:YES];
+		NSLog(@"ToolbarDisconnected");
+	}
+}
+
+#pragma mark Application Delegate
+
+- (NSString *)applicationSupportDirectory {
+	
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    return [basePath stringByAppendingPathComponent:@"Longing_Capture_Client"];
+}
+
+#pragma mark Window Delegate
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return [[self managedObjectContext] undoManager];
+}
+
+#pragma mark Termination
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+	return YES;
+}
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     if (!managedObjectContext) return NSTerminateNow;
@@ -116,18 +244,12 @@
     return NSTerminateNow;
 }
 
-
-/**
-    Implementation of dealloc, to release the retained variables.
- */
- 
 - (void)dealloc {
-
+	
     [window release];
     [managedObjectContext release];
-	
+	[captureClientController release];
     [super dealloc];
 }
-
 
 @end

@@ -136,11 +136,15 @@
 
 
 
-@dynamic stats;
+@dynamic settings;
 
 	
 
 @dynamic cameraAngle;
+
+	
+
+@dynamic stats;
 
 	
 

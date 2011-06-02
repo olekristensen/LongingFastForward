@@ -4,9 +4,6 @@
 #import <BaseTen/BaseTen.h>
 
 
-@class LFFResearchStation;
-@class LFFCameraAngle;
-@class LFFImageLDR;
 
 
 
@@ -285,21 +282,6 @@
 
 
 
-@property (nonatomic, retain) LFFResearchStation* targetForResearchStation;
-//- (BOOL)validateTargetForResearchStation:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) LFFCameraAngle* cameraAngle;
-//- (BOOL)validateCameraAngle:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) LFFImageLDR* imageLDR;
-//- (BOOL)validateImageLDR:(id*)value_ error:(NSError**)error_;
-
-
-
 
 @end
 
@@ -524,21 +506,6 @@
 - (void)setPrimitiveWhitebalAutoAdjustTolValue:(long long)value_;
 
 
-
-
-
-- (LFFResearchStation*)primitiveTargetForResearchStation;
-- (void)setPrimitiveTargetForResearchStation:(LFFResearchStation*)value;
-
-
-
-- (LFFCameraAngle*)primitiveCameraAngle;
-- (void)setPrimitiveCameraAngle:(LFFCameraAngle*)value;
-
-
-
-- (LFFImageLDR*)primitiveImageLDR;
-- (void)setPrimitiveImageLDR:(LFFImageLDR*)value;
 
 
 @end

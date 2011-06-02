@@ -43,10 +43,6 @@
 
 
 
-@dynamic defaultProfile;
-
-	
-
 @dynamic client;
 
 	
@@ -63,6 +59,10 @@
 	
 
 @dynamic device;
+
+	
+
+@dynamic defaultSettings;
 
 	
 

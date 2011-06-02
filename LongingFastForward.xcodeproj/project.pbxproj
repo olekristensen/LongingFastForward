@@ -33,29 +33,51 @@
 		7F4F6A73139014F800EB13DA /* LongingFastForward.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A72139014F800EB13DA /* LongingFastForward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4F6A7B139015E400EB13DA /* LFFImageLDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A79139015E400EB13DA /* LFFImageLDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4F6A7C139015E400EB13DA /* LFFImageLDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F6A7A139015E400EB13DA /* LFFImageLDR.m */; };
-		7F4F6A881390160100EB13DA /* _LFFImageLDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A861390160100EB13DA /* _LFFImageLDR.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7F4F6A881390160100EB13DA /* _LFFImageLDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A861390160100EB13DA /* _LFFImageLDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4F6A891390160100EB13DA /* _LFFImageLDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F6A871390160100EB13DA /* _LFFImageLDR.m */; };
-		7FDE4DDA138D47A300FE0296 /* _LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FA29114139693440069DAFE /* _LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA29115139693440069DAFE /* _LFFCameraDeviceSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */; };
+		7FA291181396935A0069DAFE /* LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA291191396935A0069DAFE /* LFFCameraDeviceSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291171396935A0069DAFE /* LFFCameraDeviceSettings.m */; };
+		7FA29155139699250069DAFE /* _LFFCameraAngleSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA2914D139699250069DAFE /* _LFFCameraAngleSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA29156139699250069DAFE /* _LFFCameraAngleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2914E139699250069DAFE /* _LFFCameraAngleSettings.m */; };
+		7FA29157139699250069DAFE /* _LFFCameraDefaultSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA2914F139699250069DAFE /* _LFFCameraDefaultSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA29158139699250069DAFE /* _LFFCameraDefaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29150139699250069DAFE /* _LFFCameraDefaultSettings.m */; };
+		7FA29159139699250069DAFE /* _LFFImageLDRCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA29151139699250069DAFE /* _LFFImageLDRCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA2915A139699250069DAFE /* _LFFImageLDRCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29152139699250069DAFE /* _LFFImageLDRCameraSettings.m */; };
+		7FA2915B139699250069DAFE /* _LFFResearchStationCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA29153139699250069DAFE /* _LFFResearchStationCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA2915C139699250069DAFE /* _LFFResearchStationCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29154139699250069DAFE /* _LFFResearchStationCameraSettings.m */; };
+		7FA291651396993D0069DAFE /* LFFCameraAngleSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA2915D1396993D0069DAFE /* LFFCameraAngleSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA291661396993D0069DAFE /* LFFCameraAngleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2915E1396993D0069DAFE /* LFFCameraAngleSettings.m */; };
+		7FA291671396993D0069DAFE /* LFFCameraDefaultSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA2915F1396993D0069DAFE /* LFFCameraDefaultSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA291681396993D0069DAFE /* LFFCameraDefaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291601396993D0069DAFE /* LFFCameraDefaultSettings.m */; };
+		7FA291691396993D0069DAFE /* LFFImageLDRCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291611396993D0069DAFE /* LFFImageLDRCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA2916A1396993D0069DAFE /* LFFImageLDRCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291621396993D0069DAFE /* LFFImageLDRCameraSettings.m */; };
+		7FA2916B1396993D0069DAFE /* LFFResearchStationCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291631396993D0069DAFE /* LFFResearchStationCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA2916C1396993D0069DAFE /* LFFResearchStationCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291641396993D0069DAFE /* LFFResearchStationCameraSettings.m */; };
+		7FA296541397B6F10069DAFE /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */; };
+		7FA296581397B6F90069DAFE /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */; };
+		7FDE4DDA138D47A300FE0296 /* _LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DDB138D47A300FE0296 /* _LFFCameraAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */; };
-		7FDE4DDC138D47A300FE0296 /* _LFFCameraDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DDC138D47A300FE0296 /* _LFFCameraDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DDD138D47A300FE0296 /* _LFFCameraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB0138D47A300FE0296 /* _LFFCameraDevice.m */; };
-		7FDE4DDE138D47A300FE0296 /* _LFFCameraProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB1138D47A300FE0296 /* _LFFCameraProfile.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DDE138D47A300FE0296 /* _LFFCameraProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB1138D47A300FE0296 /* _LFFCameraProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DDF138D47A300FE0296 /* _LFFCameraProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB2138D47A300FE0296 /* _LFFCameraProfile.m */; };
-		7FDE4DE0138D47A300FE0296 /* _LFFCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB3138D47A300FE0296 /* _LFFCameraSettings.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DE0138D47A300FE0296 /* _LFFCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB3138D47A300FE0296 /* _LFFCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DE1138D47A300FE0296 /* _LFFCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB4138D47A300FE0296 /* _LFFCameraSettings.m */; };
-		7FDE4DE2138D47A300FE0296 /* _LFFCameraStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB5138D47A300FE0296 /* _LFFCameraStats.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DE2138D47A300FE0296 /* _LFFCameraStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB5138D47A300FE0296 /* _LFFCameraStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DE3138D47A300FE0296 /* _LFFCameraStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB6138D47A300FE0296 /* _LFFCameraStats.m */; };
-		7FDE4DE4138D47A300FE0296 /* _LFFCaptureClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB7138D47A300FE0296 /* _LFFCaptureClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DE4138D47A300FE0296 /* _LFFCaptureClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB7138D47A300FE0296 /* _LFFCaptureClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DE5138D47A300FE0296 /* _LFFCaptureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DB8138D47A300FE0296 /* _LFFCaptureClient.m */; };
-		7FDE4DE6138D47A300FE0296 /* _LFFCaptureSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB9138D47A300FE0296 /* _LFFCaptureSession.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DE6138D47A300FE0296 /* _LFFCaptureSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DB9138D47A300FE0296 /* _LFFCaptureSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DE7138D47A300FE0296 /* _LFFCaptureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBA138D47A300FE0296 /* _LFFCaptureSession.m */; };
-		7FDE4DE8138D47A300FE0296 /* _LFFEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBB138D47A300FE0296 /* _LFFEvent.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DE8138D47A300FE0296 /* _LFFEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBB138D47A300FE0296 /* _LFFEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DE9138D47A300FE0296 /* _LFFEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBC138D47A300FE0296 /* _LFFEvent.m */; };
-		7FDE4DEA138D47A300FE0296 /* _LFFImageHDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBD138D47A300FE0296 /* _LFFImageHDR.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DEA138D47A300FE0296 /* _LFFImageHDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBD138D47A300FE0296 /* _LFFImageHDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DEB138D47A300FE0296 /* _LFFImageHDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DBE138D47A300FE0296 /* _LFFImageHDR.m */; };
-		7FDE4DEC138D47A300FE0296 /* _LFFLoggingEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBF138D47A300FE0296 /* _LFFLoggingEntity.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DEC138D47A300FE0296 /* _LFFLoggingEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DBF138D47A300FE0296 /* _LFFLoggingEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DED138D47A300FE0296 /* _LFFLoggingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC0138D47A300FE0296 /* _LFFLoggingEntity.m */; };
-		7FDE4DEE138D47A300FE0296 /* _LFFResearchStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC1138D47A300FE0296 /* _LFFResearchStation.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FDE4DEE138D47A300FE0296 /* _LFFResearchStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC1138D47A300FE0296 /* _LFFResearchStation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DEF138D47A300FE0296 /* _LFFResearchStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC2138D47A300FE0296 /* _LFFResearchStation.m */; };
 		7FDE4DF0138D47A300FE0296 /* LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DC4138D47A300FE0296 /* LFFCameraAngle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DF1138D47A300FE0296 /* LFFCameraAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DC5138D47A300FE0296 /* LFFCameraAngle.m */; };
@@ -79,7 +101,7 @@
 		7FDE4E03138D47A300FE0296 /* LFFLoggingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD7138D47A300FE0296 /* LFFLoggingEntity.m */; };
 		7FDE4E04138D47A300FE0296 /* LFFResearchStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DD8138D47A300FE0296 /* LFFResearchStation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4E05138D47A300FE0296 /* LFFResearchStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DD9138D47A300FE0296 /* LFFResearchStation.m */; };
-		7FDE53A6138D532C00FE0296 /* LongingFastForward_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */; };
+		7FDE53A6138D532C00FE0296 /* LongingFastForward_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE5470138D58CE00FE0296 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,14 +117,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7FB0C8EE1394094100FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */;
+			remoteGlobalIDString = 7FB0C8EE1394094100FE20A3;
 			remoteInfo = Malvar_He_Cutler_Bayer_Demosaicing;
 		};
 		7FB0C8F51394096300FE20A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* Malvar_He_Cutler_Bayer_Demosaicing */;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = Malvar_He_Cutler_Bayer_Demosaicing;
 		};
 		7FE2E26B138ABD3600792184 /* PBXContainerItemProxy */ = {
@@ -142,6 +164,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				7FA296581397B6F90069DAFE /* BWToolkitFramework.framework in Copy Frameworks */,
 				7F4F66F9138D5FA700EB13DA /* BaseTen.framework in Copy Frameworks */,
 				7F4F66FA138D5FA700EB13DA /* BaseTenAppKit.framework in Copy Frameworks */,
 			);
@@ -161,6 +184,27 @@
 		7F4F6A7A139015E400EB13DA /* LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageLDR.m; sourceTree = "<group>"; };
 		7F4F6A861390160100EB13DA /* _LFFImageLDR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFImageLDR.h; sourceTree = "<group>"; };
 		7F4F6A871390160100EB13DA /* _LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFImageLDR.m; sourceTree = "<group>"; };
+		7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDeviceSettings.h; sourceTree = "<group>"; };
+		7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraDeviceSettings.m; sourceTree = "<group>"; };
+		7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraDeviceSettings.h; sourceTree = "<group>"; };
+		7FA291171396935A0069DAFE /* LFFCameraDeviceSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraDeviceSettings.m; sourceTree = "<group>"; };
+		7FA2914D139699250069DAFE /* _LFFCameraAngleSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraAngleSettings.h; sourceTree = "<group>"; };
+		7FA2914E139699250069DAFE /* _LFFCameraAngleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraAngleSettings.m; sourceTree = "<group>"; };
+		7FA2914F139699250069DAFE /* _LFFCameraDefaultSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDefaultSettings.h; sourceTree = "<group>"; };
+		7FA29150139699250069DAFE /* _LFFCameraDefaultSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraDefaultSettings.m; sourceTree = "<group>"; };
+		7FA29151139699250069DAFE /* _LFFImageLDRCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFImageLDRCameraSettings.h; sourceTree = "<group>"; };
+		7FA29152139699250069DAFE /* _LFFImageLDRCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFImageLDRCameraSettings.m; sourceTree = "<group>"; };
+		7FA29153139699250069DAFE /* _LFFResearchStationCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFResearchStationCameraSettings.h; sourceTree = "<group>"; };
+		7FA29154139699250069DAFE /* _LFFResearchStationCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFResearchStationCameraSettings.m; sourceTree = "<group>"; };
+		7FA2915D1396993D0069DAFE /* LFFCameraAngleSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraAngleSettings.h; sourceTree = "<group>"; };
+		7FA2915E1396993D0069DAFE /* LFFCameraAngleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraAngleSettings.m; sourceTree = "<group>"; };
+		7FA2915F1396993D0069DAFE /* LFFCameraDefaultSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraDefaultSettings.h; sourceTree = "<group>"; };
+		7FA291601396993D0069DAFE /* LFFCameraDefaultSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraDefaultSettings.m; sourceTree = "<group>"; };
+		7FA291611396993D0069DAFE /* LFFImageLDRCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFImageLDRCameraSettings.h; sourceTree = "<group>"; };
+		7FA291621396993D0069DAFE /* LFFImageLDRCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageLDRCameraSettings.m; sourceTree = "<group>"; };
+		7FA291631396993D0069DAFE /* LFFResearchStationCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFResearchStationCameraSettings.h; sourceTree = "<group>"; };
+		7FA291641396993D0069DAFE /* LFFResearchStationCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFResearchStationCameraSettings.m; sourceTree = "<group>"; };
+		7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Contrib/bwtoolkit/build/Release/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; path = "Malvar-He-Cutler Bayer Demosaicing/Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; sourceTree = "<group>"; };
 		7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraAngle.h; sourceTree = "<group>"; };
 		7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraAngle.m; sourceTree = "<group>"; };
@@ -225,6 +269,7 @@
 				7FDE5470138D58CE00FE0296 /* Cocoa.framework in Frameworks */,
 				7F4F66DE138D5F4300EB13DA /* BaseTenAppKit.framework in Frameworks */,
 				7F4F66DF138D5F4400EB13DA /* BaseTen.framework in Frameworks */,
+				7FA296541397B6F10069DAFE /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +319,7 @@
 				7FDE50C6138D4F2900FE0296 /* BaseTen.framework */,
 				7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */,
 				7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */,
+				7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -313,6 +359,16 @@
 		7FDE4DAC138D47A300FE0296 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7FA2914D139699250069DAFE /* _LFFCameraAngleSettings.h */,
+				7FA2914E139699250069DAFE /* _LFFCameraAngleSettings.m */,
+				7FA2914F139699250069DAFE /* _LFFCameraDefaultSettings.h */,
+				7FA29150139699250069DAFE /* _LFFCameraDefaultSettings.m */,
+				7FA29151139699250069DAFE /* _LFFImageLDRCameraSettings.h */,
+				7FA29152139699250069DAFE /* _LFFImageLDRCameraSettings.m */,
+				7FA29153139699250069DAFE /* _LFFResearchStationCameraSettings.h */,
+				7FA29154139699250069DAFE /* _LFFResearchStationCameraSettings.m */,
+				7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */,
+				7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */,
 				7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */,
 				7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */,
 				7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */,
@@ -344,6 +400,16 @@
 		7FDE4DC3138D47A300FE0296 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7FA2915D1396993D0069DAFE /* LFFCameraAngleSettings.h */,
+				7FA2915E1396993D0069DAFE /* LFFCameraAngleSettings.m */,
+				7FA2915F1396993D0069DAFE /* LFFCameraDefaultSettings.h */,
+				7FA291601396993D0069DAFE /* LFFCameraDefaultSettings.m */,
+				7FA291611396993D0069DAFE /* LFFImageLDRCameraSettings.h */,
+				7FA291621396993D0069DAFE /* LFFImageLDRCameraSettings.m */,
+				7FA291631396993D0069DAFE /* LFFResearchStationCameraSettings.h */,
+				7FA291641396993D0069DAFE /* LFFResearchStationCameraSettings.m */,
+				7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */,
+				7FA291171396935A0069DAFE /* LFFCameraDeviceSettings.m */,
 				7FDE4DC4138D47A300FE0296 /* LFFCameraAngle.h */,
 				7FDE4DC5138D47A300FE0296 /* LFFCameraAngle.m */,
 				7FDE4DC6138D47A300FE0296 /* LFFCameraDevice.h */,
@@ -439,6 +505,16 @@
 				7F4F6A73139014F800EB13DA /* LongingFastForward.h in Headers */,
 				7F4F6A7B139015E400EB13DA /* LFFImageLDR.h in Headers */,
 				7F4F6A881390160100EB13DA /* _LFFImageLDR.h in Headers */,
+				7FA29114139693440069DAFE /* _LFFCameraDeviceSettings.h in Headers */,
+				7FA291181396935A0069DAFE /* LFFCameraDeviceSettings.h in Headers */,
+				7FA29155139699250069DAFE /* _LFFCameraAngleSettings.h in Headers */,
+				7FA29157139699250069DAFE /* _LFFCameraDefaultSettings.h in Headers */,
+				7FA29159139699250069DAFE /* _LFFImageLDRCameraSettings.h in Headers */,
+				7FA2915B139699250069DAFE /* _LFFResearchStationCameraSettings.h in Headers */,
+				7FA291651396993D0069DAFE /* LFFCameraAngleSettings.h in Headers */,
+				7FA291671396993D0069DAFE /* LFFCameraDefaultSettings.h in Headers */,
+				7FA291691396993D0069DAFE /* LFFImageLDRCameraSettings.h in Headers */,
+				7FA2916B1396993D0069DAFE /* LFFResearchStationCameraSettings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,10 +585,9 @@
 		7FB0C8F11394094100FE20A3 /* Malvar_He_Cutler_Bayer_Demosaicing.plugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			name = Malvar_He_Cutler_Bayer_Demosaicing.plugin;
-			path = build/Deploy/Malvar_He_Cutler_Bayer_Demosaicing.plugin;
+			path = Malvar_He_Cutler_Bayer_Demosaicing.plugin;
 			remoteRef = 7FB0C8F01394094100FE20A3 /* PBXContainerItemProxy */;
-			sourceTree = "<group>";
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		7FE2E26C138ABD3600792184 /* Longing Capture Client.app */ = {
 			isa = PBXReferenceProxy;
@@ -589,6 +664,16 @@
 				7FDE4E05138D47A300FE0296 /* LFFResearchStation.m in Sources */,
 				7F4F6A7C139015E400EB13DA /* LFFImageLDR.m in Sources */,
 				7F4F6A891390160100EB13DA /* _LFFImageLDR.m in Sources */,
+				7FA29115139693440069DAFE /* _LFFCameraDeviceSettings.m in Sources */,
+				7FA291191396935A0069DAFE /* LFFCameraDeviceSettings.m in Sources */,
+				7FA29156139699250069DAFE /* _LFFCameraAngleSettings.m in Sources */,
+				7FA29158139699250069DAFE /* _LFFCameraDefaultSettings.m in Sources */,
+				7FA2915A139699250069DAFE /* _LFFImageLDRCameraSettings.m in Sources */,
+				7FA2915C139699250069DAFE /* _LFFResearchStationCameraSettings.m in Sources */,
+				7FA291661396993D0069DAFE /* LFFCameraAngleSettings.m in Sources */,
+				7FA291681396993D0069DAFE /* LFFCameraDefaultSettings.m in Sources */,
+				7FA2916A1396993D0069DAFE /* LFFImageLDRCameraSettings.m in Sources */,
+				7FA2916C1396993D0069DAFE /* LFFResearchStationCameraSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +739,7 @@
 					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
 					"$(BUILT_PRODUCTS_DIR)",
 					"$(BUILD_DIR)/Release",
+					"\"$(SRCROOT)/Contrib/bwtoolkit/build/Release\"",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DEBUGGING_SYMBOLS = full;
@@ -698,6 +784,7 @@
 					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
 					"$(BUILT_PRODUCTS_DIR)",
 					"$(BUILD_DIR)/Release",
+					"\"$(SRCROOT)/Contrib/bwtoolkit/build/Release\"",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DEBUGGING_SYMBOLS = full;

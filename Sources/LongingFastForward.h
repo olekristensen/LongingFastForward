@@ -1,5 +1,5 @@
 /*
- *  LongingFastForward.h
+ *  LongingFastForward.h"
  *  LongingFastForward
  *
  *  Created by ole kristensen on 27/05/11.
@@ -7,15 +7,21 @@
  *
  */
 
-#import <LongingFastForward/LFFCameraAngle.h>
-#import <LongingFastForward/LFFCameraDevice.h>
-#import <LongingFastForward/LFFCameraProfile.h>
-#import <LongingFastForward/LFFCameraSettings.h>
-#import <LongingFastForward/LFFCameraStats.h>
-#import <LongingFastForward/LFFCaptureClient.h>
-#import <LongingFastForward/LFFCaptureSession.h>
-#import <LongingFastForward/LFFEvent.h>
-#import <LongingFastForward/LFFImageHDR.h>
-#import <LongingFastForward/LFFImageLDR.h>
-#import <LongingFastForward/LFFLoggingEntity.h>
-#import <LongingFastForward/LFFResearchStation.h>
+
+#import "LFFCameraDevice.h"
+#import "LFFCameraAngleSettings.h"
+#import "LFFImageHDR.h"
+#import "LFFCameraAngle.h"
+#import "LFFLoggingEntity.h"
+#import "LFFResearchStationCameraSettings.h"
+#import "LFFCameraDeviceSettings.h"
+#import "LFFCaptureClient.h"
+#import "LFFEvent.h"
+#import "LFFCameraSettings.h"
+#import "LFFCameraDefaultSettings.h"
+#import "LFFResearchStation.h"
+#import "LFFImageLDR.h"
+#import "LFFCameraStats.h"
+#import "LFFCameraProfile.h"
+#import "LFFImageLDRCameraSettings.h"
+#import "LFFCaptureSession.h"

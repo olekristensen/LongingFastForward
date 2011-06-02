@@ -756,18 +756,6 @@
 
 
 
-@dynamic targetForResearchStation;
-
-	
-
-@dynamic cameraAngle;
-
-	
-
-@dynamic imageLDR;
-
-	
-
 
 
 

@@ -4,8 +4,9 @@
 #import <BaseTen/BaseTen.h>
 
 
-@class LFFCameraStats;
+@class LFFCameraDeviceSettings;
 @class LFFCameraAngle;
+@class LFFCameraStats;
 
 
 
@@ -101,13 +102,18 @@
 
 
 
-@property (nonatomic, retain) LFFCameraStats* stats;
-//- (BOOL)validateStats:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) LFFCameraDeviceSettings* settings;
+//- (BOOL)validateSettings:(id*)value_ error:(NSError**)error_;
 
 
 
 @property (nonatomic, retain) LFFCameraAngle* cameraAngle;
 //- (BOOL)validateCameraAngle:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) LFFCameraStats* stats;
+//- (BOOL)validateStats:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -191,13 +197,18 @@
 
 
 
-- (LFFCameraStats*)primitiveStats;
-- (void)setPrimitiveStats:(LFFCameraStats*)value;
+- (LFFCameraDeviceSettings*)primitiveSettings;
+- (void)setPrimitiveSettings:(LFFCameraDeviceSettings*)value;
 
 
 
 - (LFFCameraAngle*)primitiveCameraAngle;
 - (void)setPrimitiveCameraAngle:(LFFCameraAngle*)value;
+
+
+
+- (LFFCameraStats*)primitiveStats;
+- (void)setPrimitiveStats:(LFFCameraStats*)value;
 
 
 @end

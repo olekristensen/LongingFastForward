@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7446970DB6B7EA00F9684A /* MainMenu.xib */; };
 		77C8280E06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */; };
-		7F2B4D2E138AC89B00BC1530 /* LongingFastForward_DataModel in Resources */ = {isa = PBXBuildFile; fileRef = 7F2B4CFF138AC89B00BC1530 /* LongingFastForward_DataModel */; };
-		7F2B4D2F138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B4D2D138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel */; };
-		7F2B5630138B061600BC1530 /* BaseTenAppKit.framework in Copy BaseTen Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5361138B039E00BC1530 /* BaseTenAppKit.framework */; };
-		7F2B5631138B061600BC1530 /* BaseTen.framework in Copy BaseTen Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B536B138B03E200BC1530 /* BaseTen.framework */; };
+		7F2B5630138B061600BC1530 /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5361138B039E00BC1530 /* BaseTenAppKit.framework */; };
+		7F2B5631138B061600BC1530 /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B536B138B03E200BC1530 /* BaseTen.framework */; };
 		7F2B5650138B079200BC1530 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5361138B039E00BC1530 /* BaseTenAppKit.framework */; };
 		7F2B5651138B079600BC1530 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B536B138B03E200BC1530 /* BaseTen.framework */; };
 		7F4301EA138C0FB9003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301E9138C0FB9003FBB0D /* Shared Resources */; };
+		7F7764DC139509A100BE5C6F /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BC3138AC5DD00BC1530 /* LongingFastForward.framework */; };
+		7F7764FA13950B8F00BE5C6F /* LFFCaptureClientController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F7764F913950B8F00BE5C6F /* LFFCaptureClientController.mm */; };
+		7FA28F23139545930069DAFE /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FA28F22139545930069DAFE /* UserDefaults.plist */; };
+		7FA293011397A5320069DAFE /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA292FF1397A5320069DAFE /* LFFConnected.png */; };
+		7FA293021397A5320069DAFE /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA293001397A5320069DAFE /* LFFDisconnected.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -39,16 +42,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7F2B562F138B05C400BC1530 /* Copy BaseTen Frameworks */ = {
+		7F2B562F138B05C400BC1530 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7F2B5630138B061600BC1530 /* BaseTenAppKit.framework in Copy BaseTen Frameworks */,
-				7F2B5631138B061600BC1530 /* BaseTen.framework in Copy BaseTen Frameworks */,
+				7F7764DC139509A100BE5C6F /* LongingFastForward.framework in Copy Frameworks */,
+				7F2B5630138B061600BC1530 /* BaseTenAppKit.framework in Copy Frameworks */,
+				7F2B5631138B061600BC1530 /* BaseTen.framework in Copy Frameworks */,
 			);
-			name = "Copy BaseTen Frameworks";
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -70,6 +74,11 @@
 		7F2B5361138B039E00BC1530 /* BaseTenAppKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = BaseTenAppKit.framework; path = /Library/Frameworks/BaseTenAppKit.framework; sourceTree = "<absolute>"; };
 		7F2B536B138B03E200BC1530 /* BaseTen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseTen.framework; path = /Library/Frameworks/BaseTen.framework; sourceTree = "<absolute>"; };
 		7F4301E9138C0FB9003FBB0D /* Shared Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Shared Resources"; path = "../Shared Resources"; sourceTree = SOURCE_ROOT; };
+		7F7764F813950B8F00BE5C6F /* LFFCaptureClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCaptureClientController.h; sourceTree = "<group>"; };
+		7F7764F913950B8F00BE5C6F /* LFFCaptureClientController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LFFCaptureClientController.mm; sourceTree = "<group>"; };
+		7FA28F22139545930069DAFE /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
+		7FA292FF1397A5320069DAFE /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LFFConnected.png; path = "../Shared Resources/Images/LFFConnected.png"; sourceTree = SOURCE_ROOT; };
+		7FA293001397A5320069DAFE /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LFFDisconnected.png; path = "../Shared Resources/Images/LFFDisconnected.png"; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Longing_Capture_Client-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = "Longing_Capture_Client-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Longing Capture Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Longing Capture Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -93,6 +102,8 @@
 			children = (
 				77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */,
 				77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */,
+				7F7764F813950B8F00BE5C6F /* LFFCaptureClientController.h */,
+				7F7764F913950B8F00BE5C6F /* LFFCaptureClientController.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -152,9 +163,12 @@
 			isa = PBXGroup;
 			children = (
 				7F4301E9138C0FB9003FBB0D /* Shared Resources */,
+				7FA293001397A5320069DAFE /* LFFDisconnected.png */,
+				7FA292FF1397A5320069DAFE /* LFFConnected.png */,
 				8D1107310486CEB800E47090 /* Longing_Capture_Client-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				2F7446970DB6B7EA00F9684A /* MainMenu.xib */,
+				7FA28F22139545930069DAFE /* UserDefaults.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -194,7 +208,7 @@
 			buildConfigurationList = 26FC0A840875C7B200E6366F /* Build configuration list for PBXNativeTarget "Longing Capture Client" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
-				7F2B562F138B05C400BC1530 /* Copy BaseTen Frameworks */,
+				7F2B562F138B05C400BC1530 /* Copy Frameworks */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 			);
@@ -256,8 +270,10 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */,
-				7F2B4D2E138AC89B00BC1530 /* LongingFastForward_DataModel in Resources */,
 				7F4301EA138C0FB9003FBB0D /* Shared Resources in Resources */,
+				7FA28F23139545930069DAFE /* UserDefaults.plist in Resources */,
+				7FA293011397A5320069DAFE /* LFFConnected.png in Resources */,
+				7FA293021397A5320069DAFE /* LFFDisconnected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +286,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				77C8280E06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m in Sources */,
-				7F2B4D2F138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */,
+				7F7764FA13950B8F00BE5C6F /* LFFCaptureClientController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,11 @@
 		7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301DE138C0F9C003FBB0D /* Shared Resources */; };
 		7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FA138C1016003FBB0D /* LFFConnected.png */; };
 		7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FB138C1016003FBB0D /* LFFDisconnected.png */; };
-		7F4F6BD213901E0000EB13DA /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 7F4F6B9313901E0000EB13DA /* Models */; };
+		7FA293321397B1AC0069DAFE /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FA293311397B1AC0069DAFE /* UserDefaults.plist */; };
+		7FA296741397B99B0069DAFE /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
+		7FA296751397B9A40069DAFE /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
+		7FA296811397BA930069DAFE /* LFFWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA296801397BA930069DAFE /* LFFWarning.png */; };
+		7FA2968C1397BBCC0069DAFE /* LFFAddFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA2968B1397BBCC0069DAFE /* LFFAddFolder.png */; };
 		7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -47,6 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7FA296751397B9A40069DAFE /* BWToolkitFramework.framework in Copy Frameworks */,
 				7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */,
 				7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */,
 				7F2B5695138B0FF700BC1530 /* BaseTenAppKit.framework in Copy Frameworks */,
@@ -74,6 +79,10 @@
 		7F4301FA138C1016003FBB0D /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFConnected.png; sourceTree = "<group>"; };
 		7F4301FB138C1016003FBB0D /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFDisconnected.png; sourceTree = "<group>"; };
 		7F4F6B9313901E0000EB13DA /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Models; path = ../Models; sourceTree = SOURCE_ROOT; };
+		7FA293311397B1AC0069DAFE /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
+		7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = /Users/ole/Development/LongingFastForward/Contrib/bwtoolkit/build/Release/BWToolkitFramework.framework; sourceTree = "<absolute>"; };
+		7FA296801397BA930069DAFE /* LFFWarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LFFWarning.png; path = "../Shared Resources/Images/LFFWarning.png"; sourceTree = SOURCE_ROOT; };
+		7FA2968B1397BBCC0069DAFE /* LFFAddFolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LFFAddFolder.png; path = "../Shared Resources/Images/LFFAddFolder.png"; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Longing_Control_Panel-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = "Longing_Control_Panel-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Longing Control Panel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Longing Control Panel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +95,7 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */,
 				7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */,
+				7FA296741397B99B0069DAFE /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +117,7 @@
 				7F2B568F138B0FBE00BC1530 /* BaseTen.framework */,
 				7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -158,9 +169,12 @@
 				7F4301DE138C0F9C003FBB0D /* Shared Resources */,
 				7F4301FA138C1016003FBB0D /* LFFConnected.png */,
 				7F4301FB138C1016003FBB0D /* LFFDisconnected.png */,
+				7FA296801397BA930069DAFE /* LFFWarning.png */,
+				7FA2968B1397BBCC0069DAFE /* LFFAddFolder.png */,
 				8D1107310486CEB800E47090 /* Longing_Control_Panel-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				2F7446970DB6B7EA00F9684A /* MainMenu.xib */,
+				7FA293311397B1AC0069DAFE /* UserDefaults.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -255,7 +269,9 @@
 				7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */,
 				7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */,
 				7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */,
-				7F4F6BD213901E0000EB13DA /* Models in Resources */,
+				7FA293321397B1AC0069DAFE /* UserDefaults.plist in Resources */,
+				7FA296811397BA930069DAFE /* LFFWarning.png in Resources */,
+				7FA2968C1397BBCC0069DAFE /* LFFAddFolder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +322,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"",
+					"\"$(SRCROOT)/../Contrib/bwtoolkit/build/Release\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -325,7 +344,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"",
+					"\"$(SRCROOT)/../Contrib/bwtoolkit/build/Release\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

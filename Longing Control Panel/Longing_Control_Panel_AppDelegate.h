@@ -17,6 +17,8 @@
 @interface Longing_Control_Panel_AppDelegate : NSObject 
 {
     NSWindow *window;
+    IBOutlet NSWindow *populateDatabaseSheet;
+	IBOutlet NSButton *populateDatabaseSheetDeleteFirst;
 	IBOutlet BXDatabaseContext *managedObjectContext;
 	LFFResearchStation *researchStation;
 	IBOutlet BXSynchronizedArrayController *researchStationController;
@@ -31,7 +33,14 @@
 @property (nonatomic, retain, readonly) BXDatabaseContext *managedObjectContext;
 @property (nonatomic, retain, readonly) LFFResearchStation *researchStation;
 
-- (IBAction)saveAction:sender;
 - (IBAction)connectionAction:sender;
+
+- populateDatabaseClearExisting:(BOOL) clearExisting;
+- (IBAction)closePopulateDatabaseSheet: (id)sender;
+- (void)presentPopulateDatabaseSheet;
+- (NSString*)populateDatabaseSheetCloseButtonText;
+- (void)didEndPopulateDatabaseSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+
+
 
 @end

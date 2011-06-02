@@ -2,7 +2,7 @@
 {
 	089C165DFE840E0CC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 741}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 44}";
 		};
@@ -63,8 +63,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 328011011;
-			PBXWorkspaceStateSaveDate = 328011011;
+			PBXPerProjectTemplateStateSaveDate = 328711757;
+			PBXWorkspaceStateSaveDate = 328711757;
 		};
 		perUserProjectItems = {
 			7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */;
@@ -77,11 +77,7 @@
 			7F2B50D9138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50D9138AEF4C00BC1530 /* PBXTextBookmark */;
 			7F2B50DB138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50DB138AEF4C00BC1530 /* PBXTextBookmark */;
 			7F2B50DD138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50DD138AEF4C00BC1530 /* PBXTextBookmark */;
-			7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */;
 			7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */ = 7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */;
-			7F2B5345138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5345138AFFC300BC1530 /* PBXTextBookmark */;
-			7F2B5346138AFFC300BC1530 /* PlistBookmark */ = 7F2B5346138AFFC300BC1530 /* PlistBookmark */;
-			7F2B5348138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5348138AFFC300BC1530 /* PBXTextBookmark */;
 			7F2B5349138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5349138AFFC300BC1530 /* PBXTextBookmark */;
 			7F2B534B138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B534B138AFFC300BC1530 /* PBXTextBookmark */;
 			7F2B534D138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B534D138AFFC300BC1530 /* PBXTextBookmark */;
@@ -90,10 +86,26 @@
 			7F2B5352138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5352138AFFC300BC1530 /* PBXTextBookmark */;
 			7F2B5353138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5353138AFFC300BC1530 /* PBXTextBookmark */;
 			7F2B5354138AFFC300BC1530 /* PBXTextBookmark */ = 7F2B5354138AFFC300BC1530 /* PBXTextBookmark */;
-			7F2B5667138B099B00BC1530 /* PBXTextBookmark */ = 7F2B5667138B099B00BC1530 /* PBXTextBookmark */;
-			7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */ = 7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */;
-			7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */ = 7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */;
-			7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */ = 7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */;
+			7F7764E2139509CA00BE5C6F /* PBXTextBookmark */ = 7F7764E2139509CA00BE5C6F /* PBXTextBookmark */;
+			7F7764E3139509CA00BE5C6F /* PBXTextBookmark */ = 7F7764E3139509CA00BE5C6F /* PBXTextBookmark */;
+			7FA28F0D139540250069DAFE /* XDModelBookmark */ = 7FA28F0D139540250069DAFE /* XDModelBookmark */;
+			7FA28FEA1395460A0069DAFE /* PBXTextBookmark */ = 7FA28FEA1395460A0069DAFE /* PBXTextBookmark */;
+			7FA28FEB1395460A0069DAFE /* PlistBookmark */ = 7FA28FEB1395460A0069DAFE /* PlistBookmark */;
+			7FA2900213954BB30069DAFE /* PlistBookmark */ = 7FA2900213954BB30069DAFE /* PlistBookmark */;
+			7FA2902913955C210069DAFE /* PBXTextBookmark */ = 7FA2902913955C210069DAFE /* PBXTextBookmark */;
+			7FA290911395697C0069DAFE /* PBXTextBookmark */ = 7FA290911395697C0069DAFE /* PBXTextBookmark */;
+			7FA2927613969FF40069DAFE /* PBXTextBookmark */ = 7FA2927613969FF40069DAFE /* PBXTextBookmark */;
+			7FA2927813969FF40069DAFE /* PBXTextBookmark */ = 7FA2927813969FF40069DAFE /* PBXTextBookmark */;
+			7FA2927A13969FF40069DAFE /* PBXTextBookmark */ = 7FA2927A13969FF40069DAFE /* PBXTextBookmark */;
+			7FA2927C13969FF40069DAFE /* PBXTextBookmark */ = 7FA2927C13969FF40069DAFE /* PBXTextBookmark */;
+			7FA292F5139798990069DAFE /* PBXTextBookmark */ = 7FA292F5139798990069DAFE /* PBXTextBookmark */;
+			7FA292F6139798990069DAFE /* PBXTextBookmark */ = 7FA292F6139798990069DAFE /* PBXTextBookmark */;
+			7FA293071397A58C0069DAFE /* PBXBookmark */ = 7FA293071397A58C0069DAFE /* PBXBookmark */;
+			7FA293331397B1F20069DAFE /* PBXTextBookmark */ = 7FA293331397B1F20069DAFE /* PBXTextBookmark */;
+			7FC754D81397D30800E764FE /* PBXTextBookmark */ = 7FC754D81397D30800E764FE /* PBXTextBookmark */;
+			7FC754D91397D30800E764FE /* PBXTextBookmark */ = 7FC754D91397D30800E764FE /* PBXTextBookmark */;
+			7FC754DA1397D30800E764FE /* PBXTextBookmark */ = 7FC754DA1397D30800E764FE /* PBXTextBookmark */;
+			7FC754DC1397D30800E764FE /* PBXTextBookmark */ = 7FC754DC1397D30800E764FE /* PBXTextBookmark */;
 		};
 		sourceControlManager = 7FE2E257138ABCEA00792184 /* Source Control */;
 		userBuildSettings = {
@@ -101,30 +113,30 @@
 	};
 	29B97316FDCFA39411CA2CEA /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 747}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 278}";
 		};
 	};
 	32CA4F630368D1EE00C91783 /* Longing_Capture_Client_Prefix.pch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 747}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 175}";
 		};
 	};
 	77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1514, 769}}";
-			sepNavSelRange = "{299, 253}";
-			sepNavVisRange = "{0, 558}";
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 693}}";
+			sepNavSelRange = "{1046, 0}";
+			sepNavVisRange = "{0, 1258}";
 		};
 	};
 	77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1514, 1742}}";
-			sepNavSelRange = "{2431, 66}";
-			sepNavVisRange = "{2089, 2195}";
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 3367}}";
+			sepNavSelRange = "{1407, 0}";
+			sepNavVisRange = "{2899, 1379}";
 		};
 	};
 	7F2B4D2D138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel */ = {
@@ -132,7 +144,7 @@
 			"Xdesign Model Editor Bookmark Key" = {
 				UIContextForDetailArea = {
 					_indexOfSelectedPane = 0;
-					_indexOfSelectedView = 1;
+					_indexOfSelectedView = 0;
 				};
 				UIContextForEntityArea = {
 					_indexOfSelectedView = 0;
@@ -153,7 +165,7 @@
 					chosenTableWidths = (
 						103.000000,
 						22.000000,
-						188.080078,
+						121.080078,
 					);
 				};
 				UIContextForLayoutManager = {
@@ -163,8 +175,8 @@
 						_percentageOfCollapsedView = 0;
 						isCollapsed = yes;
 						sizes = (
-							"{{0, 0}, {1028, 220}}",
-							"{{1033, 0}, {540, 220}}",
+							"{{0, 0}, {823, 218}}",
+							"{{828, 0}, {433, 218}}",
 						);
 					};
 					diagramSplitGeometry = {
@@ -173,8 +185,8 @@
 						_percentageOfCollapsedView = 0;
 						isCollapsed = yes;
 						sizes = (
-							"{{0, 0}, {1573, 220}}",
-							"{{0, 225}, {1573, 543}}",
+							"{{0, 0}, {1261, 220}}",
+							"{{0, 225}, {1261, 827}}",
 						);
 					};
 					tableSplitGeometry = {
@@ -183,8 +195,8 @@
 						_percentageOfCollapsedView = 0;
 						isCollapsed = yes;
 						sizes = (
-							"{{0, 0}, {338, 218}}",
-							"{{343, 0}, {683, 218}}",
+							"{{0, 0}, {271, 218}}",
+							"{{276, 0}, {547, 218}}",
 						);
 					};
 				};
@@ -273,7 +285,7 @@
 					chosenTableWidthsPT = (
 						128.000000,
 						108.110840,
-						420.570801,
+						284.570801,
 					);
 					chosenTableWidthsRT = (
 						128.000000,
@@ -281,8 +293,9 @@
 					);
 				};
 				"xdesign model browser state key - shown/hidden" = 1;
-				"xdesign model diagram view visible rect key" = "{{-394, 0}, {1558, 528}}";
+				"xdesign model diagram view visible rect key" = "{{-238, 0}, {1246, 812}}";
 			};
+			sepNavWindowFrame = "{{15, 8}, {1261, 1165}}";
 		};
 	};
 	7F2B50CB138AEF4C00BC1530 /* PBXTextBookmark */ = {
@@ -476,22 +489,17 @@
 		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFCameraAngle.h;
 		sourceTree = "<absolute>";
 	};
-	7F2B50E5138AEF4C00BC1530 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7F2B50E6138AEF4C00BC1530 /* LFFResearchStation.h */;
-		name = "LFFResearchStation.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 120;
-		vrLoc = 0;
-	};
 	7F2B50E6138AEF4C00BC1530 /* LFFResearchStation.h */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.c.h;
 		name = LFFResearchStation.h;
 		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFResearchStation.h;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 735}}";
+			sepNavSelRange = "{142, 0}";
+			sepNavVisRange = "{0, 142}";
+		};
 	};
 	7F2B50E7138AEF4C00BC1530 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -509,37 +517,6 @@
 		name = LFFResearchStation.m;
 		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFResearchStation.m;
 		sourceTree = "<absolute>";
-	};
-	7F2B5345138AFFC300BC1530 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 089C165DFE840E0CC02AAC07 /* English */;
-		name = "InfoPlist.strings: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 44;
-		vrLoc = 0;
-	};
-	7F2B5346138AFFC300BC1530 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 8D1107310486CEB800E47090 /* Longing_Capture_Client-Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = "/Users/ole/Development/LongingFastForward/Longing Capture Client/Longing_Capture_Client-Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775808;
-	};
-	7F2B5348138AFFC300BC1530 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
-		name = "main.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 278;
-		vrLoc = 0;
 	};
 	7F2B5349138AFFC300BC1530 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -656,7 +633,7 @@
 		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraAngle.h;
 		sourceTree = "<absolute>";
 	};
-	7F2B5667138B099B00BC1530 /* PBXTextBookmark */ = {
+	7F7764E2139509CA00BE5C6F /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 32CA4F630368D1EE00C91783 /* Longing_Capture_Client_Prefix.pch */;
 		name = "Longing_Capture_Client_Prefix.pch: 1";
@@ -666,35 +643,269 @@
 		vrLen = 175;
 		vrLoc = 0;
 	};
-	7F2B57CD138BBEC900BC1530 /* PBXTextBookmark */ = {
+	7F7764E3139509CA00BE5C6F /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		fRef = 77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */;
-		name = "Longing_Capture_Client_AppDelegate.h: 14";
-		rLen = 253;
-		rLoc = 299;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
 		rType = 0;
-		vrLen = 558;
+		vrLen = 278;
 		vrLoc = 0;
 	};
-	7FDE5504138D5E7E00FE0296 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */;
-		name = "Longing_Capture_Client_AppDelegate.m: 81";
-		rLen = 66;
-		rLoc = 2431;
-		rType = 0;
-		vrLen = 2195;
-		vrLoc = 2089;
+	7F7764F813950B8F00BE5C6F /* LFFCaptureClientController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 693}}";
+			sepNavSelRange = "{424, 0}";
+			sepNavVisRange = "{0, 721}";
+			sepNavWindowFrame = "{{15, 8}, {1261, 1165}}";
+		};
 	};
-	7FDE5505138D5E7E00FE0296 /* PBXTextBookmark */ = {
+	7F7764F913950B8F00BE5C6F /* LFFCaptureClientController.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1859, 1508}}";
+			sepNavSelRange = "{1201, 0}";
+			sepNavVisRange = "{176, 464}";
+			sepNavWindowFrame = "{{15, 8}, {1261, 1165}}";
+		};
+	};
+	7FA28F0D139540250069DAFE /* XDModelBookmark */ = {
+		isa = XDModelBookmark;
+		fRef = 7F2B4D2D138AC89B00BC1530 /* LongingFastForward_DataModel.xcdatamodel */;
+		fallbackIsa = PBXBookmark;
+	};
+	7FA28FEA1395460A0069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 44;
+		vrLoc = 0;
+	};
+	7FA28FEB1395460A0069DAFE /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Longing_Capture_Client-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/ole/Development/LongingFastForward/Longing Capture Client/Longing_Capture_Client-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	7FA2900213954BB30069DAFE /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 7FA28F22139545930069DAFE /* UserDefaults.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/ole/Development/LongingFastForward/Longing Capture Client/UserDefaults.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	7FA2902913955C210069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA2902A13955C210069DAFE /* NSPredicate.h */;
+		name = "NSPredicate.h: 51";
+		rLen = 141;
+		rLoc = 2151;
+		rType = 0;
+		vrLen = 2558;
+		vrLoc = 0;
+	};
+	7FA2902A13955C210069DAFE /* NSPredicate.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = NSPredicate.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSPredicate.h;
+		sourceTree = "<absolute>";
+	};
+	7FA290911395697C0069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA290921395697C0069DAFE /* NSSet.h */;
+		name = "NSSet.h: 12";
+		rLen = 87;
+		rLoc = 234;
+		rType = 0;
+		vrLen = 2031;
+		vrLoc = 0;
+	};
+	7FA290921395697C0069DAFE /* NSSet.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = NSSet.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSSet.h;
+		sourceTree = "<absolute>";
+	};
+	7FA2927613969FF40069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA2927713969FF40069DAFE /* LFFCameraDeviceSettings.h */;
+		name = "LFFCameraDeviceSettings.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 135;
+		vrLoc = 0;
+	};
+	7FA2927713969FF40069DAFE /* LFFCameraDeviceSettings.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LFFCameraDeviceSettings.h;
+		path = "/Users/ole/Development/LongingFastForward/Longing Capture Client/build/Debug/Longing Capture Client.app/Contents/Frameworks/LongingFastForward.framework/Headers/LFFCameraDeviceSettings.h";
+		sourceTree = "<absolute>";
+	};
+	7FA2927813969FF40069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA2927913969FF40069DAFE /* LongingFastForward.h */;
+		name = "LongingFastForward.h: 13";
+		rLen = 55;
+		rLoc = 308;
+		rType = 0;
+		vrLen = 779;
+		vrLoc = 0;
+	};
+	7FA2927913969FF40069DAFE /* LongingFastForward.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = LongingFastForward.h;
+		path = "/Users/ole/Development/LongingFastForward/Longing Capture Client/build/Debug/Longing Capture Client.app/Contents/Frameworks/LongingFastForward.framework/Headers/LongingFastForward.h";
+		sourceTree = "<absolute>";
+	};
+	7FA2927A13969FF40069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA2927B13969FF40069DAFE /* _LFFEvent.m */;
+		name = "_LFFEvent.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 939;
+		vrLoc = 0;
+	};
+	7FA2927B13969FF40069DAFE /* _LFFEvent.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = _LFFEvent.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFEvent.m;
+		sourceTree = "<absolute>";
+	};
+	7FA2927C13969FF40069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FA2927D13969FF40069DAFE /* _LFFCameraDefaultSettings.m */;
+		name = "_LFFCameraDefaultSettings.m: 50";
+		rLen = 0;
+		rLoc = 1131;
+		rType = 0;
+		vrLen = 1366;
+		vrLoc = 0;
+	};
+	7FA2927D13969FF40069DAFE /* _LFFCameraDefaultSettings.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = _LFFCameraDefaultSettings.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/_Classes/_LFFCameraDefaultSettings.m;
+		sourceTree = "<absolute>";
+	};
+	7FA292F5139798990069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F7764F813950B8F00BE5C6F /* LFFCaptureClientController.h */;
+		name = "LFFCaptureClientController.h: 19";
+		rLen = 0;
+		rLoc = 424;
+		rType = 0;
+		vrLen = 721;
+		vrLoc = 0;
+	};
+	7FA292F6139798990069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F7764F913950B8F00BE5C6F /* LFFCaptureClientController.mm */;
+		name = "LFFCaptureClientController.mm: 48";
+		rLen = 0;
+		rLoc = 1201;
+		rType = 0;
+		vrLen = 1336;
+		vrLoc = 0;
+	};
+	7FA293051397A5460069DAFE /* LFFConnected.png */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.png;
+		name = LFFConnected.png;
+		path = "/Users/ole/Development/LongingFastForward/Shared Resources/Images/LFFConnected.png";
+		sourceTree = "<absolute>";
+	};
+	7FA293071397A58C0069DAFE /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 7FA293051397A5460069DAFE /* LFFConnected.png */;
+	};
+	7FA293331397B1F20069DAFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 77C8280B06725ACE000B614F /* Longing_Capture_Client_AppDelegate.h */;
+		name = "Longing_Capture_Client_AppDelegate.h: 40";
+		rLen = 0;
+		rLoc = 1046;
+		rType = 0;
+		vrLen = 1258;
+		vrLoc = 0;
+	};
+	7FC754D81397D30800E764FE /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 77C8280C06725ACE000B614F /* Longing_Capture_Client_AppDelegate.m */;
-		name = "Longing_Capture_Client_AppDelegate.m: 81";
-		rLen = 66;
-		rLoc = 2431;
+		name = "Longing_Capture_Client_AppDelegate.m: 42";
+		rLen = 0;
+		rLoc = 1407;
 		rType = 0;
-		vrLen = 2195;
-		vrLoc = 2089;
+		vrLen = 1379;
+		vrLoc = 2899;
+	};
+	7FC754D91397D30800E764FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7F2B50E6138AEF4C00BC1530 /* LFFResearchStation.h */;
+		name = "LFFResearchStation.h: 9";
+		rLen = 0;
+		rLoc = 94;
+		rType = 0;
+		vrLen = 142;
+		vrLoc = 0;
+	};
+	7FC754DA1397D30800E764FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FC754DB1397D30800E764FE /* LFFLoggingEntity.m */;
+		name = "LFFLoggingEntity.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 786;
+		vrLoc = 0;
+	};
+	7FC754DB1397D30800E764FE /* LFFLoggingEntity.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = LFFLoggingEntity.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFLoggingEntity.m;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1514, 735}}";
+			sepNavSelRange = "{537, 0}";
+			sepNavVisRange = "{0, 773}";
+		};
+	};
+	7FC754DC1397D30800E764FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7FC754DD1397D30800E764FE /* LFFLoggingEntity.m */;
+		name = "LFFLoggingEntity.m: 19";
+		rLen = 0;
+		rLoc = 537;
+		rType = 0;
+		vrLen = 773;
+		vrLoc = 0;
+	};
+	7FC754DD1397D30800E764FE /* LFFLoggingEntity.m */ = {
+		isa = PBXFileReference;
+		name = LFFLoggingEntity.m;
+		path = /Users/ole/Development/LongingFastForward/Models/LongingFastForward_DataModel/Classes/LFFLoggingEntity.m;
+		sourceTree = "<absolute>";
 	};
 	7FE2E24C138ABCE300792184 /* Longing Capture Client */ = {
 		isa = PBXExecutable;

@@ -101,6 +101,21 @@ ___________
 
     install frameworks
     
-    
+
+6   BWTOOLKIT
+_____________
+
+    $ hg clone ssh://hg@bitbucket.org/bwalkin/bwtoolkit
+    in the contrib library
+
+    Build the lib with Xcode 3
+
+    Double click the BWToolkit.ibpluin to load it into Interface Builder
+
+
+7   IMAGE UNITS
+_______________
+
+    Build using Deploy
     
     

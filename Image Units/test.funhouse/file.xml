@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>layers</key>
+	<array>
+		<dict>
+			<key>file</key>
+			<string>test.tif</string>
+			<key>offsetX</key>
+			<real>0.0</real>
+			<key>offsetY</key>
+			<real>0.0</real>
+			<key>type</key>
+			<string>image</string>
+		</dict>
+		<dict>
+			<key>classname</key>
+			<string>Malvar_He_Cutler_Bayer_DemosaicingFilter</string>
+			<key>type</key>
+			<string>filter</string>
+			<key>values</key>
+			<dict>
+				<key>inputFirstRedPixel_CIVectorValue</key>
+				<string>[0 1]</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>classname</key>
+			<string>CIMedianFilter</string>
+			<key>type</key>
+			<string>filter</string>
+			<key>values</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>classname</key>
+			<string>CISharpenLuminance</string>
+			<key>type</key>
+			<string>filter</string>
+			<key>values</key>
+			<dict>
+				<key>inputSharpness</key>
+				<real>1.7037037037037037</real>
+			</dict>
+		</dict>
+		<dict>
+			<key>classname</key>
+			<string>CIWhitePointAdjust</string>
+			<key>type</key>
+			<string>filter</string>
+			<key>values</key>
+			<dict>
+				<key>inputColor_CIColorValue</key>
+				<string>0.905104 0.897844 0.955645 1</string>
+			</dict>
+		</dict>
+	</array>
+	<key>windowHeight</key>
+	<real>1102</real>
+	<key>windowWidth</key>
+	<real>1920</real>
+</dict>
+</plist>

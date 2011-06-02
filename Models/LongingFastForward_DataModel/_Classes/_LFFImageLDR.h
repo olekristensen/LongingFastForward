@@ -5,7 +5,7 @@
 
 
 @class LFFImageHDR;
-@class LFFCameraSettings;
+@class LFFImageLDRCameraSettings;
 
 
 
@@ -60,7 +60,7 @@
 
 
 
-@property (nonatomic, retain) LFFCameraSettings* cameraSettings;
+@property (nonatomic, retain) LFFImageLDRCameraSettings* cameraSettings;
 //- (BOOL)validateCameraSettings:(id*)value_ error:(NSError**)error_;
 
 
@@ -111,8 +111,8 @@
 
 
 
-- (LFFCameraSettings*)primitiveCameraSettings;
-- (void)setPrimitiveCameraSettings:(LFFCameraSettings*)value;
+- (LFFImageLDRCameraSettings*)primitiveCameraSettings;
+- (void)setPrimitiveCameraSettings:(LFFImageLDRCameraSettings*)value;
 
 
 @end

@@ -10,14 +10,53 @@
 #import <BaseTen/BaseTen.h>
 #import <BaseTen/BXLogger.h>
 
+@interface Longing_Control_Panel_AppDelegate()
+
++ (void)setupDefaults;
+- (void)updateConnectionToolbarItem;
+
+@end
+
 @implementation Longing_Control_Panel_AppDelegate
 
 @synthesize window, managedObjectContext, researchStation;
 
++ (void)initialize{
+	
+    [self setupDefaults];
+}
+
++ (void)setupDefaults
+{
+    NSString *userDefaultsValuesPath;
+    NSDictionary *userDefaultsValuesDict;
+    NSDictionary *initialValuesDict;
+    NSArray *resettableUserDefaultsKeys;
+	
+    // load the default values for the user defaults
+    userDefaultsValuesPath=[[NSBundle mainBundle] pathForResource:@"UserDefaults"
+														   ofType:@"plist"];
+    userDefaultsValuesDict=[NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
+	
+    // set them in the standard user defaults
+    [[NSUserDefaults standardUserDefaults] registerDefaults:userDefaultsValuesDict];
+	
+    // if your application supports resetting a subset of the defaults to
+    // factory values, you should set those values
+    // in the shared user defaults controller
+    resettableUserDefaultsKeys=[NSArray arrayWithObjects:@"defaultNumberOfCaptureClients", @"defaultResearchStationLocation", nil];
+    initialValuesDict=[userDefaultsValuesDict dictionaryWithValuesForKeys:resettableUserDefaultsKeys];
+	
+    // Set the initial values in the shared user defaults controller
+    [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValuesDict];
+}
+
+
+
 - (void) awakeFromNib
 {
 	BXLogSetLevel(kBXLogLevelDebug);
-
+	
 	NSAssert (nil != managedObjectContext, @"Longing_Control_Panel_AppDelegate's outlets were not set up correctly.");
 	[managedObjectContext setLogsQueries:YES];
 	
@@ -26,21 +65,25 @@
 	[self updateConnectionToolbarItem];
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
-{
-	return YES;
-}
+#pragma mark Database Delegate
 
 - (void) databaseContextConnectionSucceeded: (BXDatabaseContext *) ctx
 {	
 	NSLog(@"databaseContextConnectionSucceeded");
+	
 	researchStation = [self researchStation];
+	if (researchStation == nil) {
+		
+		dispatch_async(dispatch_get_main_queue(), ^{[self presentPopulateDatabaseSheet];});
+		
+	}
 	[self updateConnectionToolbarItem];
-
+	
 }
 
 - (void) databaseContext: (BXDatabaseContext *) context lostConnection: (NSError *) error
 {
+	
 	NSLog(@"lostConnection");
 	//FIXME: do something about this; not just logging.
 	if ([NSApp presentError: error])
@@ -53,7 +96,7 @@
 	[self updateConnectionToolbarItem];
 }
 
-
+# pragma mark Database Object Management
 
 - (LFFResearchStation *) researchStation {
 	
@@ -64,92 +107,161 @@
 		
 		[researchStationController fetch:nil];
 		
-		if ([[researchStationController arrangedObjects] count] == 0) {
-			
-			NSLog(@"count of objects %i",[[researchStationController arrangedObjects] count]);
-			
-			BXEntityDescription* entity;
-			NSDictionary* values;
-			
-			entity= [[managedObjectContext databaseObjectModel] entityForTable: @"CameraSettings"];
-			values = [[NSDictionary alloc]init];
-			NSManagedObject *newCameraSettings = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
-			
-			
-			entity = [[managedObjectContext databaseObjectModel] entityForTable: @"ResearchStation"];
-			values = [NSDictionary dictionaryWithObject: newCameraSettings forKey: @"cameraSettingsTarget"];
-			researchStation = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
-			
-			return researchStation;
-			
+		if ([[researchStationController arrangedObjects] count] == 1) {
+			return [[researchStationController arrangedObjects] objectAtIndex:0];
+		} else {
+			return nil;
 		}
-		
-		// clear superflouus research station entries
-		
-		if ([[researchStationController arrangedObjects] count] > 0) {
-			
-			[researchStationController removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [[researchStationController arrangedObjects] count]-1)]];
-			researchStation = [[researchStationController arrangedObjects] objectAtIndex:0];
-		}
+	}
 	
-		NSLog(researchStation.location);
-		return researchStation;
+}
 
+-(LFFResearchStation *) populateDatabaseClearExisting:(BOOL) clearExisting {
 	
+	if (clearExisting && [[researchStationController arrangedObjects] count] > 0) {
+		[researchStationController removeAllObjects];
+	}
+	
+	if ([[researchStationController arrangedObjects] count] == 0) {
+		
+		BXEntityDescription* entity;
+		NSDictionary* values;
+
+		// CREATE CAMERA ANGLES
+		
+		// CREATE CAPTURE CLIENTS
+		
+		// CREATE 
+		
+		entity= [[managedObjectContext databaseObjectModel] entityForTable: @"ResearchStationCameraSettings"];
+		values = [[NSDictionary alloc]init];
+		NSManagedObject *newCameraSettings = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
+		
+		entity = [[managedObjectContext databaseObjectModel] entityForTable: @"ResearchStation"];
+		values = [NSDictionary dictionaryWithObjectsAndKeys:
+				  newCameraSettings, @"cameraSettingsTarget",
+				  [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultResearchStationLocation"], @"location",
+				  nil];
+		researchStation = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
+		
+		return researchStation;
+		
+	}
+	
+	return researchStation;
+	
+}
+
+
+
+#pragma mark Populate Database Sheet
+
+-(void)presentPopulateDatabaseSheet{
+	
+	[populateDatabaseSheetDeleteFirst setState:NSOffState];
+	
+	[NSApp beginSheet: populateDatabaseSheet
+	   modalForWindow: window
+		modalDelegate: self
+	   didEndSelector: @selector(didEndPopulateDatabaseSheet:returnCode:contextInfo:)
+		  contextInfo: nil];
+}
+
+-(NSString*)populateDatabaseSheetCloseButtonText{
+	if (researchStation == nil) {
+		return @"Quit";
+	} else {
+		return @"Cancel";
+	}
+}
+
+- (IBAction)closePopulateDatabaseSheet: (id)sender
+{
+	NSInteger returnCode = [sender tag] + [populateDatabaseSheetDeleteFirst state];
+	
+	// "Cancel"/"Quit" tag	= 100
+	// "Populate" tag		= 200
+	
+	[NSApp endSheet:populateDatabaseSheet returnCode:returnCode];
+}
+
+- (void)didEndPopulateDatabaseSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:self];
+	
+	NSLog(@"didEndPoulate returnCode: %i", returnCode);
+	
+	switch (returnCode) {
+		case 100:
+		case 101:
+			if (researchStation == nil) {
+				[NSApp terminate:self];
+			}
+			break;
+		case 201:
+			[self populateDatabaseClearExisting:YES];
+			break;
+		case 200:
+			[self populateDatabaseClearExisting:NO];
+			break;
+		default:
+			break;
 	}
 	
 }
 
 
-/**
- Returns the support directory for the application, used to store the Core Data
- store file.  This code uses a directory named "Longing_Control_Panel" for
- the content, either in the NSApplicationSupportDirectory location or (if the
- former cannot be found), the system's temporary directory.
- */
+#pragma mark Toolbar
 
-- (NSString *)applicationSupportDirectory {
+- (IBAction)connectionAction:sender
+{
+	[sender setEnabled:NO];
 	
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    return [basePath stringByAppendingPathComponent:@"Longing_Control_Panel"];
+	if([managedObjectContext isConnected]){
+		[researchStationController setContent:nil];
+		[researchStationController setSelectedObjects:nil];
+		[managedObjectContext disconnect];
+		[managedObjectContext setDatabaseURI:databaseUrlFromNib];
+ 		[researchStation release];
+		researchStation = nil;
+		NSLog(@"disconnecting");
+	} else {
+		//		if ([managedObjectContext canConnect]){
+		[managedObjectContext connect:nil];
+		//		}
+		NSLog(@"connecting");
+		
+	}
+	[self updateConnectionToolbarItem];
+	
 }
 
-/**
- Returns the NSUndoManager for the application.  In this case, the manager
- returned is that of the managed object context for the application.
- */
+- (void) updateConnectionToolbarItem{
+	if([managedObjectContext isConnected]){
+		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFConnected"]];
+		[connectionToolbarItem setLabel:@"Disconnect"];
+		[connectionToolbarItem setEnabled:YES];
+		NSLog(@"ToolbarConnected");
+	} else {
+		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFDisconnected"]];
+		[connectionToolbarItem setLabel:@"Connect"];
+		[connectionToolbarItem setEnabled:YES];
+		NSLog(@"ToolbarDisconnected");
+	}
+}
+
+#pragma mark Window Delegate
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
     return [[self managedObjectContext] undoManager];
 }
 
+#pragma mark Termination
 
-/**
- Performs the save action for the application, which is to send the save:
- message to the application's managed object context.  Any encountered errors
- are presented to the user.
- */
-
-- (IBAction) saveAction:(id)sender {
-	
-    NSError *error = nil;
-    
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%s unable to commit editing before saving", [self class], _cmd);
-    }
-	
-    if (![[self managedObjectContext] save:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-    }
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+	return YES;
 }
-
-
-/**
- Implementation of the applicationShouldTerminate: method, used here to
- handle the saving of changes in the application managed object context
- before the application terminates.
- */
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 	
@@ -192,48 +304,6 @@
 	
     return NSTerminateNow;
 }
-
-- (IBAction)connectionAction:sender
-{
-	[sender setEnabled:NO];
-
-	if([managedObjectContext isConnected]){
-		[researchStationController setContent:nil];
-		[researchStationController setSelectedObjects:nil];
-		[managedObjectContext disconnect];
-		[managedObjectContext setDatabaseURI:databaseUrlFromNib];
- 		[researchStation release];
-		researchStation = nil;
-		NSLog(@"disconnecting");
-	} else {
-//		if ([managedObjectContext canConnect]){
-			[managedObjectContext connect:nil];
-//		}
-		NSLog(@"connecting");
-
-	}
-	[self updateConnectionToolbarItem];
-	
-}
-
-- (void) updateConnectionToolbarItem{
-	if([managedObjectContext isConnected]){
-		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFConnected"]];
-		[connectionToolbarItem setLabel:@"Disconnect"];
-		[connectionToolbarItem setEnabled:YES];
-		NSLog(@"ToolbarConnected");
-	} else {
-		[connectionToolbarItem setImage:[NSImage imageNamed:@"LFFDisconnected"]];
-		[connectionToolbarItem setLabel:@"Connect"];
-		[connectionToolbarItem setEnabled:YES];
-		NSLog(@"ToolbarDisconnected");
-	}
-}
-
-
-/**
- Implementation of dealloc, to release the retained variables.
- */
 
 - (void)dealloc {
 	

@@ -4,11 +4,11 @@
 #import <BaseTen/BaseTen.h>
 
 
-@class LFFCameraProfile;
 @class LFFCaptureClient;
 @class LFFCaptureSession;
 @class LFFCameraDevice;
-@class LFFCameraSettings;
+@class LFFCameraDefaultSettings;
+@class LFFCameraAngleSettings;
 
 
 
@@ -30,11 +30,6 @@
 
 
 
-@property (nonatomic, retain) LFFCameraProfile* defaultProfile;
-//- (BOOL)validateDefaultProfile:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) LFFCaptureClient* client;
 //- (BOOL)validateClient:(id*)value_ error:(NSError**)error_;
 
@@ -50,7 +45,12 @@
 
 
 
-@property (nonatomic, retain) LFFCameraSettings* settings;
+@property (nonatomic, retain) LFFCameraDefaultSettings* defaultSettings;
+//- (BOOL)validateDefaultSettings:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) LFFCameraAngleSettings* settings;
 //- (BOOL)validateSettings:(id*)value_ error:(NSError**)error_;
 
 
@@ -79,11 +79,6 @@
 
 
 
-- (LFFCameraProfile*)primitiveDefaultProfile;
-- (void)setPrimitiveDefaultProfile:(LFFCameraProfile*)value;
-
-
-
 - (LFFCaptureClient*)primitiveClient;
 - (void)setPrimitiveClient:(LFFCaptureClient*)value;
 
@@ -99,8 +94,13 @@
 
 
 
-- (LFFCameraSettings*)primitiveSettings;
-- (void)setPrimitiveSettings:(LFFCameraSettings*)value;
+- (LFFCameraDefaultSettings*)primitiveDefaultSettings;
+- (void)setPrimitiveDefaultSettings:(LFFCameraDefaultSettings*)value;
+
+
+
+- (LFFCameraAngleSettings*)primitiveSettings;
+- (void)setPrimitiveSettings:(LFFCameraAngleSettings*)value;
 
 
 @end

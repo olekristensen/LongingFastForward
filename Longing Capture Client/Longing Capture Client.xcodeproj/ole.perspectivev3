@@ -231,8 +231,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -270,20 +268,26 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>7F2B4CE3138AC88800BC1530</string>
+								<string>7F2B4CFF138AC89B00BC1530</string>
+								<string>7FC7538B1397BCF400E764FE</string>
 								<string>080E96DDFE201D6D7F000001</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
+								<string>7F4301E9138C0FB9003FBB0D</string>
 								<string>29B97323FDCFA39411CA2CEA</string>
 								<string>1058C7A0FEA54F0111CA2CBB</string>
 								<string>1058C7A2FEA54F0111CA2CBB</string>
+								<string>7F2B4BBD138AC5DD00BC1530</string>
 								<string>19C28FACFE9D520D11CA2CBB</string>
 								<string>1C37FBAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>6</integer>
+									<integer>34</integer>
 									<integer>4</integer>
+									<integer>3</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -316,12 +320,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>7FE2E251138ABCEA00792184</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Longing_Capture_Client_AppDelegate.m</string>
+								<string>LFFLoggingEntity.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -329,11 +335,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>7FE2E252138ABCEA00792184</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Longing_Capture_Client_AppDelegate.m</string>
+										<string>LFFLoggingEntity.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7FDE5505138D5E7E00FE0296</string>
+										<string>7FC754DC1397D30800E764FE</string>
 										<key>history</key>
 										<array>
 											<string>7F2B50CB138AEF4C00BC1530</string>
@@ -346,11 +352,7 @@
 											<string>7F2B50D9138AEF4C00BC1530</string>
 											<string>7F2B50DB138AEF4C00BC1530</string>
 											<string>7F2B50DD138AEF4C00BC1530</string>
-											<string>7F2B50E5138AEF4C00BC1530</string>
 											<string>7F2B50E7138AEF4C00BC1530</string>
-											<string>7F2B5345138AFFC300BC1530</string>
-											<string>7F2B5346138AFFC300BC1530</string>
-											<string>7F2B5348138AFFC300BC1530</string>
 											<string>7F2B5349138AFFC300BC1530</string>
 											<string>7F2B534B138AFFC300BC1530</string>
 											<string>7F2B534D138AFFC300BC1530</string>
@@ -359,9 +361,25 @@
 											<string>7F2B5352138AFFC300BC1530</string>
 											<string>7F2B5353138AFFC300BC1530</string>
 											<string>7F2B5354138AFFC300BC1530</string>
-											<string>7F2B5667138B099B00BC1530</string>
-											<string>7F2B57CD138BBEC900BC1530</string>
-											<string>7FDE5504138D5E7E00FE0296</string>
+											<string>7F7764E2139509CA00BE5C6F</string>
+											<string>7F7764E3139509CA00BE5C6F</string>
+											<string>7FA28F0D139540250069DAFE</string>
+											<string>7FA28FEA1395460A0069DAFE</string>
+											<string>7FA28FEB1395460A0069DAFE</string>
+											<string>7FA2900213954BB30069DAFE</string>
+											<string>7FA2902913955C210069DAFE</string>
+											<string>7FA290911395697C0069DAFE</string>
+											<string>7FA2927613969FF40069DAFE</string>
+											<string>7FA2927813969FF40069DAFE</string>
+											<string>7FA2927A13969FF40069DAFE</string>
+											<string>7FA2927C13969FF40069DAFE</string>
+											<string>7FA292F5139798990069DAFE</string>
+											<string>7FA292F6139798990069DAFE</string>
+											<string>7FA293071397A58C0069DAFE</string>
+											<string>7FA293331397B1F20069DAFE</string>
+											<string>7FC754D81397D30800E764FE</string>
+											<string>7FC754D91397D30800E764FE</string>
+											<string>7FC754DA1397D30800E764FE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -375,18 +393,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1575, 785}}</string>
+								<string>{{0, 0}, {1575, 767}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 59 1920 1119 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>785pt</string>
+							<string>767pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>288pt</string>
+							<string>306pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -400,9 +418,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1575, 261}}</string>
-										<key>RubberWindowFrame</key>
-										<string>0 59 1920 1119 0 0 1920 1178 </string>
+										<string>{{10, 27}, {1575, 279}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -456,7 +472,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1575, 245}}</string>
+										<string>{{10, 27}, {1575, 279}}</string>
+										<key>RubberWindowFrame</key>
+										<string>0 59 1920 1119 0 0 1920 1178 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -484,11 +502,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7FDE5506138D5E7E00FE0296</string>
+				<string>7FC753E81397BE5600E764FE</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>7FDE5507138D5E7E00FE0296</string>
+				<string>7FC753E91397BE5600E764FE</string>
 				<string>7FE2E251138ABCEA00792184</string>
-				<string>7FDE5508138D5E7E00FE0296</string>
+				<string>7FC753EA1397BE5600E764FE</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -637,14 +655,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7FDE5509138D5E7E00FE0296</string>
+				<string>7FC753EB1397BE5600E764FE</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>7FDE550A138D5E7E00FE0296</string>
-				<string>7FDE550B138D5E7E00FE0296</string>
-				<string>7FDE550C138D5E7E00FE0296</string>
-				<string>7FDE550D138D5E7E00FE0296</string>
-				<string>7FDE550E138D5E7E00FE0296</string>
+				<string>7FC753EC1397BE5600E764FE</string>
+				<string>7FC753ED1397BE5600E764FE</string>
+				<string>7FC753EE1397BE5600E764FE</string>
+				<string>7FC753EF1397BE5600E764FE</string>
+				<string>7FC753F01397BE5600E764FE</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -678,8 +696,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7FDE550F138D5E7E00FE0296</string>
-		<string>7FDE5510138D5E7E00FE0296</string>
+		<string>7FC753F21397BE5600E764FE</string>
+		<string>7FC753F31397BE5600E764FE</string>
+		<string>/Users/ole/Development/LongingFastForward/Longing Capture Client/Longing Capture Client.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 59 1920 1119 0 0 1920 1178 </string>

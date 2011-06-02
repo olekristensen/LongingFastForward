@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "LFFCaptureClientController.h";
 
 @class BXDatabaseContext;
 
@@ -14,13 +15,34 @@
 {
     NSWindow *window;
 	IBOutlet BXDatabaseContext *managedObjectContext;
-    
+	IBOutlet BXSynchronizedArrayController *captureClientArrayController;
+    LFFCaptureClientController *captureClientController;
+	IBOutlet NSWindow *captureClientSelectionSheet;
+	
+	IBOutlet NSToolbarItem * connectionToolbarItem;
+	
+	NSURL *databaseUrlFromNib;
+
+
 }
+
++ (void)setupDefaults;
 
 @property (nonatomic, retain) IBOutlet NSWindow *window;
 
 @property (nonatomic, retain, readonly) BXDatabaseContext *managedObjectContext;
+@property (nonatomic, retain, readonly) LFFCaptureClientController *captureClientController;
 
 - (IBAction)saveAction:sender;
+- (IBAction)connectionAction:sender;
+
+
+#pragma mark Capture Client Selection Sheet
+
+- (IBAction)closeCaptureClientSelectionSheet: (id)sender;
+- (void)presentCaptureClientSelectionSheet;
+- (NSString*)captureClientSelectionSheetCloseButtonText;
+- (BOOL)captureClientSelectionSheetEnabled;
+
 
 @end
