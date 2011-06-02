@@ -9,19 +9,20 @@
 /* Begin PBXBuildFile section */
 		2F7446990DB6B7EA00F9684A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7446970DB6B7EA00F9684A /* MainMenu.xib */; };
 		77C8280E06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* Longing_Control_Panel_AppDelegate.m */; };
-		7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
-		7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
-		7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
-		7F2B5695138B0FF700BC1530 /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
 		7F4301DF138C0F9C003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301DE138C0F9C003FBB0D /* Shared Resources */; };
 		7F4301FC138C1016003FBB0D /* LFFConnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FA138C1016003FBB0D /* LFFConnected.png */; };
 		7F4301FD138C1016003FBB0D /* LFFDisconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301FB138C1016003FBB0D /* LFFDisconnected.png */; };
+		7F554EED1397FB3E00D17C56 /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
+		7F5556AA13980AC400D17C56 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
+		7F5556AB13980AC400D17C56 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
+		7F5556AC13980AC400D17C56 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
+		7F5556B113980AF000D17C56 /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B568F138B0FBE00BC1530 /* BaseTen.framework */; };
+		7F5556B213980AF000D17C56 /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
+		7F5556B313980AF000D17C56 /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
+		7F5556EA13980D2F00D17C56 /* LongingFastForward.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
 		7FA293321397B1AC0069DAFE /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FA293311397B1AC0069DAFE /* UserDefaults.plist */; };
-		7FA296741397B99B0069DAFE /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
-		7FA296751397B9A40069DAFE /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
 		7FA296811397BA930069DAFE /* LFFWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA296801397BA930069DAFE /* LFFWarning.png */; };
 		7FA2968C1397BBCC0069DAFE /* LFFAddFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA2968B1397BBCC0069DAFE /* LFFAddFolder.png */; };
-		7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -35,11 +36,11 @@
 			remoteGlobalIDString = 7F2B4B1B138AC32F00BC1530;
 			remoteInfo = LongingFastForward;
 		};
-		7F2B4BBA138AC5B100BC1530 /* PBXContainerItemProxy */ = {
+		7F5551FA1397FEBD00D17C56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530;
+			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530 /* LongingFastForward */;
 			remoteInfo = LongingFastForward;
 		};
 /* End PBXContainerItemProxy section */
@@ -51,10 +52,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7FA296751397B9A40069DAFE /* BWToolkitFramework.framework in Copy Frameworks */,
-				7FDE4D8A138D46FD00FE0296 /* LongingFastForward.framework in Copy Frameworks */,
-				7F2B5694138B0FF700BC1530 /* BaseTen.framework in Copy Frameworks */,
-				7F2B5695138B0FF700BC1530 /* BaseTenAppKit.framework in Copy Frameworks */,
+				7F5556B113980AF000D17C56 /* BaseTen.framework in Copy Frameworks */,
+				7F5556B213980AF000D17C56 /* BaseTenAppKit.framework in Copy Frameworks */,
+				7F5556B313980AF000D17C56 /* BWToolkitFramework.framework in Copy Frameworks */,
+				7F554EED1397FB3E00D17C56 /* LongingFastForward.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,10 +93,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F5556EA13980D2F00D17C56 /* LongingFastForward.framework in Frameworks */,
+				7F5556AA13980AC400D17C56 /* BaseTen.framework in Frameworks */,
+				7F5556AB13980AC400D17C56 /* BaseTenAppKit.framework in Frameworks */,
+				7F5556AC13980AC400D17C56 /* BWToolkitFramework.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				7F2B5690138B0FBE00BC1530 /* BaseTen.framework in Frameworks */,
-				7F2B5692138B0FBE00BC1530 /* BaseTenAppKit.framework in Frameworks */,
-				7FA296741397B99B0069DAFE /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 				7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */,
+				7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -125,7 +128,6 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */,
 				77C82804067257F0000B614F /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
@@ -211,7 +213,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				7F2B4BBB138AC5B100BC1530 /* PBXTargetDependency */,
+				7F5551FB1397FEBD00D17C56 /* PBXTargetDependency */,
 			);
 			name = "Longing Control Panel";
 			productInstallPath = "$(HOME)/Applications";
@@ -290,10 +292,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7F2B4BBB138AC5B100BC1530 /* PBXTargetDependency */ = {
+		7F5551FB1397FEBD00D17C56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LongingFastForward;
-			targetProxy = 7F2B4BBA138AC5B100BC1530 /* PBXContainerItemProxy */;
+			targetProxy = 7F5551FA1397FEBD00D17C56 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -322,8 +324,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = NO;
+				DEPLOYMENT_POSTPROCESSING = NO;
+				DSTROOT = /;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"/**",
+					"\"$(SRCROOT)/../../../Library/Frameworks\"",
 					"\"$(SRCROOT)/../Contrib/bwtoolkit/build/Release\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -333,9 +340,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Longing_Control_Panel_Prefix.pch;
+				HEADER_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**";
 				INFOPLIST_FILE = "Longing_Control_Panel-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Longing Control Panel";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -344,17 +353,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DSTROOT = /;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"/**",
+					"\"$(SRCROOT)/../../../Library/Frameworks\"",
 					"\"$(SRCROOT)/../Contrib/bwtoolkit/build/Release\"",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Longing_Control_Panel_Prefix.pch;
+				HEADER_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**";
 				INFOPLIST_FILE = "Longing_Control_Panel-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Longing Control Panel";
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

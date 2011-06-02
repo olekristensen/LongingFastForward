@@ -4,15 +4,14 @@
 
 -(void)logEvent:(NSString*)logString{
 	
-	
-	NSLog(@"LOGGING \n%s", logString);
+	NSLog(@"LOGGING: %@", logString);
 	NSDictionary* values = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSDate date], @"time",
 							logString, @"message",
 							self, @"loggingEntity",
 							nil];
 	
-	BXEntityDescription * entity = [[self databaseObjectModel] entityForTable: @"Event"];
+	BXEntityDescription * entity = [[[self databaseContext] databaseObjectModel] entityForTable: @"Event"];
 	
 	LFFEvent *newEvent = [[self databaseContext] createObjectForEntity: entity
 													   withFieldValues: values error: NULL];
@@ -21,10 +20,8 @@
 }
 
 -(void)awakeFromInsert{
-	NSLog(@"AWAKE FROM INSERT \n%s", [self description]);
-
 	[super awakeFromInsert];
-	[self logEvent:[NSString stringWithFormat:@"Created: %s", [self description]]];
+	[self logEvent:[NSString stringWithFormat:@"Created: %@", [self description]]];
 }
 
 

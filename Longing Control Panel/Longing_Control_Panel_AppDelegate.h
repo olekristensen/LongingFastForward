@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BaseTenAppKit/BaseTenAppKit.h>
-#import <LongingFastForward/LFFResearchStation.h>
+#import <LongingFastForward/LongingFastForward.h>
 
 
 @class BXDatabaseContext;
@@ -17,11 +17,13 @@
 @interface Longing_Control_Panel_AppDelegate : NSObject 
 {
     NSWindow *window;
+	IBOutlet NSView * objectView;
     IBOutlet NSWindow *populateDatabaseSheet;
 	IBOutlet NSButton *populateDatabaseSheetDeleteFirst;
 	IBOutlet BXDatabaseContext *managedObjectContext;
+	
+	IBOutlet NSArrayController *researchStationController;
 	LFFResearchStation *researchStation;
-	IBOutlet BXSynchronizedArrayController *researchStationController;
 	
 	IBOutlet NSToolbarItem * connectionToolbarItem;
     

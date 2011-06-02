@@ -55,11 +55,12 @@
 
 - (void) awakeFromNib
 {
-	BXLogSetLevel(kBXLogLevelDebug);
 	
 	NSAssert (nil != managedObjectContext, @"Longing_Control_Panel_AppDelegate's outlets were not set up correctly.");
-	[managedObjectContext setLogsQueries:YES];
 	
+	BXLogSetLevel(kBXLogLevelDebug);
+	[managedObjectContext setLogsQueries:YES];
+		
 	databaseUrlFromNib = [managedObjectContext databaseURI];
 	
 	[self updateConnectionToolbarItem];
@@ -72,13 +73,14 @@
 	NSLog(@"databaseContextConnectionSucceeded");
 	
 	researchStation = [self researchStation];
+
 	if (researchStation == nil) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{[self presentPopulateDatabaseSheet];});
 		
 	}
-	[self updateConnectionToolbarItem];
 	
+	[self updateConnectionToolbarItem];
 }
 
 - (void) databaseContext: (BXDatabaseContext *) context lostConnection: (NSError *) error
@@ -106,9 +108,16 @@
 		if (researchStation) return researchStation;
 		
 		[researchStationController fetch:nil];
-		
-		if ([[researchStationController arrangedObjects] count] == 1) {
-			return [[researchStationController arrangedObjects] objectAtIndex:0];
+				
+		if ([[researchStationController arrangedObjects] count] > 0) {
+			if ([[researchStationController arrangedObjects] count] > 1) {
+				[researchStationController removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [[researchStationController arrangedObjects] count]-1)]];
+			}
+			
+			[[researchStationController arrangedObjects] makeObjectsPerformSelector:@selector(setup) withObject:nil];
+			researchStation = [[researchStationController arrangedObjects] objectAtIndex:0];
+			[self showObjectView:[researchStation contentView]];
+			return researchStation;
 		} else {
 			return nil;
 		}
@@ -116,13 +125,19 @@
 	
 }
 
+-(void)showObjectView:(NSView*)view{
+	[[objectView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	[objectView addSubview:view];
+	[view setFrame:[objectView bounds]];
+}
+
 -(LFFResearchStation *) populateDatabaseClearExisting:(BOOL) clearExisting {
 	
-	if (clearExisting && [[researchStationController arrangedObjects] count] > 0) {
-		[researchStationController removeAllObjects];
+	if (clearExisting) {
+		// clear
 	}
 	
-	if ([[researchStationController arrangedObjects] count] == 0) {
+	if (researchStation == nil) {
 		
 		BXEntityDescription* entity;
 		NSDictionary* values;
@@ -142,6 +157,7 @@
 				  newCameraSettings, @"cameraSettingsTarget",
 				  [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultResearchStationLocation"], @"location",
 				  nil];
+
 		researchStation = [managedObjectContext createObjectForEntity: entity withFieldValues: values error: NULL];
 		
 		return researchStation;
@@ -218,12 +234,11 @@
 	[sender setEnabled:NO];
 	
 	if([managedObjectContext isConnected]){
-		[researchStationController setContent:nil];
-		[researchStationController setSelectedObjects:nil];
 		[managedObjectContext disconnect];
 		[managedObjectContext setDatabaseURI:databaseUrlFromNib];
  		[researchStation release];
 		researchStation = nil;
+		[[objectView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 		NSLog(@"disconnecting");
 	} else {
 		//		if ([managedObjectContext canConnect]){
@@ -310,7 +325,6 @@
     [window release];
     [managedObjectContext release];
 	[researchStation release];
-	[researchStationController release];
 	
     [super dealloc];
 }

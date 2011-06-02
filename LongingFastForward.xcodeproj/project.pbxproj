@@ -24,10 +24,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		7F2B4B26138AC3EB00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B4B25138AC3C900BC1530 /* LongingFastForward_DataModel.xcdatamodel */; };
 		7F4301DB138C0F7B003FBB0D /* Shared Resources in Resources */ = {isa = PBXBuildFile; fileRef = 7F4301D5138C0F7B003FBB0D /* Shared Resources */; };
-		7F4F66DE138D5F4300EB13DA /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
-		7F4F66DF138D5F4400EB13DA /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
 		7F4F66F9138D5FA700EB13DA /* BaseTen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
 		7F4F66FA138D5FA700EB13DA /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
 		7F4F6A73139014F800EB13DA /* LongingFastForward.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A72139014F800EB13DA /* LongingFastForward.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +32,8 @@
 		7F4F6A7C139015E400EB13DA /* LFFImageLDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F6A7A139015E400EB13DA /* LFFImageLDR.m */; };
 		7F4F6A881390160100EB13DA /* _LFFImageLDR.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4F6A861390160100EB13DA /* _LFFImageLDR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4F6A891390160100EB13DA /* _LFFImageLDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F6A871390160100EB13DA /* _LFFImageLDR.m */; };
+		7F5552CB1398056D00D17C56 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
+		7F5552CF1398057800D17C56 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
 		7FA29114139693440069DAFE /* _LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FA29115139693440069DAFE /* _LFFCameraDeviceSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */; };
 		7FA291181396935A0069DAFE /* LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,8 +54,7 @@
 		7FA2916A1396993D0069DAFE /* LFFImageLDRCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291621396993D0069DAFE /* LFFImageLDRCameraSettings.m */; };
 		7FA2916B1396993D0069DAFE /* LFFResearchStationCameraSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291631396993D0069DAFE /* LFFResearchStationCameraSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FA2916C1396993D0069DAFE /* LFFResearchStationCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA291641396993D0069DAFE /* LFFResearchStationCameraSettings.m */; };
-		7FA296541397B6F10069DAFE /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */; };
-		7FA296581397B6F90069DAFE /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */; };
+		7FC755701397DE6C00E764FE /* LFFResearchStation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7556F1397DE6C00E764FE /* LFFResearchStation.xib */; };
 		7FDE4DDA138D47A300FE0296 /* _LFFCameraAngle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDE4DDB138D47A300FE0296 /* _LFFCameraAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */; };
 		7FDE4DDC138D47A300FE0296 /* _LFFCameraDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -162,9 +160,8 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 7;
+			dstSubfolderSpec = 10;
 			files = (
-				7FA296581397B6F90069DAFE /* BWToolkitFramework.framework in Copy Frameworks */,
 				7F4F66F9138D5FA700EB13DA /* BaseTen.framework in Copy Frameworks */,
 				7F4F66FA138D5FA700EB13DA /* BaseTenAppKit.framework in Copy Frameworks */,
 			);
@@ -204,8 +201,8 @@
 		7FA291621396993D0069DAFE /* LFFImageLDRCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageLDRCameraSettings.m; sourceTree = "<group>"; };
 		7FA291631396993D0069DAFE /* LFFResearchStationCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFResearchStationCameraSettings.h; sourceTree = "<group>"; };
 		7FA291641396993D0069DAFE /* LFFResearchStationCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFResearchStationCameraSettings.m; sourceTree = "<group>"; };
-		7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = Contrib/bwtoolkit/build/Release/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		7FB0C8E81394094100FE20A3 /* Malvar-He-Cutler Bayer Demosaicing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; path = "Malvar-He-Cutler Bayer Demosaicing/Malvar-He-Cutler Bayer Demosaicing.xcodeproj"; sourceTree = "<group>"; };
+		7FC7556F1397DE6C00E764FE /* LFFResearchStation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LFFResearchStation.xib; sourceTree = "<group>"; };
 		7FDE4DAD138D47A300FE0296 /* _LFFCameraAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraAngle.h; sourceTree = "<group>"; };
 		7FDE4DAE138D47A300FE0296 /* _LFFCameraAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraAngle.m; sourceTree = "<group>"; };
 		7FDE4DAF138D47A300FE0296 /* _LFFCameraDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDevice.h; sourceTree = "<group>"; };
@@ -266,10 +263,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F5552CF1398057800D17C56 /* BaseTenAppKit.framework in Frameworks */,
+				7F5552CB1398056D00D17C56 /* BaseTen.framework in Frameworks */,
 				7FDE5470138D58CE00FE0296 /* Cocoa.framework in Frameworks */,
-				7F4F66DE138D5F4300EB13DA /* BaseTenAppKit.framework in Frameworks */,
-				7F4F66DF138D5F4400EB13DA /* BaseTen.framework in Frameworks */,
-				7FA296541397B6F10069DAFE /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +315,6 @@
 				7FDE50C6138D4F2900FE0296 /* BaseTen.framework */,
 				7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */,
 				7F2B4B8D138AC4DB00BC1530 /* Cocoa.framework */,
-				7FA296531397B6F10069DAFE /* BWToolkitFramework.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -327,6 +322,7 @@
 		7F43FF64138BFBB7003FBB0D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FC7556F1397DE6C00E764FE /* LFFResearchStation.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -528,6 +524,8 @@
 				7F2B4D7A138ADC0F00BC1530 /* Generate Model Files */,
 				7F2B4B17138AC32F00BC1530 /* Resources */,
 				7FDE5465138D581E00FE0296 /* Copy Frameworks */,
+				7F55528F1398022B00D17C56 /* Make Frameworks folder */,
+				7F5553A31398078300D17C56 /* ShellScript */,
 				7F2B4B16138AC32F00BC1530 /* Headers */,
 				7F2B4B18138AC32F00BC1530 /* Sources */,
 				7F2B4B19138AC32F00BC1530 /* Frameworks */,
@@ -611,6 +609,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F4301DB138C0F7B003FBB0D /* Shared Resources in Resources */,
+				7FC755701397DE6C00E764FE /* LFFResearchStation.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +631,33 @@
 			shellPath = /bin/sh;
 			shellScript = "mogenerator --base-class BXDatabaseObject \\\n--model $SRCROOT/Models/LongingFastForward_DataModel.xcdatamodel \\\n--template-path $SRCROOT/Models \\\n--machine-dir $SRCROOT/Models/LongingFastForward_DataModel/_Classes \\\n--human-dir $SRCROOT/Models/LongingFastForward_DataModel/Classes";
 		};
+		7F55528F1398022B00D17C56 /* Make Frameworks folder */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Make Frameworks folder";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nFRAMEWORK_DIR=\"$BUILT_PRODUCTS_DIR/LongingFastForward.framework\"\nFRAMEWORKS_DIR=\"$FRAMEWORK_DIR/Frameworks\"\n\nif ( ! [ -e \"$FRAMEWORKS_DIR\" ]); then\nln -s \"$FRAMEWORK_DIR/Versions/Current/Frameworks\" \"$FRAMEWORKS_DIR\"\nfi";
+		};
+		7F5553A31398078300D17C56 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -639,7 +665,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F2B4B26138AC3EB00BC1530 /* LongingFastForward_DataModel.xcdatamodel in Sources */,
 				7FDE4DDB138D47A300FE0296 /* _LFFCameraAngle.m in Sources */,
 				7FDE4DDD138D47A300FE0296 /* _LFFCameraDevice.m in Sources */,
 				7FDE4DDF138D47A300FE0296 /* _LFFCameraProfile.m in Sources */,
@@ -733,10 +758,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Frameworks\"",
 					"$(BUILT_PRODUCTS_DIR)",
 					"$(BUILD_DIR)/Release",
 					"\"$(SRCROOT)/Contrib/bwtoolkit/build/Release\"",
@@ -755,12 +783,17 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Frameworks\"/**",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
 				INFOPLIST_FILE = "LongingFastForward-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				OTHER_LDFLAGS = (
-					"-framework",
+					"-sub_umbrella",
+					BaseTenAppKit,
+					"-sub_umbrella",
 					BaseTen,
 					"-framework",
 					Foundation,
@@ -769,6 +802,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LongingFastForward;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -778,10 +812,13 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Resources\"",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Frameworks\"",
 					"$(BUILT_PRODUCTS_DIR)",
 					"$(BUILD_DIR)/Release",
 					"\"$(SRCROOT)/Contrib/bwtoolkit/build/Release\"",
@@ -798,12 +835,17 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).framework/Frameworks\"/**",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
 				INFOPLIST_FILE = "LongingFastForward-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				OTHER_LDFLAGS = (
-					"-framework",
+					"-sub_umbrella",
+					BaseTenAppKit,
+					"-sub_umbrella",
 					BaseTen,
 					"-framework",
 					Foundation,
