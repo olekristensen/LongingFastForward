@@ -6,7 +6,7 @@
 
 @class LFFCameraAngle;
 @class LFFCaptureClient;
-@class LFFCameraStats;
+@class LFFCaptureSessionStats;
 @class LFFImageHDR;
 
 
@@ -15,6 +15,7 @@
 
 @interface LFFCaptureSessionID : NSManagedObjectID {}
 @end
+
 
 @interface _LFFCaptureSession : LFFLoggingEntity {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -57,7 +58,7 @@
 
 
 
-@property (nonatomic, retain) LFFCameraStats* stats;
+@property (nonatomic, retain) LFFCaptureSessionStats* stats;
 //- (BOOL)validateStats:(id*)value_ error:(NSError**)error_;
 
 
@@ -114,13 +115,14 @@
 
 
 
-- (LFFCameraStats*)primitiveStats;
-- (void)setPrimitiveStats:(LFFCameraStats*)value;
+- (LFFCaptureSessionStats*)primitiveStats;
+- (void)setPrimitiveStats:(LFFCaptureSessionStats*)value;
 
 
 
 - (NSMutableSet*)primitiveImages;
 - (void)setPrimitiveImages:(NSMutableSet*)value;
+
 
 
 @end

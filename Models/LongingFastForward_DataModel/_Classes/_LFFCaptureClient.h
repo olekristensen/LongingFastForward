@@ -15,6 +15,7 @@
 @interface LFFCaptureClientID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFCaptureClient : LFFLoggingEntity {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -103,6 +104,7 @@
 
 - (LFFResearchStation*)primitiveResearchStation;
 - (void)setPrimitiveResearchStation:(LFFResearchStation*)value;
+
 
 
 @end

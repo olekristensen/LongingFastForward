@@ -90,7 +90,7 @@
 		return nil;
 	}
 	
-	NSSet *setOfClients = [[[self researchStation] captureClients] filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"name == @s", captureClientName]];
+	NSSet *setOfClients = [[[self researchStation] captureClients] filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", captureClientName]];
 	
 	if ([setOfClients count] == 0) {
 		NSLog(@"No Capture Clients matched the name %s", captureClientName);

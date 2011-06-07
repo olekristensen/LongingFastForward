@@ -36,9 +36,10 @@
 
 
 
-@dynamic researchStaion;
+@dynamic researchStation;
 
 	
+
 
 
 

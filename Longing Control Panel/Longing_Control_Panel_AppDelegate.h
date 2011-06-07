@@ -14,7 +14,7 @@
 @class BXDatabaseContext;
 @class BXDatabaseObject;
 
-@interface Longing_Control_Panel_AppDelegate : NSObject 
+@interface Longing_Control_Panel_AppDelegate : NSObject < BXDatabaseContextDelegate >
 {
     NSWindow *window;
 	IBOutlet NSView * objectView;
@@ -22,12 +22,13 @@
 	IBOutlet NSButton *populateDatabaseSheetDeleteFirst;
 	IBOutlet BXDatabaseContext *managedObjectContext;
 	
-	IBOutlet NSArrayController *researchStationController;
+	IBOutlet BXSynchronizedArrayController *researchStationController;
 	LFFResearchStation *researchStation;
 	
 	IBOutlet NSToolbarItem * connectionToolbarItem;
     
 	NSURL *databaseUrlFromNib;
+	LFFController* lffController;
 	
 }
 

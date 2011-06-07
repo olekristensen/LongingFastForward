@@ -34,6 +34,17 @@
 		7F4F6A891390160100EB13DA /* _LFFImageLDR.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F6A871390160100EB13DA /* _LFFImageLDR.m */; };
 		7F5552CB1398056D00D17C56 /* BaseTen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C6138D4F2900FE0296 /* BaseTen.framework */; };
 		7F5552CF1398057800D17C56 /* BaseTenAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDE50C8138D4F2F00FE0296 /* BaseTenAppKit.framework */; };
+		7F555BF21398F75600D17C56 /* LFFResearchStationCameraSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F555BF11398F75600D17C56 /* LFFResearchStationCameraSettings.xib */; };
+		7F730DAE139E55B700C3F8C9 /* LFFController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F730DAC139E55B700C3F8C9 /* LFFController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F730DAF139E55B700C3F8C9 /* LFFController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F730DAD139E55B700C3F8C9 /* LFFController.m */; };
+		7F730DCF139E60F100C3F8C9 /* _LFFCameraDeviceStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F730DCB139E60F100C3F8C9 /* _LFFCameraDeviceStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F730DD0139E60F100C3F8C9 /* _LFFCameraDeviceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F730DCC139E60F100C3F8C9 /* _LFFCameraDeviceStats.m */; };
+		7F730DD1139E60F100C3F8C9 /* _LFFCaptureSessionStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F730DCD139E60F100C3F8C9 /* _LFFCaptureSessionStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F730DD2139E60F100C3F8C9 /* _LFFCaptureSessionStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F730DCE139E60F100C3F8C9 /* _LFFCaptureSessionStats.m */; };
+		7F730DD7139E610100C3F8C9 /* LFFCameraDeviceStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F730DD3139E610100C3F8C9 /* LFFCameraDeviceStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F730DD8139E610100C3F8C9 /* LFFCameraDeviceStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F730DD4139E610100C3F8C9 /* LFFCameraDeviceStats.m */; };
+		7F730DD9139E610100C3F8C9 /* LFFCaptureSessionStats.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F730DD5139E610100C3F8C9 /* LFFCaptureSessionStats.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F730DDA139E610100C3F8C9 /* LFFCaptureSessionStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F730DD6139E610100C3F8C9 /* LFFCaptureSessionStats.m */; };
 		7FA29114139693440069DAFE /* _LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FA29115139693440069DAFE /* _LFFCameraDeviceSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */; };
 		7FA291181396935A0069DAFE /* LFFCameraDeviceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -181,6 +192,17 @@
 		7F4F6A7A139015E400EB13DA /* LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFImageLDR.m; sourceTree = "<group>"; };
 		7F4F6A861390160100EB13DA /* _LFFImageLDR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFImageLDR.h; sourceTree = "<group>"; };
 		7F4F6A871390160100EB13DA /* _LFFImageLDR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFImageLDR.m; sourceTree = "<group>"; };
+		7F555BF11398F75600D17C56 /* LFFResearchStationCameraSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LFFResearchStationCameraSettings.xib; sourceTree = "<group>"; };
+		7F730DAC139E55B700C3F8C9 /* LFFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFController.h; sourceTree = "<group>"; };
+		7F730DAD139E55B700C3F8C9 /* LFFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFController.m; sourceTree = "<group>"; };
+		7F730DCB139E60F100C3F8C9 /* _LFFCameraDeviceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDeviceStats.h; sourceTree = "<group>"; };
+		7F730DCC139E60F100C3F8C9 /* _LFFCameraDeviceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraDeviceStats.m; sourceTree = "<group>"; };
+		7F730DCD139E60F100C3F8C9 /* _LFFCaptureSessionStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCaptureSessionStats.h; sourceTree = "<group>"; };
+		7F730DCE139E60F100C3F8C9 /* _LFFCaptureSessionStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCaptureSessionStats.m; sourceTree = "<group>"; };
+		7F730DD3139E610100C3F8C9 /* LFFCameraDeviceStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraDeviceStats.h; sourceTree = "<group>"; };
+		7F730DD4139E610100C3F8C9 /* LFFCameraDeviceStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCameraDeviceStats.m; sourceTree = "<group>"; };
+		7F730DD5139E610100C3F8C9 /* LFFCaptureSessionStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCaptureSessionStats.h; sourceTree = "<group>"; };
+		7F730DD6139E610100C3F8C9 /* LFFCaptureSessionStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFFCaptureSessionStats.m; sourceTree = "<group>"; };
 		7FA29112139693440069DAFE /* _LFFCameraDeviceSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LFFCameraDeviceSettings.h; sourceTree = "<group>"; };
 		7FA29113139693440069DAFE /* _LFFCameraDeviceSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LFFCameraDeviceSettings.m; sourceTree = "<group>"; };
 		7FA291161396935A0069DAFE /* LFFCameraDeviceSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFFCameraDeviceSettings.h; sourceTree = "<group>"; };
@@ -277,8 +299,8 @@
 			children = (
 				7F4301D5138C0F7B003FBB0D /* Shared Resources */,
 				7F2B4B1D138AC32F00BC1530 /* LongingFastForward-Info.plist */,
-				7FDE53A4138D532C00FE0296 /* Sources */,
 				7F43FF64138BFBB7003FBB0D /* Views */,
+				7FDE53A4138D532C00FE0296 /* Sources */,
 				7F2B4B24138AC3C900BC1530 /* Models */,
 				7FE2E25F138ABCF100792184 /* Apps */,
 				7FB0C83C1394090B00FE20A3 /* Image Units */,
@@ -323,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				7FC7556F1397DE6C00E764FE /* LFFResearchStation.xib */,
+				7F555BF11398F75600D17C56 /* LFFResearchStationCameraSettings.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,6 +378,10 @@
 		7FDE4DAC138D47A300FE0296 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7F730DCB139E60F100C3F8C9 /* _LFFCameraDeviceStats.h */,
+				7F730DCC139E60F100C3F8C9 /* _LFFCameraDeviceStats.m */,
+				7F730DCD139E60F100C3F8C9 /* _LFFCaptureSessionStats.h */,
+				7F730DCE139E60F100C3F8C9 /* _LFFCaptureSessionStats.m */,
 				7FA2914D139699250069DAFE /* _LFFCameraAngleSettings.h */,
 				7FA2914E139699250069DAFE /* _LFFCameraAngleSettings.m */,
 				7FA2914F139699250069DAFE /* _LFFCameraDefaultSettings.h */,
@@ -396,6 +423,10 @@
 		7FDE4DC3138D47A300FE0296 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7F730DD3139E610100C3F8C9 /* LFFCameraDeviceStats.h */,
+				7F730DD4139E610100C3F8C9 /* LFFCameraDeviceStats.m */,
+				7F730DD5139E610100C3F8C9 /* LFFCaptureSessionStats.h */,
+				7F730DD6139E610100C3F8C9 /* LFFCaptureSessionStats.m */,
 				7FA2915D1396993D0069DAFE /* LFFCameraAngleSettings.h */,
 				7FA2915E1396993D0069DAFE /* LFFCameraAngleSettings.m */,
 				7FA2915F1396993D0069DAFE /* LFFCameraDefaultSettings.h */,
@@ -439,6 +470,8 @@
 			children = (
 				7FDE53A5138D532C00FE0296 /* LongingFastForward_Prefix.pch */,
 				7F4F6A72139014F800EB13DA /* LongingFastForward.h */,
+				7F730DAC139E55B700C3F8C9 /* LFFController.h */,
+				7F730DAD139E55B700C3F8C9 /* LFFController.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -511,6 +544,11 @@
 				7FA291671396993D0069DAFE /* LFFCameraDefaultSettings.h in Headers */,
 				7FA291691396993D0069DAFE /* LFFImageLDRCameraSettings.h in Headers */,
 				7FA2916B1396993D0069DAFE /* LFFResearchStationCameraSettings.h in Headers */,
+				7F730DAE139E55B700C3F8C9 /* LFFController.h in Headers */,
+				7F730DCF139E60F100C3F8C9 /* _LFFCameraDeviceStats.h in Headers */,
+				7F730DD1139E60F100C3F8C9 /* _LFFCaptureSessionStats.h in Headers */,
+				7F730DD7139E610100C3F8C9 /* LFFCameraDeviceStats.h in Headers */,
+				7F730DD9139E610100C3F8C9 /* LFFCaptureSessionStats.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +648,7 @@
 			files = (
 				7F4301DB138C0F7B003FBB0D /* Shared Resources in Resources */,
 				7FC755701397DE6C00E764FE /* LFFResearchStation.xib in Resources */,
+				7F555BF21398F75600D17C56 /* LFFResearchStationCameraSettings.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +738,11 @@
 				7FA291681396993D0069DAFE /* LFFCameraDefaultSettings.m in Sources */,
 				7FA2916A1396993D0069DAFE /* LFFImageLDRCameraSettings.m in Sources */,
 				7FA2916C1396993D0069DAFE /* LFFResearchStationCameraSettings.m in Sources */,
+				7F730DAF139E55B700C3F8C9 /* LFFController.m in Sources */,
+				7F730DD0139E60F100C3F8C9 /* _LFFCameraDeviceStats.m in Sources */,
+				7F730DD2139E60F100C3F8C9 /* _LFFCaptureSessionStats.m in Sources */,
+				7F730DD8139E610100C3F8C9 /* LFFCameraDeviceStats.m in Sources */,
+				7F730DDA139E610100C3F8C9 /* LFFCaptureSessionStats.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

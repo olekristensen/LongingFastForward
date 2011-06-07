@@ -4,7 +4,9 @@
 
 -(void)logEvent:(NSString*)logString{
 	
-	NSLog(@"LOGGING: %@", logString);
+	//FIXME: Inheritance
+	
+/**	NSLog(@"LOGGING: %@", logString);
 	NSDictionary* values = [NSDictionary dictionaryWithObjectsAndKeys:
 							[NSDate date], @"time",
 							logString, @"message",
@@ -17,6 +19,7 @@
 													   withFieldValues: values error: NULL];
 	
 	[self addEventLogObject:newEvent];
+ **/
 }
 
 -(void)awakeFromInsert{

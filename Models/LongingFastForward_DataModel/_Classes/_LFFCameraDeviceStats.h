@@ -1,21 +1,21 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to LFFCameraDeviceSettings.h instead.
+// Make changes to LFFCameraDeviceStats.h instead.
 
 #import <BaseTen/BaseTen.h>
-#import "LFFCameraSettings.h"
+#import "LFFCameraStats.h"
 
 @class LFFCameraDevice;
 
 
-@interface LFFCameraDeviceSettingsID : NSManagedObjectID {}
+@interface LFFCameraDeviceStatsID : NSManagedObjectID {}
 @end
 
 
-@interface _LFFCameraDeviceSettings : LFFCameraSettings {}
+@interface _LFFCameraDeviceStats : LFFCameraStats {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (LFFCameraDeviceSettingsID*)objectID;
+- (LFFCameraDeviceStatsID*)objectID;
 
 
 
@@ -28,11 +28,11 @@
 
 @end
 
-@interface _LFFCameraDeviceSettings (CoreDataGeneratedAccessors)
+@interface _LFFCameraDeviceStats (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _LFFCameraDeviceSettings (CoreDataGeneratedPrimitiveAccessors)
+@interface _LFFCameraDeviceStats (CoreDataGeneratedPrimitiveAccessors)
 
 
 

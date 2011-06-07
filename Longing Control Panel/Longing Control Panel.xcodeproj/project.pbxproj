@@ -20,6 +20,7 @@
 		7F5556B213980AF000D17C56 /* BaseTenAppKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B5691138B0FBE00BC1530 /* BaseTenAppKit.framework */; };
 		7F5556B313980AF000D17C56 /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */; };
 		7F5556EA13980D2F00D17C56 /* LongingFastForward.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2B4BB9138AC59E00BC1530 /* LongingFastForward.framework */; };
+		7F730C8B139E369B00C3F8C9 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7F730C8A139E369B00C3F8C9 /* icon.icns */; };
 		7FA293321397B1AC0069DAFE /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FA293311397B1AC0069DAFE /* UserDefaults.plist */; };
 		7FA296811397BA930069DAFE /* LFFWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA296801397BA930069DAFE /* LFFWarning.png */; };
 		7FA2968C1397BBCC0069DAFE /* LFFAddFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA2968B1397BBCC0069DAFE /* LFFAddFolder.png */; };
@@ -40,7 +41,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F2B4BB3138AC59E00BC1530 /* LongingFastForward.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530 /* LongingFastForward */;
+			remoteGlobalIDString = 7F2B4B1A138AC32F00BC1530;
 			remoteInfo = LongingFastForward;
 		};
 /* End PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		7F4301FA138C1016003FBB0D /* LFFConnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFConnected.png; sourceTree = "<group>"; };
 		7F4301FB138C1016003FBB0D /* LFFDisconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LFFDisconnected.png; sourceTree = "<group>"; };
 		7F4F6B9313901E0000EB13DA /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Models; path = ../Models; sourceTree = SOURCE_ROOT; };
+		7F555B881398F22E00D17C56 /* Views */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Views; path = ../Views; sourceTree = SOURCE_ROOT; };
+		7F730C8A139E369B00C3F8C9 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		7FA293311397B1AC0069DAFE /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		7FA296731397B99B0069DAFE /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = /Users/ole/Development/LongingFastForward/Contrib/bwtoolkit/build/Release/BWToolkitFramework.framework; sourceTree = "<absolute>"; };
 		7FA296801397BA930069DAFE /* LFFWarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LFFWarning.png; path = "../Shared Resources/Images/LFFWarning.png"; sourceTree = SOURCE_ROOT; };
@@ -146,6 +149,7 @@
 		29B97314FDCFA39411CA2CEA /* Longing Control Panel */ = {
 			isa = PBXGroup;
 			children = (
+				7F555B881398F22E00D17C56 /* Views */,
 				7F4F6B9313901E0000EB13DA /* Models */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -168,6 +172,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7F730C8A139E369B00C3F8C9 /* icon.icns */,
 				7F4301DE138C0F9C003FBB0D /* Shared Resources */,
 				7F4301FA138C1016003FBB0D /* LFFConnected.png */,
 				7F4301FB138C1016003FBB0D /* LFFDisconnected.png */,
@@ -274,6 +279,7 @@
 				7FA293321397B1AC0069DAFE /* UserDefaults.plist in Resources */,
 				7FA296811397BA930069DAFE /* LFFWarning.png in Resources */,
 				7FA2968C1397BBCC0069DAFE /* LFFAddFolder.png in Resources */,
+				7F730C8B139E369B00C3F8C9 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +363,9 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = /;
 				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(INSTALL_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
 					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
+					"\"$(INSTALL_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"/**",
 					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks\"/**",
 					"\"$(SRCROOT)/../../../Library/Frameworks\"",
 					"\"$(SRCROOT)/../Contrib/bwtoolkit/build/Release\"",
@@ -366,7 +374,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Longing_Control_Panel_Prefix.pch;
-				HEADER_SEARCH_PATHS = "\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(INSTALL_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
+					"\"$(TARGET_BUILD_DIR)/$(TARGET_NAME).app/Contents/Frameworks/LongingFastForward.framework/Frameworks\"/**",
+				);
 				INFOPLIST_FILE = "Longing_Control_Panel-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Longing Control Panel";

@@ -10,6 +10,14 @@
 #import <BaseTen/BaseTen.h>
 #import <BaseTen/BXLogger.h>
 
+@interface Longing_Capture_Client_AppDelegate()
+
++ (void)setupDefaults;
+- (void)updateConnectionToolbarItem;
+
+@end
+
+
 @implementation Longing_Capture_Client_AppDelegate
 
 @synthesize window, managedObjectContext, captureClientController;

@@ -21,6 +21,7 @@
 @interface LFFImageHDRID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFImageHDR : LFFLoggingEntity {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -200,6 +201,7 @@
 
 - (NSMutableSet*)primitiveImagesLDR;
 - (void)setPrimitiveImagesLDR:(NSMutableSet*)value;
+
 
 
 @end

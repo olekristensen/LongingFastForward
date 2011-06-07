@@ -11,6 +11,7 @@
 @interface LFFCameraDefaultSettingsID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFCameraDefaultSettings : LFFCameraSettings {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -55,6 +56,7 @@
 
 - (NSMutableSet*)primitiveDefaultSettingsForCameraAngles;
 - (void)setPrimitiveDefaultSettingsForCameraAngles:(NSMutableSet*)value;
+
 
 
 @end

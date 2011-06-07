@@ -1,29 +1,29 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to LFFCameraDeviceSettings.m instead.
+// Make changes to LFFCameraDeviceStats.m instead.
 
-#import "_LFFCameraDeviceSettings.h"
+#import "_LFFCameraDeviceStats.h"
 
-@implementation LFFCameraDeviceSettingsID
+@implementation LFFCameraDeviceStatsID
 @end
 
-@implementation _LFFCameraDeviceSettings
+@implementation _LFFCameraDeviceStats
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"CameraDeviceSettings" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"CameraDeviceStats" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"CameraDeviceSettings";
+	return @"CameraDeviceStats";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"CameraDeviceSettings" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"CameraDeviceStats" inManagedObjectContext:moc_];
 }
 
-- (LFFCameraDeviceSettingsID*)objectID {
-	return (LFFCameraDeviceSettingsID*)[super objectID];
+- (LFFCameraDeviceStatsID*)objectID {
+	return (LFFCameraDeviceStatsID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {

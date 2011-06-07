@@ -4,8 +4,6 @@
 #import <BaseTen/BaseTen.h>
 
 
-@class LFFCaptureSession;
-@class LFFCameraDevice;
 
 
 
@@ -21,21 +19,12 @@
 @interface LFFCameraStatsID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFCameraStats : BXDatabaseObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (LFFCameraStatsID*)objectID;
-
-
-
-@property (nonatomic, retain) NSNumber *packetsReceived;
-
-@property long long packetsReceivedValue;
-- (long long)packetsReceivedValue;
-- (void)setPacketsReceivedValue:(long long)value_;
-
-//- (BOOL)validatePacketsReceived:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -49,13 +38,23 @@
 
 
 
-@property (nonatomic, retain) NSNumber *framesCompleted;
+@property (nonatomic, retain) NSNumber *packetsRequested;
 
-@property long long framesCompletedValue;
-- (long long)framesCompletedValue;
-- (void)setFramesCompletedValue:(long long)value_;
+@property long long packetsRequestedValue;
+- (long long)packetsRequestedValue;
+- (void)setPacketsRequestedValue:(long long)value_;
 
-//- (BOOL)validateFramesCompleted:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validatePacketsRequested:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *packetsReceived;
+
+@property long long packetsReceivedValue;
+- (long long)packetsReceivedValue;
+- (void)setPacketsReceivedValue:(long long)value_;
+
+//- (BOOL)validatePacketsReceived:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -75,6 +74,16 @@
 
 
 
+@property (nonatomic, retain) NSNumber *framesCompleted;
+
+@property long long framesCompletedValue;
+- (long long)framesCompletedValue;
+- (void)setFramesCompletedValue:(long long)value_;
+
+//- (BOOL)validateFramesCompleted:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *packetsResent;
 
 @property long long packetsResentValue;
@@ -82,16 +91,6 @@
 - (void)setPacketsResentValue:(long long)value_;
 
 //- (BOOL)validatePacketsResent:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *packetsRequested;
-
-@property long long packetsRequestedValue;
-- (long long)packetsRequestedValue;
-- (void)setPacketsRequestedValue:(long long)value_;
-
-//- (BOOL)validatePacketsRequested:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -126,16 +125,6 @@
 
 
 
-@property (nonatomic, retain) LFFCaptureSession* captureSession;
-//- (BOOL)validateCaptureSession:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) LFFCameraDevice* cameraDevice;
-//- (BOOL)validateCameraDevice:(id*)value_ error:(NSError**)error_;
-
-
-
 
 @end
 
@@ -144,15 +133,6 @@
 @end
 
 @interface _LFFCameraStats (CoreDataGeneratedPrimitiveAccessors)
-
-
-- (NSNumber*)primitivePacketsReceived;
-- (void)setPrimitivePacketsReceived:(NSNumber*)value;
-
-- (long long)primitivePacketsReceivedValue;
-- (void)setPrimitivePacketsReceivedValue:(long long)value_;
-
-
 
 
 - (NSNumber*)primitiveDriverType;
@@ -164,11 +144,20 @@
 
 
 
-- (NSNumber*)primitiveFramesCompleted;
-- (void)setPrimitiveFramesCompleted:(NSNumber*)value;
+- (NSNumber*)primitivePacketsRequested;
+- (void)setPrimitivePacketsRequested:(NSNumber*)value;
 
-- (long long)primitiveFramesCompletedValue;
-- (void)setPrimitiveFramesCompletedValue:(long long)value_;
+- (long long)primitivePacketsRequestedValue;
+- (void)setPrimitivePacketsRequestedValue:(long long)value_;
+
+
+
+
+- (NSNumber*)primitivePacketsReceived;
+- (void)setPrimitivePacketsReceived:(NSNumber*)value;
+
+- (long long)primitivePacketsReceivedValue;
+- (void)setPrimitivePacketsReceivedValue:(long long)value_;
 
 
 
@@ -188,20 +177,20 @@
 
 
 
+- (NSNumber*)primitiveFramesCompleted;
+- (void)setPrimitiveFramesCompleted:(NSNumber*)value;
+
+- (long long)primitiveFramesCompletedValue;
+- (void)setPrimitiveFramesCompletedValue:(long long)value_;
+
+
+
+
 - (NSNumber*)primitivePacketsResent;
 - (void)setPrimitivePacketsResent:(NSNumber*)value;
 
 - (long long)primitivePacketsResentValue;
 - (void)setPrimitivePacketsResentValue:(long long)value_;
-
-
-
-
-- (NSNumber*)primitivePacketsRequested;
-- (void)setPrimitivePacketsRequested:(NSNumber*)value;
-
-- (long long)primitivePacketsRequestedValue;
-- (void)setPrimitivePacketsRequestedValue:(long long)value_;
 
 
 
@@ -232,15 +221,6 @@
 
 
 
-
-
-- (LFFCaptureSession*)primitiveCaptureSession;
-- (void)setPrimitiveCaptureSession:(LFFCaptureSession*)value;
-
-
-
-- (LFFCameraDevice*)primitiveCameraDevice;
-- (void)setPrimitiveCameraDevice:(LFFCameraDevice*)value;
 
 
 @end

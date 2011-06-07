@@ -33,6 +33,7 @@
 @interface LFFCameraSettingsID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFCameraSettings : BXDatabaseObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -504,6 +505,7 @@
 
 - (long long)primitiveWhitebalAutoAdjustTolValue;
 - (void)setPrimitiveWhitebalAutoAdjustTolValue:(long long)value_;
+
 
 
 

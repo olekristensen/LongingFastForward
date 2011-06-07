@@ -23,8 +23,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="882"/>
 			<integer value="956"/>
-			<integer value="883"/>
 			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -1410,8 +1410,8 @@
 				<string key="NSWindowTitle">Populate Database</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
-				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
-				<string key="NSWindowContentMinSize">{500, 203}</string>
+				<string key="NSWindowContentMaxSize">{700, 289}</string>
+				<string key="NSWindowContentMinSize">{500, 289}</string>
 				<object class="NSView" key="NSWindowView" id="731779943">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -1748,8 +1748,8 @@
 					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
-				<string key="NSMinSize">{500, 225}</string>
-				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSMinSize">{500, 311}</string>
+				<string key="NSMaxSize">{700, 311}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="894289955">
 				<bool key="NSSharedInstance">YES</bool>
@@ -2508,14 +2508,6 @@
 						<reference key="destination" ref="375711552"/>
 					</object>
 					<int key="connectionID">958</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">databaseContext</string>
-						<reference key="source" ref="134590037"/>
-						<reference key="destination" ref="425992088"/>
-					</object>
-					<int key="connectionID">962</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3968,9 +3960,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<integer value="1"/>
-					<string>{{612, 88}, {907, 882}}</string>
+					<string>{{364, 88}, {907, 882}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{612, 88}, {907, 882}}</string>
+					<string>{{364, 88}, {907, 882}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -4129,10 +4121,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{713, 372}, {500, 289}}</string>
 					<boolean value="NO"/>
-					<boolean value="NO"/>
 					<boolean value="YES"/>
-					<string>{700, 203}</string>
-					<string>{500, 203}</string>
+					<boolean value="YES"/>
+					<string>{700, 289}</string>
+					<string>{500, 289}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
@@ -4266,7 +4258,7 @@
 							<string>NSView</string>
 							<string>NSWindow</string>
 							<string>NSButton</string>
-							<string>NSArrayController</string>
+							<string>BXSynchronizedArrayController</string>
 							<string>NSWindow</string>
 						</object>
 					</object>
@@ -4306,7 +4298,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">researchStationController</string>
-								<string key="candidateClassName">NSArrayController</string>
+								<string key="candidateClassName">BXSynchronizedArrayController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">window</string>

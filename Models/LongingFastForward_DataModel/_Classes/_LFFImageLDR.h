@@ -16,6 +16,7 @@
 @interface LFFImageLDRID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFImageLDR : BXDatabaseObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -113,6 +114,7 @@
 
 - (LFFImageLDRCameraSettings*)primitiveCameraSettings;
 - (void)setPrimitiveCameraSettings:(LFFImageLDRCameraSettings*)value;
+
 
 
 @end

@@ -11,6 +11,7 @@
 @interface <$managedObjectClassName$>ID : NSManagedObjectID {}
 @end
 
+
 @interface _<$managedObjectClassName$> : <$customSuperentity$> {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -80,4 +81,5 @@
 - (void)setPrimitive<$Relationship.name.initialCapitalString$>:(<$Relationship.destinationEntity.managedObjectClassName$>*)value;
 <$endif$>
 <$endforeach do$>
+
 @end

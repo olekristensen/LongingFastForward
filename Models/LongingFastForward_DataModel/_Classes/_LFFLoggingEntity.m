@@ -10,16 +10,16 @@
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"LFFLoggingEntity" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"LoggingEntity" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"LFFLoggingEntity";
+	return @"LoggingEntity";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"LFFLoggingEntity" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"LoggingEntity" inManagedObjectContext:moc_];
 }
 
 - (LFFLoggingEntityID*)objectID {
@@ -46,6 +46,7 @@
 	return result;
 }
 	
+
 
 
 

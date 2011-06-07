@@ -6,7 +6,7 @@
 
 @class LFFCameraDeviceSettings;
 @class LFFCameraAngle;
-@class LFFCameraStats;
+@class LFFCameraDeviceStats;
 
 
 
@@ -22,6 +22,7 @@
 
 @interface LFFCameraDeviceID : NSManagedObjectID {}
 @end
+
 
 @interface _LFFCameraDevice : BXDatabaseObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
@@ -112,7 +113,7 @@
 
 
 
-@property (nonatomic, retain) LFFCameraStats* stats;
+@property (nonatomic, retain) LFFCameraDeviceStats* stats;
 //- (BOOL)validateStats:(id*)value_ error:(NSError**)error_;
 
 
@@ -207,8 +208,9 @@
 
 
 
-- (LFFCameraStats*)primitiveStats;
-- (void)setPrimitiveStats:(LFFCameraStats*)value;
+- (LFFCameraDeviceStats*)primitiveStats;
+- (void)setPrimitiveStats:(LFFCameraDeviceStats*)value;
+
 
 
 @end

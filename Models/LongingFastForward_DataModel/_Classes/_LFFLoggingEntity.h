@@ -10,6 +10,7 @@
 @interface LFFLoggingEntityID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFLoggingEntity : BXDatabaseObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -42,6 +43,7 @@
 
 - (NSMutableSet*)primitiveEventLog;
 - (void)setPrimitiveEventLog:(NSMutableSet*)value;
+
 
 
 @end

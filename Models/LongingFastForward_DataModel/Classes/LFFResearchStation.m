@@ -1,5 +1,5 @@
 #import "LFFResearchStation.h"
-
+#import "LFFResearchStationCameraSettings.h"
 
 static NSNib *researchStationNib;
 
@@ -14,26 +14,39 @@ static NSNib *researchStationNib;
 
 -(void) setup
 {
-	
+	NSLog(@"ResearchStation Setup");
 	[researchStationNib instantiateNibWithOwner:self topLevelObjects:nil]; 
-	NSAssert(contentView != nil, @"IBOutlets were not set correctly in LFFResearchStation.xib");
-	
+	NSAssert(contentView != nil && controller != nil, @"IBOutlets were not set correctly in LFFResearchStation.xib");
+	[[self databaseContext]refreshObject:self mergeChanges:NO];
+	[[self cameraSettingsTarget] setup];
 	[controller setContent: self];
-//	[view setDelegate:self];
-		
+	
+	[[cameraSettingsView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	[cameraSettingsView addSubview:[[self cameraSettingsTarget] contentView]];
+	
 }
 
 -(void)awakeFromInsert{
 	[super awakeFromInsert];
 	[self setup];
-	NSLog(@"Research station inserted");
 }
 
 -(void)awakeFromFetch{
 	[super awakeFromFetch];
 	[self setup];
-	NSLog(@"Research station fetched");
 }
 
+-(void)didTurnIntoFault
+{
+	[[self cameraSettingsTarget] faultKey:nil];
+}
+
+
+-(void)dealloc{
+	[controller setContent: nil];
+	[contentView release];
+	[cameraSettingsView release];
+	[super dealloc];
+}
 
 @end

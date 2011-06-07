@@ -29,28 +29,28 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"packetsReceivedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"packetsReceived"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"driverTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"driverType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"framesCompletedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"framesCompleted"];
+	if ([key isEqualToString:@"packetsRequestedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"packetsRequested"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"packetsReceivedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"packetsReceived"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"frameRateValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"frameRate"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"packetsResentValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"packetsResent"];
+	if ([key isEqualToString:@"framesCompletedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"framesCompleted"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"packetsRequestedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"packetsRequested"];
+	if ([key isEqualToString:@"packetsResentValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"packetsResent"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"framesDroppedValue"]) {
@@ -68,32 +68,6 @@
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic packetsReceived;
-
-
-
-- (long long)packetsReceivedValue {
-	NSNumber *result = [self packetsReceived];
-	return [result longLongValue];
-}
-
-- (void)setPacketsReceivedValue:(long long)value_ {
-	[self setPacketsReceived:[NSNumber numberWithLongLong:value_]];
-}
-
-- (long long)primitivePacketsReceivedValue {
-	NSNumber *result = [self primitivePacketsReceived];
-	return [result longLongValue];
-}
-
-- (void)setPrimitivePacketsReceivedValue:(long long)value_ {
-	[self setPrimitivePacketsReceived:[NSNumber numberWithLongLong:value_]];
-}
-
 
 
 
@@ -124,26 +98,52 @@
 
 
 
-@dynamic framesCompleted;
+@dynamic packetsRequested;
 
 
 
-- (long long)framesCompletedValue {
-	NSNumber *result = [self framesCompleted];
+- (long long)packetsRequestedValue {
+	NSNumber *result = [self packetsRequested];
 	return [result longLongValue];
 }
 
-- (void)setFramesCompletedValue:(long long)value_ {
-	[self setFramesCompleted:[NSNumber numberWithLongLong:value_]];
+- (void)setPacketsRequestedValue:(long long)value_ {
+	[self setPacketsRequested:[NSNumber numberWithLongLong:value_]];
 }
 
-- (long long)primitiveFramesCompletedValue {
-	NSNumber *result = [self primitiveFramesCompleted];
+- (long long)primitivePacketsRequestedValue {
+	NSNumber *result = [self primitivePacketsRequested];
 	return [result longLongValue];
 }
 
-- (void)setPrimitiveFramesCompletedValue:(long long)value_ {
-	[self setPrimitiveFramesCompleted:[NSNumber numberWithLongLong:value_]];
+- (void)setPrimitivePacketsRequestedValue:(long long)value_ {
+	[self setPrimitivePacketsRequested:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic packetsReceived;
+
+
+
+- (long long)packetsReceivedValue {
+	NSNumber *result = [self packetsReceived];
+	return [result longLongValue];
+}
+
+- (void)setPacketsReceivedValue:(long long)value_ {
+	[self setPacketsReceived:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitivePacketsReceivedValue {
+	NSNumber *result = [self primitivePacketsReceived];
+	return [result longLongValue];
+}
+
+- (void)setPrimitivePacketsReceivedValue:(long long)value_ {
+	[self setPrimitivePacketsReceived:[NSNumber numberWithLongLong:value_]];
 }
 
 
@@ -183,6 +183,32 @@
 
 
 
+@dynamic framesCompleted;
+
+
+
+- (long long)framesCompletedValue {
+	NSNumber *result = [self framesCompleted];
+	return [result longLongValue];
+}
+
+- (void)setFramesCompletedValue:(long long)value_ {
+	[self setFramesCompleted:[NSNumber numberWithLongLong:value_]];
+}
+
+- (long long)primitiveFramesCompletedValue {
+	NSNumber *result = [self primitiveFramesCompleted];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveFramesCompletedValue:(long long)value_ {
+	[self setPrimitiveFramesCompleted:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
 @dynamic packetsResent;
 
 
@@ -203,32 +229,6 @@
 
 - (void)setPrimitivePacketsResentValue:(long long)value_ {
 	[self setPrimitivePacketsResent:[NSNumber numberWithLongLong:value_]];
-}
-
-
-
-
-
-@dynamic packetsRequested;
-
-
-
-- (long long)packetsRequestedValue {
-	NSNumber *result = [self packetsRequested];
-	return [result longLongValue];
-}
-
-- (void)setPacketsRequestedValue:(long long)value_ {
-	[self setPacketsRequested:[NSNumber numberWithLongLong:value_]];
-}
-
-- (long long)primitivePacketsRequestedValue {
-	NSNumber *result = [self primitivePacketsRequested];
-	return [result longLongValue];
-}
-
-- (void)setPrimitivePacketsRequestedValue:(long long)value_ {
-	[self setPrimitivePacketsRequested:[NSNumber numberWithLongLong:value_]];
 }
 
 
@@ -313,13 +313,6 @@
 
 
 
-@dynamic captureSession;
-
-	
-
-@dynamic cameraDevice;
-
-	
 
 
 

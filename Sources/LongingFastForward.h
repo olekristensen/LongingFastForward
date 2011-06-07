@@ -9,6 +9,7 @@
 
 
 #import "LFFCameraDevice.h"
+#import "LFFCameraDeviceStats.h"
 #import "LFFCameraAngleSettings.h"
 #import "LFFImageHDR.h"
 #import "LFFCameraAngle.h"
@@ -25,3 +26,5 @@
 #import "LFFCameraProfile.h"
 #import "LFFImageLDRCameraSettings.h"
 #import "LFFCaptureSession.h"
+#import "LFFCaptureSessionStats.h"
+#import "LFFController.h"

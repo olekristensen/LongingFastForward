@@ -10,6 +10,7 @@
 @interface LFFResearchStationCameraSettingsID : NSManagedObjectID {}
 @end
 
+
 @interface _LFFResearchStationCameraSettings : LFFCameraSettings {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -19,8 +20,8 @@
 
 
 
-@property (nonatomic, retain) LFFResearchStation* researchStaion;
-//- (BOOL)validateResearchStaion:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) LFFResearchStation* researchStation;
+//- (BOOL)validateResearchStation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -35,8 +36,9 @@
 
 
 
-- (LFFResearchStation*)primitiveResearchStaion;
-- (void)setPrimitiveResearchStaion:(LFFResearchStation*)value;
+- (LFFResearchStation*)primitiveResearchStation;
+- (void)setPrimitiveResearchStation:(LFFResearchStation*)value;
+
 
 
 @end
