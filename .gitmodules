@@ -4,3 +4,6 @@
 [submodule "Tools/mogenerator"]
 	path = Tools/mogenerator
 	url = git://github.com/rentzsch/mogenerator.git
+[submodule "Experiments/prosilicaAlternatingExposureSketch"]
+	path = Experiments/prosilicaAlternatingExposureSketch
+	url = git@github.com:olekristensen/prosilicaAlternatingExposureSketch.git
