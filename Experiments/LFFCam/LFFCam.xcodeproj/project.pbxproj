@@ -1,0 +1,211 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F7AF79D159308A600112D47 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7AF79C159308A600112D47 /* main.cpp */; };
+		7F7AF79F159308A600112D47 /* LFFCam.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F7AF79E159308A600112D47 /* LFFCam.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7F7AF796159308A600112D47 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				7F7AF79F159308A600112D47 /* LFFCam.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7F7AF798159308A600112D47 /* LFFCam */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LFFCam; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F7AF79C159308A600112D47 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7F7AF79E159308A600112D47 /* LFFCam.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LFFCam.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F7AF795159308A600112D47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7F7AF78D159308A500112D47 = {
+			isa = PBXGroup;
+			children = (
+				7F7AF79B159308A600112D47 /* LFFCam */,
+				7F7AF799159308A600112D47 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F7AF799159308A600112D47 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F7AF798159308A600112D47 /* LFFCam */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F7AF79B159308A600112D47 /* LFFCam */ = {
+			isa = PBXGroup;
+			children = (
+				7F7AF79C159308A600112D47 /* main.cpp */,
+				7F7AF79E159308A600112D47 /* LFFCam.1 */,
+			);
+			path = LFFCam;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7F7AF797159308A600112D47 /* LFFCam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F7AF7A2159308A600112D47 /* Build configuration list for PBXNativeTarget "LFFCam" */;
+			buildPhases = (
+				7F7AF794159308A600112D47 /* Sources */,
+				7F7AF795159308A600112D47 /* Frameworks */,
+				7F7AF796159308A600112D47 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LFFCam;
+			productName = LFFCam;
+			productReference = 7F7AF798159308A600112D47 /* LFFCam */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F7AF78F159308A500112D47 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Recoil Performance Group";
+			};
+			buildConfigurationList = 7F7AF792159308A500112D47 /* Build configuration list for PBXProject "LFFCam" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7F7AF78D159308A500112D47;
+			productRefGroup = 7F7AF799159308A600112D47 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7F7AF797159308A600112D47 /* LFFCam */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F7AF794159308A600112D47 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F7AF79D159308A600112D47 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7F7AF7A0159308A600112D47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7F7AF7A1159308A600112D47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7F7AF7A3159308A600112D47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7F7AF7A4159308A600112D47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F7AF792159308A500112D47 /* Build configuration list for PBXProject "LFFCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F7AF7A0159308A600112D47 /* Debug */,
+				7F7AF7A1159308A600112D47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F7AF7A2159308A600112D47 /* Build configuration list for PBXNativeTarget "LFFCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F7AF7A3159308A600112D47 /* Debug */,
+				7F7AF7A4159308A600112D47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F7AF78F159308A500112D47 /* Project object */;
+}
