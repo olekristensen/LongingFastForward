@@ -20,6 +20,8 @@
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		7F2240671586D62400ACAD6E /* debayer_vert.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 7F2240661586D62400ACAD6E /* debayer_vert.glsl */; };
 		7F2240691586D65900ACAD6E /* debayer_frag.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 7F2240681586D65900ACAD6E /* debayer_frag.glsl */; };
+		7F50DFD7159B724A00C487A2 /* libImagelib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F50DFD5159B724A00C487A2 /* libImagelib.a */; };
+		7F50DFD8159B724A00C487A2 /* libPvAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F50DFD6159B724A00C487A2 /* libPvAPI.a */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,11 @@
 		7F2240661586D62400ACAD6E /* debayer_vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debayer_vert.glsl; path = ../resources/debayer_vert.glsl; sourceTree = "<group>"; };
 		7F2240681586D65900ACAD6E /* debayer_frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debayer_frag.glsl; path = ../resources/debayer_frag.glsl; sourceTree = "<group>"; };
 		7F22406A1586D83500ACAD6E /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		7F50DFD0159B724A00C487A2 /* ImageLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLib.h; sourceTree = "<group>"; };
+		7F50DFD1159B724A00C487A2 /* PvApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvApi.h; sourceTree = "<group>"; };
+		7F50DFD2159B724A00C487A2 /* PvRegIo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PvRegIo.h; sourceTree = "<group>"; };
+		7F50DFD5159B724A00C487A2 /* libImagelib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libImagelib.a; sourceTree = "<group>"; };
+		7F50DFD6159B724A00C487A2 /* libPvAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPvAPI.a; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* lffCinderCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lffCinderCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -62,6 +69,8 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+				7F50DFD7159B724A00C487A2 /* libImagelib.a in Frameworks */,
+				7F50DFD8159B724A00C487A2 /* libPvAPI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +123,7 @@
 		29B97314FDCFA39411CA2CEA /* lffCinderCapture */ = {
 			isa = PBXGroup;
 			children = (
+				7F50DFCC159B724A00C487A2 /* lib */,
 				29B97315FDCFA39411CA2CEA /* Headers */,
 				080E96DDFE201D6D7F000001 /* Source */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -150,6 +160,58 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F50DFCC159B724A00C487A2 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFCD159B724A00C487A2 /* PvApi */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		7F50DFCD159B724A00C487A2 /* PvApi */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFCE159B724A00C487A2 /* include */,
+				7F50DFD3159B724A00C487A2 /* lib */,
+			);
+			path = PvApi;
+			sourceTree = "<group>";
+		};
+		7F50DFCE159B724A00C487A2 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFCF159B724A00C487A2 /* PvApi */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		7F50DFCF159B724A00C487A2 /* PvApi */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFD0159B724A00C487A2 /* ImageLib.h */,
+				7F50DFD1159B724A00C487A2 /* PvApi.h */,
+				7F50DFD2159B724A00C487A2 /* PvRegIo.h */,
+			);
+			path = PvApi;
+			sourceTree = "<group>";
+		};
+		7F50DFD3159B724A00C487A2 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFD4159B724A00C487A2 /* macosx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		7F50DFD4159B724A00C487A2 /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				7F50DFD5159B724A00C487A2 /* libImagelib.a */,
+				7F50DFD6159B724A00C487A2 /* libPvAPI.a */,
+			);
+			path = macosx;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,11 +293,15 @@
 				GCC_PREFIX_HEADER = lffCinderCapture_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(CINDER_PATH)/blocks/pvApi/include/PvApi/\"",
+					"\"$(SRCROOT)/lib/PvApi/include/PvApi\"",
 					"\"$(CINDER_PATH)/boost\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib/PvApi/lib/macosx\"",
+				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/blocks/pvApi/lib/macosx/libImagelib.a\"",
 					"\"$(CINDER_PATH)/blocks/pvApi/lib/macosx/libPvAPI.a\"",
@@ -261,11 +327,15 @@
 				GCC_PREFIX_HEADER = lffCinderCapture_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(CINDER_PATH)/blocks/pvApi/include/PvApi/\"",
+					"\"$(SRCROOT)/lib/PvApi/include/PvApi\"",
 					"\"$(CINDER_PATH)/boost\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib/PvApi/lib/macosx\"",
+				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/blocks/pvApi/lib/macosx/libImagelib.a\"",
 					"\"$(CINDER_PATH)/blocks/pvApi/lib/macosx/libPvAPI.a\"",
