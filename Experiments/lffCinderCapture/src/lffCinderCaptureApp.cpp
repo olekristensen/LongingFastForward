@@ -18,6 +18,7 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/Camera.h"
 #include <iostream>
+#include <Accelerate/Accelerate.h>
 
 #include "Resources.h"
 
@@ -30,7 +31,7 @@
 
 #define CAMERA_FRAMES_COUNT 10
 
-#define SERIAL_BUFSIZE 512
+#define SERIAL_BUFSIZE 64
 #define SERIAL_READ_INTERVAL 0.25
 
 #define USHORT unsigned short
@@ -118,6 +119,8 @@ public:
     bool drawPixels = false;
     
     float * displayPixels;
+    
+    vImage_Buffer imageBuffer;
     
     unsigned char * ldrData;
     unsigned char*  ldrPixels;
@@ -424,7 +427,12 @@ void CameraStop()
     
     //Add delay between AcquisitionStop and PvCaptureQueueClear
 	//to give actively written frame time to complete
-	usleep(200*1000);
+
+    printf("Waiting for frame to complete");
+    for (int i = 0; i < 10; i++) {
+        printf(".");
+        usleep(100*1000);
+    }
 	
     //clear queued frames. will block until all frames dequeued
 	if ((errCode = PvCaptureQueueClear(GCamera.Handle)) != ePvErrSuccess)
@@ -545,11 +553,12 @@ void lffCinderCaptureApp::setup()
     
     setWindowPos(0, 20);
     setWindowSize(1920, 1080);
+    setFrameRate(-1);
     
     gl::enableDepthRead( false ); 
     gl::enableAlphaTest( false );
     gl::enableDepthWrite( false );
-    gl::enableVerticalSync( true );
+    gl::enableVerticalSync( false );
     
     ctr = 'R';
 	lastString = "";
@@ -619,6 +628,11 @@ void lffCinderCaptureApp::setup()
     displayPixels = new float[cameraWidth*cameraHeight];
     memset(displayPixels, 0.0, cameraWidth*cameraHeight);
     
+    imageBuffer.data = displayPixels;
+    imageBuffer.width = cameraWidth;
+    imageBuffer.height = cameraHeight;
+    imageBuffer.rowBytes = cameraWidth*4;
+
     hdrChannel = Channel32f( cameraWidth, cameraHeight, cameraWidth*4, 1, (float *)displayPixels );
     hdrTexture = gl::Texture( hdrChannel );
     
@@ -721,18 +735,18 @@ void lffCinderCaptureApp::update()
             }
             
         }        
-        pthread_mutex_lock(&pixelsMutex);
-        if(newPixels){
+        //pthread_mutex_lock(&pixelsMutex);
+        //if(newPixels){
             hdrTexture.update( hdrChannel ); 
             //        ldrTexture.update( ldrChannel, Area(0,0,cameraWidth,cameraHeight) );    
             console() << "Updated:\t" << ++numberUpdatedFrames << endl;
             newPixels = false;
             lastUpdatedBracket = justUpdatedBracket;
             justUpdatedBracket = (currentFrameCount-1)%bracketedExposuresCount;
-            renderSceneToFbo(justUpdatedBracket);
+            //renderSceneToFbo(justUpdatedBracket);
             
-        }
-        pthread_mutex_unlock(&pixelsMutex);
+        //}
+        //pthread_mutex_unlock(&pixelsMutex);
         
     }
     
@@ -750,7 +764,7 @@ void lffCinderCaptureApp::update()
 	if (bSendSerialMessage)
 	{
 		// request next chunk
-		serial.writeByte('S');
+		serial.writeByte('K');
 		
 		try{
 			// read until newline, to a maximum of BUFSIZE bytes
@@ -767,6 +781,7 @@ void lffCinderCaptureApp::update()
 		serial.flush();
 	}
     std::flush(console());
+    console()<< "FPS: " << getAverageFps() << endl;
 }
 
 void lffCinderCaptureApp::draw()
@@ -781,8 +796,11 @@ void lffCinderCaptureApp::draw()
 	// use the scene we rendered into the FBO as a texture
 	// glEnable( GL_TEXTURE_2D );
     
-    float windowWidth = ((getWindowWidth()-(10*(1+bracketedExposuresCount)))*(1.0/bracketedExposuresCount));
+    /**
+     float windowWidth = ((getWindowWidth()-(10*(1+bracketedExposuresCount)))*(1.0/bracketedExposuresCount));
     float windowHeight = windowWidth*(1.0*cameraHeight/cameraWidth);
+  
+    
     for(int i = 0; i < bracketedExposuresCount; i++){
         gl::draw( hdrFbos[i].getTexture(0), Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
         gl::enableAlphaBlending( PREMULT );
@@ -799,6 +817,7 @@ void lffCinderCaptureApp::draw()
         }
         
     }
+**/
     
     params::InterfaceGl::draw();
     
@@ -871,19 +890,29 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
         
         const float K = 1.0 / 0xFFF;
         
-        pthread_mutex_lock(&pixelsMutex);
+        //pthread_mutex_lock(&pixelsMutex);
         newPixels = true;
-        for( int i = 0; i < pFrame->Width * pFrame->Height; i++)
-        {
-            displayPixels[i] = K * pFrom[i];
-        }
         
+        vImage_Buffer fromPixels;
+        
+        fromPixels.data = pFrom;
+        fromPixels.width = pFrame->Width;
+        fromPixels.height = pFrame->Height;
+        fromPixels.rowBytes = pFrame->Width*2;
+        
+        vImageConvert_16UToF (&fromPixels,
+                                           &imageBuffer,
+                                           0,
+                                           K,
+                                           kvImageNoFlags
+                                           );
+
         currentFrameCount = pFrame->FrameCount;
         //printf("Converted: %ul \t%i \t%i \t%i\n", ++numberCapturedFrames, pFrame->FrameCount, pFrame->FrameCount%bracketedExposuresCount, *(int*)(pFrame->Context[1]));
         
         //pvFrameAncillaryData* aBuffer= (pvFrameAncillaryData*)pFrame->AncillaryBuffer;
         
-        pthread_mutex_unlock(&pixelsMutex);
+        //pthread_mutex_unlock(&pixelsMutex);
         
         delete (UCHAR*)lFrame.ImageBuffer;
         
@@ -939,6 +968,7 @@ void lffCinderCaptureApp::renderSceneToFbo(int whichFbo)
     
 	gl::SaveFramebufferBinding bindingSaver;
 
+   /**
     char * frameLabel = new char[20];
     std::sprintf(frameLabel, "Bracket %i", whichFbo);
     
@@ -947,7 +977,8 @@ void lffCinderCaptureApp::renderSceneToFbo(int whichFbo)
     layout.setColor( Color( 1.0, 1.0, 1.0 ) );
     layout.addLine(frameLabel);
     textTextures[whichFbo] = gl::Texture(layout.render( true ) ) ;
-
+    
+    **/
 	// bind the framebuffer - now everything we draw will go there
 	hdrFbos[whichFbo].bindFramebuffer();
     
@@ -956,7 +987,7 @@ void lffCinderCaptureApp::renderSceneToFbo(int whichFbo)
         
     renderHdrTexture();
     
-    gl::draw(textTextures[whichFbo], hdrFbos[whichFbo].getBounds());
+   // gl::draw(textTextures[whichFbo], hdrFbos[whichFbo].getBounds());
     
     hdrFbos[whichFbo].unbindFramebuffer();
     
