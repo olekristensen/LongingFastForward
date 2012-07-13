@@ -5,11 +5,11 @@
 //  Created by Ole Kristensen on 13/07/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
+#include <iostream>
 
 #include "BracketBuffer.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
-#include <iostream>
 
 
 BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
@@ -20,6 +20,13 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     width = _width;
     height = _height;
     
+    pixels16U = new USHORT [width * height];
+    memset(pixels16U, 0xFFFF, width*height);
+    vImage16U.data = pixels16U;
+    vImage16U.width = width;
+    vImage16U.height = height;
+    vImage16U.rowBytes = width*2;
+    
     pixelsFloat = new float [width * height];
     memset(pixelsFloat, 0.0, width*height);
     vImageFloat.data = pixelsFloat;
@@ -27,17 +34,14 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     vImageFloat.height = height;
     vImageFloat.rowBytes = width*4;
     
-    pixels16U = new USHORT [width * height];
-    memset(pixels16U, 0xFFFF, width*height);
-    vImage16U.data = pixelsFloat;
-    vImage16U.width = width;
-    vImage16U.height = height;
-    vImage16U.rowBytes = width*4;
+    channel = cinder::Channel32f(vImageFloat.width, vImageFloat.height, vImageFloat.rowBytes, 1, pixelsFloat);
+    texture = cinder::gl::Texture(channel);
     
-    
+    needsUpdate = true;
+        
 }
 
-void BracketBuffer::update(tPvFrame * pFrame)
+void BracketBuffer::load(tPvFrame * pFrame)
 {
     
     // make temporary frame
@@ -82,9 +86,6 @@ void BracketBuffer::update(tPvFrame * pFrame)
         }
         
         
-        pDest = (USHORT*)pvFrame.ImageBuffer;
-        pDestEnd = pDest + (pFrame->Width * pFrame->Height);
-        
         // convert to float for display
         
         const float K = 1.0 / 0xFFF;
@@ -94,8 +95,20 @@ void BracketBuffer::update(tPvFrame * pFrame)
                               0,
                               K,
                               kvImageNoFlags);
+    
+        frameNumber = pFrame->FrameCount;
+    
+        needsUpdate = true;
     }
     
+}
+
+void BracketBuffer::update()
+{
+    if(needsUpdate){    
+        texture.update(channel);
+        needsUpdate =false;
+    }
 }
 
 void BracketBuffer::saveFrame(char * filename){

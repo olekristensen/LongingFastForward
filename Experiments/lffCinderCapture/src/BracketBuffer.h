@@ -11,6 +11,7 @@
 
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
+#include "cinder/Channel.h"
 
 class BracketBuffer {
     
@@ -20,7 +21,9 @@ public:
     
     ~BracketBuffer();
 
-    void update(tPvFrame * pFrame);
+    void load(tPvFrame * pFrame);
+    void update();
+    void draw();
     void saveFrame(char * filename);
     
     tPvFrame pvFrame;
@@ -34,11 +37,14 @@ public:
     unsigned long frameNumber;
     int bracketIndex;
     unsigned long exposureMicroseconds;
+    
+    cinder::Channel32f  channel;
     cinder::gl::Texture texture;
-    cinder::gl::Fbo     fbo;
     
     int width;
     int height;
+    
+    bool needsUpdate;
     
     
 };

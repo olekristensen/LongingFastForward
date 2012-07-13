@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "363856421.665721"
+         timestampString = "363873000.380847"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1026"
-         endingLineNumber = "1026">
+         startingLineNumber = "888"
+         endingLineNumber = "888">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
