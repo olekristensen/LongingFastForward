@@ -5,3 +5,30 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 #endif
+
+#define _x86
+#define _OSX
+
+#include <PvApi.h>
+#include <ImageLib.h>
+#include <Accelerate/Accelerate.h>
+
+
+#pragma mark Defines
+
+#define USHORT unsigned short
+#define ULONG  unsigned long
+#define UCHAR  unsigned char
+
+#define ASSERT(x)	        assert(x)
+#define ULONG_PADDING(x)    (((x+3) & ~3) - x)
+
+
+// Packed 12 bit pixels
+typedef struct {
+    
+    unsigned char LByte;
+    unsigned char MByte;
+    unsigned char UByte;
+    
+} Packed12BitsPixel_t;

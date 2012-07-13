@@ -1,45 +1,33 @@
-#pragma mark Includes
+
+#include "cinder/app/AppBasic.h"
+#include "cinder/Serial.h"
+#include "cinder/params/Params.h"
+#include "cinder/Text.h"
+#include "cinder/gl/GlslProg.h"
+#include "cinder/ImageIo.h"
+#include "cinder/Utilities.h"
+#include "cinder/gl/gl.h"
+#include "cinder/gl/Fbo.h"
+#include "cinder/gl/Texture.h"
+#include "boost/format.hpp"
 
 #include <unistd.h>
 #include <time.h>
 
-#define _x86
-#define _OSX
-#include <PvApi.h>
-#include <ImageLib.h>
+#include <dispatch/dispatch.h>
+#include <ApplicationServices/ApplicationServices.h>
 
-#include "cinder/app/AppBasic.h"
-#include "cinder/Serial.h"
-#include "cinder/gl/gl.h"
-#include "cinder/params/Params.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/gl/GlslProg.h"
-#include "cinder/Text.h"
-#include "cinder/gl/Fbo.h"
-#include "cinder/Camera.h"
-#include <iostream>
-#include <Accelerate/Accelerate.h>
-
+#include "BracketBuffer.h"
 #include "Resources.h"
 
-//#include <stdio.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
 
 #pragma mark Defines
 
 #define CAMERA_FRAMES_COUNT 10
+#define CAMERA_STATUS_TEXT_SIZE 512
 
-#define SERIAL_BUFSIZE 64
+#define SERIAL_BUFSIZE 1024
 #define SERIAL_READ_INTERVAL 0.25
-
-#define USHORT unsigned short
-#define ULONG  unsigned long
-#define UCHAR  unsigned char
-
-#define ASSERT(x)	        assert(x)
-#define ULONG_PADDING(x)    (((x+3) & ~3) - x)
 
 static const bool PREMULT = false;
 
@@ -68,15 +56,6 @@ typedef struct {
     uint32_t chunkLength;
 } pvFrameAncillaryData;
 
-// Packed 12 bit pixels
-typedef struct {
-    
-    unsigned char LByte;
-    unsigned char MByte;
-    unsigned char UByte;
-    
-} Packed12BitsPixel_t;
-
 // Camera's data
 typedef struct 
 {
@@ -86,8 +65,21 @@ typedef struct
     tPvUint32       Counter;
     pthread_t       ThHandle;
 	bool            Abort;
+    unsigned long   FrameCompleted;
+    unsigned long   FrameDropped;
+    unsigned long   PacketReceived;
+    unsigned long   PacketMissed;
+    char            StatusText[CAMERA_STATUS_TEXT_SIZE];
+    float           FrameRate;
 } tCamera;
 
+enum frameState {
+    FRAME_STATE_QUEUED = 0,
+    FRAME_STATE_PROCESSING = 1
+};
+
+frameState gFramestateQueued = FRAME_STATE_QUEUED;
+frameState gFramestateProcessing = FRAME_STATE_PROCESSING;
 
 #pragma mark Classes
 
@@ -104,36 +96,28 @@ public:
 	void draw();
     
     void processFrame( tPvFrame* pFrame );
-    
     void renderSceneToFbo(int whichFbo);
-    
     void renderHdrTexture();
     
-    vector <gl::Fbo> hdrFbos;
+    vector <BracketBuffer*> bracketBuffers;
     
+    vector <gl::Fbo> hdrFbos;
+
     params::InterfaceGl	mParams;
     
     void keyDown( KeyEvent event );
     
-    bool newPixels = false;
-    bool drawPixels = false;
-    
     float * displayPixels;
     
-    vImage_Buffer imageBuffer;
+    vImage_Buffer displayBuffer;
     
-    unsigned char * ldrData;
-    unsigned char*  ldrPixels;
-    
+    Surface32f hdrSurface;
     Channel32f hdrChannel;
-    Channel ldrChannel;
     
     gl::Texture hdrTexture;
-    gl::Texture ldrTexture;
     
     gl::GlslProg hdrDebayerShader;
     
-    int bracketedExposuresCount;
     int currentFrameCount;
     int justUpdatedBracket;
     int lastUpdatedBracket;
@@ -144,6 +128,16 @@ public:
     int cameraHeight;
     
     int cameraGain;
+    int cameraNumberBrackets;
+    int cameraBracketEv;
+    unsigned long cameraBaseExposure;
+    
+    std::string sendSerialCommand(const std::string _command);
+    
+    void setCameraNumberBrackets(int _numberBrackets);
+    void setCameraBracketEv(int _bracketEv);
+    void setCameraBaseExposure(unsigned long _baseExposure);
+    void printCameraParameters();
     
     bool		bSendSerialMessage;			// a flag for sending serial
 	Serial serial;
@@ -153,7 +147,6 @@ public:
 	gl::Texture	mTexture;
 	
 	double sinceLastRead, lastUpdate;
-    
     
     unsigned long numberDrawnFrames = 0ul;
     unsigned long numberUpdatedFrames = 0ul;
@@ -177,8 +170,6 @@ lffCinderCaptureApp * theApp;
 //Thread start function. Displays camera stats.
 void *ThreadFunc(void *pContext)
 {
-    unsigned long FrameCompleted, FrameDropped, PacketReceived, PacketMissed;
-    float FrameRate;
     tPvErr Err;
     
     //StatFramesCompleted increments when a queued frame returns with tPvFrame.Status = ePvErrSuccess
@@ -188,14 +179,16 @@ void *ThreadFunc(void *pContext)
 	//for what frame is being returned from the camera. See CameraStart, where we check this parameter,
 	//for the case where a frame is returned from camera with no frame queued on host.
 	while(!GCamera.Abort &&
-          ((Err = PvAttrUint32Get(GCamera.Handle,"StatFramesCompleted",&FrameCompleted)) == ePvErrSuccess) &&
-          ((Err = PvAttrUint32Get(GCamera.Handle,"StatFramesDropped",&FrameDropped)) == ePvErrSuccess) &&
-		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsMissed",&PacketMissed)) == ePvErrSuccess) &&
-		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsReceived",&PacketReceived)) == ePvErrSuccess) &&
-          ((Err = PvAttrFloat32Get(GCamera.Handle,"StatFrameRate",&FrameRate)) == ePvErrSuccess))
+          ((Err = PvAttrUint32Get(GCamera.Handle,"StatFramesCompleted",&GCamera.FrameCompleted)) == ePvErrSuccess) &&
+          ((Err = PvAttrUint32Get(GCamera.Handle,"StatFramesDropped",&GCamera.FrameDropped)) == ePvErrSuccess) &&
+		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsMissed",&GCamera.PacketMissed)) == ePvErrSuccess) &&
+		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsReceived",&GCamera.PacketReceived)) == ePvErrSuccess) &&
+          ((Err = PvAttrFloat32Get(GCamera.Handle,"StatFrameRate",&GCamera.FrameRate)) == ePvErrSuccess))
     {
-        printf("FrmCmp : %5lu  FrmDrp : %5lu PckCmp : %5lu PckMss : %5lu FrmRt : %5.2f\n", FrameCompleted, FrameDropped, PacketReceived, PacketMissed, FrameRate);
-		usleep(200*1000);
+        memset(GCamera.StatusText, 0, CAMERA_STATUS_TEXT_SIZE);
+        std::sprintf(GCamera.StatusText, "FrmCmp : %10lu  FrmDrp : %5lu  PckCmp : %5lu PckMiss : %5lu  FrmRt : %5.2f\r", GCamera.FrameCompleted, GCamera.FrameDropped, GCamera.PacketReceived, GCamera.PacketMissed, GCamera.FrameRate);
+        printf(GCamera.StatusText);
+		usleep(20*1000);
 	}
     
     return 0;
@@ -243,6 +236,7 @@ void FrameDoneCB(tPvFrame* pFrame)
         
         if(pFrame->Status == ePvErrSuccess)
         {
+            pFrame->Context[0] = &gFramestateProcessing;
             theApp->processFrame(pFrame);
         }
         else
@@ -252,7 +246,7 @@ void FrameDoneCB(tPvFrame* pFrame)
             else
                 printf("Frame.Status error: %u\n",pFrame->Status);
         }
-        
+        pFrame->Context[0] = &gFramestateQueued;
         PvCaptureQueueFrame(GCamera.Handle,pFrame,FrameDoneCB);
     }
 }
@@ -427,7 +421,7 @@ void CameraStop()
     
     //Add delay between AcquisitionStop and PvCaptureQueueClear
 	//to give actively written frame time to complete
-
+    
     printf("Waiting for frame to complete");
     for (int i = 0; i < 10; i++) {
         printf(".");
@@ -552,7 +546,7 @@ void lffCinderCaptureApp::setup()
     theApp = this;
     
     setWindowPos(0, 20);
-    setWindowSize(1920, 1080);
+    setWindowSize(800, 600);
     setFrameRate(-1);
     
     gl::enableDepthRead( false ); 
@@ -560,12 +554,21 @@ void lffCinderCaptureApp::setup()
     gl::enableDepthWrite( false );
     gl::enableVerticalSync( false );
     
+    // init dynamic camera properties
+    
+    cameraWidth = 1920;
+	cameraHeight = 1080;
+    cameraGain = 0;
+    
+    cameraNumberBrackets = 6;
+    cameraBracketEv = 4;
+    cameraBaseExposure = 150ul;
+	
+    bSendSerialMessage = false;
     ctr = 'R';
 	lastString = "";
 	sinceLastRead = 0.0;
 	lastUpdate = 0.0;
-	
-	bSendSerialMessage = false;
     
     // print the devices
 	const vector<Serial::Device> &devices( Serial::getDevices() );
@@ -581,28 +584,20 @@ void lffCinderCaptureApp::setup()
 		console() << "There was an error initializing the serial device!" << std::endl;
 		quit();
 	}
-	
-    /*	// wait for * as a sign for first contact
-     char contact = 0;
-     while(contact != '*')
-     {
-     contact = (char) serial.readByte();
-     }
-     
-     */
-	// request actual data
-	serial.writeByte(ctr);
-	
-	// clear accumulated contact messages in buffer
-	char b = '*';
-	while(serial.getNumBytesAvailable() > -1)
-	{
-		b = serial.readByte();
-		console() << b << "_";
-	}
-	serial.flush();
+    
+    serial.flush();
+        
+    usleep(1000*2000); // wait for the port to be ready
+    
+    //set camera parameters
+    
+    setCameraBracketEv(cameraBracketEv);
+    setCameraNumberBrackets(cameraNumberBrackets);
+    setCameraBaseExposure(cameraBaseExposure);
+    printCameraParameters();    
     
     // load shader
+
 	try {
 		hdrDebayerShader = gl::GlslProg( loadResource( RES_DEBAYER_VERT ), loadResource( RES_DEBAYER_FRAG ) );
 	}
@@ -614,44 +609,28 @@ void lffCinderCaptureApp::setup()
 		std::cout << "Unable to load shader" << std::endl;
 	}
     
-    // make text overlays
-    
-    
-    // init dynamic camera properties
-    
-    cameraWidth = 1920;
-	cameraHeight = 1080;
-    cameraGain = 0;
-	
     // make pixel buffers
     
     displayPixels = new float[cameraWidth*cameraHeight];
-    memset(displayPixels, 0.0, cameraWidth*cameraHeight);
+    memset(displayPixels, 0.5, cameraWidth*cameraHeight*4);
     
-    imageBuffer.data = displayPixels;
-    imageBuffer.width = cameraWidth;
-    imageBuffer.height = cameraHeight;
-    imageBuffer.rowBytes = cameraWidth*4;
+    displayBuffer.data = displayPixels;
+    displayBuffer.width = cameraWidth;
+    displayBuffer.height = cameraHeight;
+    displayBuffer.rowBytes = cameraWidth*4;
+    
+    hdrChannel = Channel32f(cameraWidth, cameraHeight, cameraWidth*4, 1, displayPixels);
+    hdrTexture = gl::Texture(hdrChannel);
 
-    hdrChannel = Channel32f( cameraWidth, cameraHeight, cameraWidth*4, 1, (float *)displayPixels );
-    hdrTexture = gl::Texture( hdrChannel );
+    for(int i = 0;i<cameraNumberBrackets;i++){
+        bracketBuffers.push_back(new BracketBuffer(cameraWidth, cameraHeight, i+1));
+    }
     
-    unsigned long colorPixelLength = cameraWidth * cameraHeight * 4;
-    
-    ldrData = (unsigned char*) malloc(colorPixelLength);
-    memset(ldrData, 0xDD, colorPixelLength);
-    ldrPixels  = ldrData + (cameraWidth * cameraHeight);
-    memset(ldrPixels, 0x0F, colorPixelLength-(cameraWidth * cameraHeight));
-    ldrChannel = Channel8u( cameraWidth, cameraHeight, cameraWidth, 1, (unsigned char *) ldrData );
-    ldrTexture = gl::Texture( ldrChannel );
-    
-    bracketedExposuresCount = 5;
-    
+    // make text overlays
+
     gl::Fbo::Format hdrFormat;
     hdrFormat.enableDepthBuffer( false );
-    
-    //hdrFormat.setColorInternalFormat( hdrTexture.getInternalFormat() );
-    for(int i = 0;i<bracketedExposuresCount;i++){
+    for(int i = 0;i<cameraNumberBrackets;i++){
         hdrFbos.push_back(gl::Fbo( cameraWidth, cameraHeight, hdrFormat ));
         TextLayout layout;
         layout.setFont( Font( "Lucida Grande", 16 ) );
@@ -660,6 +639,12 @@ void lffCinderCaptureApp::setup()
         textTextures.push_back( gl::Texture( layout.render( true ) ) );
     }
     
+    TextLayout layout;
+    layout.setFont( Font( "Lucida Grande", 16 ) );
+    layout.setColor( Color( 1.0, 1.0, 1.0 ) );
+    layout.addLine("Waiting for camera");
+    textTextures.push_back( gl::Texture( layout.render( true ) ) );
+        
     // init mutex
     
     pthread_mutex_init(&pixelsMutex,PTHREAD_MUTEX_NORMAL);
@@ -672,7 +657,7 @@ void lffCinderCaptureApp::setup()
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 175, 100 ) );
 	mParams.addParam( "Gain", &cameraGain, "min=0 max=34 step=1 keyIncr=g keyDecr=G" );
     mParams.hide();
-    
+            
 }
 
 void lffCinderCaptureApp::keyDown( KeyEvent event )
@@ -735,53 +720,26 @@ void lffCinderCaptureApp::update()
             }
             
         }        
-        //pthread_mutex_lock(&pixelsMutex);
-        //if(newPixels){
-            hdrTexture.update( hdrChannel ); 
-            //        ldrTexture.update( ldrChannel, Area(0,0,cameraWidth,cameraHeight) );    
-            console() << "Updated:\t" << ++numberUpdatedFrames << endl;
-            newPixels = false;
-            lastUpdatedBracket = justUpdatedBracket;
-            justUpdatedBracket = (currentFrameCount-1)%bracketedExposuresCount;
-            //renderSceneToFbo(justUpdatedBracket);
-            
-        //}
-        //pthread_mutex_unlock(&pixelsMutex);
         
+        hdrTexture.update(hdrChannel);
+        
+        TextLayout layout;
+        layout.setFont( Font( "Lucida Grande", 16 ) );
+        layout.setColor( Color( 1.0, 1.0, 1.0 ) );
+        layout.addLine(str( boost::format("Frames Completed: %1%") % GCamera.FrameCompleted ));
+        layout.addLine(str( boost::format("Frames Dropped: %1%") % GCamera.FrameDropped ));
+        layout.addLine(str( boost::format("Packets Received: %1%") % GCamera.PacketReceived ));
+        layout.addLine(str( boost::format("Packets Missed: %1%") % GCamera.PacketMissed ));
+        layout.addLine(str( boost::format("Camera Framerate: %1%") % GCamera.FrameRate ));
+        layout.addLine(str( boost::format("Screen FPS: %1%") % getAverageFps() ));
+        
+        
+        layout.addLine("Camera frames:" );
+        textTextures[cameraNumberBrackets] = gl::Texture(layout.render( true ) );
+
+        //renderSceneToFbo(0);
+
     }
-    
-    double now = getElapsedSeconds();
-	double deltaTime = now - lastUpdate;
-	lastUpdate = now;
-	sinceLastRead += deltaTime;
-	
-	if(sinceLastRead > SERIAL_READ_INTERVAL)
-	{
-		bSendSerialMessage = true;
-		sinceLastRead = 0.0;
-	}
-	
-	if (bSendSerialMessage)
-	{
-		// request next chunk
-		serial.writeByte('K');
-		
-		try{
-			// read until newline, to a maximum of BUFSIZE bytes
-			lastString = serial.readStringUntil('\n', SERIAL_BUFSIZE );
-            
-		} catch(SerialTimeoutExc e) {
-			console() << "timeout" << endl;
-		}
-		
-		bSendSerialMessage = false;
-		
-		console() << lastString << endl;
-		
-		serial.flush();
-	}
-    std::flush(console());
-    console()<< "FPS: " << getAverageFps() << endl;
 }
 
 void lffCinderCaptureApp::draw()
@@ -791,57 +749,68 @@ void lffCinderCaptureApp::draw()
     gl::clear( Color( 0, 0, 0 ) );
     gl::color(1.0, 1.0, 1.0);
     
+    /*
+    gl::Texture myTexture(hdrFbos[0].getTexture(0));
+    myTexture.setFlipped(true);
+    gl::draw( myTexture , Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
+*/
     renderHdrTexture();
-	
+    
 	// use the scene we rendered into the FBO as a texture
 	// glEnable( GL_TEXTURE_2D );
     
-    /**
-     float windowWidth = ((getWindowWidth()-(10*(1+bracketedExposuresCount)))*(1.0/bracketedExposuresCount));
-    float windowHeight = windowWidth*(1.0*cameraHeight/cameraWidth);
-  
+    /*
+     float windowWidth = ((getWindowWidth()-(10*(1+cameraNumberBrackets)))*(1.0/cameraNumberBrackets));
+     float windowHeight = windowWidth*(1.0*cameraHeight/cameraWidth);
+     
+     
+     for(int i = 0; i < cameraNumberBrackets; i++){
+     gl::draw( hdrFbos[i].getTexture(0), Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
+     gl::enableAlphaBlending( PREMULT );
+     gl::color(0.0, 0.0, 0.0);
+     gl::draw( textTextures[i], Vec2f( 21+(i*(10+windowWidth)), windowHeight-9 - (textTextures[i].getHeight()/2)));
+     gl::color(1.0, 1.0, 1.0);
+     gl::draw( textTextures[i], Vec2f( 20+(i*(10+windowWidth)), windowHeight-10 - (textTextures[i].getHeight()/2)));
+     gl::disableAlphaBlending( );
+     if(justUpdatedBracket == i){
+     gl::drawStrokedRect(Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight));
+     }
+     if(lastUpdatedBracket == i && (lastUpdatedBracket+1)%cameraNumberBrackets != justUpdatedBracket ){
+     gl::drawSolidRect(Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight));
+     }
+     
+     }
+     */
+
+    // draw status text
     
-    for(int i = 0; i < bracketedExposuresCount; i++){
-        gl::draw( hdrFbos[i].getTexture(0), Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
-        gl::enableAlphaBlending( PREMULT );
-        gl::color(0.0, 0.0, 0.0);
-        gl::draw( textTextures[i], Vec2f( 21+(i*(10+windowWidth)), windowHeight-9 - (textTextures[i].getHeight()/2)));
-        gl::color(1.0, 1.0, 1.0);
-        gl::draw( textTextures[i], Vec2f( 20+(i*(10+windowWidth)), windowHeight-10 - (textTextures[i].getHeight()/2)));
-        gl::disableAlphaBlending( );
-        if(justUpdatedBracket == i){
-            gl::drawStrokedRect(Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight));
+    Vec2f textPos = Vec2f(10, getWindowHeight()-25);
+    
+    float bargraphsX = 120;
+    
+    gl::enableAlphaBlending( PREMULT );
+    gl::draw(textTextures[cameraNumberBrackets], textPos-Vec2f(0,textTextures[cameraNumberBrackets].getHeight()));
+    gl::disableAlphaBlending();
+    
+    for (int i = 0; i < CAMERA_FRAMES_COUNT; i++){
+        tPvFrame * aFrame;
+        aFrame = &GCamera.Frames[i];
+        if(aFrame->Context[0] == &gFramestateQueued){
+            gl::color(0, 1, 0);
+        } else {
+            gl::color(1, 1, 0);
         }
-        if(lastUpdatedBracket == i && (lastUpdatedBracket+1)%bracketedExposuresCount != justUpdatedBracket ){
-            gl::drawSolidRect(Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight));
-        }
-        
+        gl::drawSolidRect( Area((bargraphsX+15)+(i*10),getWindowHeight()-39,(bargraphsX+20)+(i*10),getWindowHeight()-30));
     }
-**/
     
     params::InterfaceGl::draw();
     
-    
-    /**
-     gl::color(255, 255, 255);
-     
-     ldrTexture.enableAndBind();
-     
-     hdrDebayerShader.bind();
-     
-     hdrDebayerShader.uniform( "source", 0 );
-     hdrDebayerShader.uniform( "sourceSize", Vec4f(cameraWidth, cameraHeight, 1.0/cameraWidth, 1.0/cameraHeight ) );
-     hdrDebayerShader.uniform( "firstRed", Vec2f(1,0) );
-     
-     
-     gl::drawSolidRect( Area(0,0,cameraWidth,cameraHeight));
-     
-     ldrTexture.unbind();
-     **/
 }
 
 void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
 {
+    
+    // make temporary frame
     
     tPvFrame lFrame = *pFrame;
     
@@ -849,16 +818,20 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
     lFrame.ImageBufferSize  = pFrame->Width * pFrame->Height * 2;
     lFrame.ImageBuffer      = new UCHAR[lFrame.ImageBufferSize];
     
+    int pixelSize = 2;
+    
+    const int destLineSize = pixelSize * pFrame->Width;			// In bytes
+    
     if(lFrame.ImageBuffer)
     {
         
-        // 16 bit conversion
+        // conversion from packed 12 bit to 16 bit planar
         
         const Packed12BitsPixel_t*  pSrc = (const Packed12BitsPixel_t*)pFrame->ImageBuffer;
         const Packed12BitsPixel_t*  pSrcEnd = (const Packed12BitsPixel_t*)((unsigned char*)pFrame->ImageBuffer + pFrame->ImageSize);
         USHORT*				        pDest = (USHORT*)lFrame.ImageBuffer;
         USHORT*                     pDestEnd = (USHORT*)lFrame.ImageBuffer + pFrame->Width * pFrame->Height;
-        const ULONG			        bitshift = 16 - pFrame->BitDepth;
+//        const ULONG			        bitshift = 16 - pFrame->BitDepth;
         USHORT                      pixel1,pixel2;
         
         while (pSrc < pSrcEnd && pDest < pDestEnd)
@@ -881,38 +854,58 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
                 pSrc++;
             }
         }
+
         
-        while (pDest < pDestEnd)
-            *(pDest++) <<= bitshift;
-        
+        pDest = (USHORT*)lFrame.ImageBuffer;
         pDestEnd = pDest + (pFrame->Width * pFrame->Height);
-        uint16_t* pFrom = (uint16_t*)lFrame.ImageBuffer;
+        
+    //    while (pDest < pDestEnd)
+    //        *(pDest++) <<= bitshift/2;
+        
+        char * filename = new char[512];
+        
+        memset(filename, 0, 512);
+        
+        sprintf(filename, "/Users/ole/Pictures/Capture/capture-%08lu.bayer16",pFrame->FrameCount);
+        
+        FILE * pFile;
+        pFile = fopen (filename,"w");
+        if (pFile!=NULL)
+        {
+            fwrite(lFrame.ImageBuffer, lFrame.ImageBufferSize, 1, pFile);
+            fclose (pFile);
+        } else {
+            console() << "failed " << filename << endl;
+
+        }
+        
+        delete filename;
+    
+        // convert to float for display
         
         const float K = 1.0 / 0xFFF;
-        
-        //pthread_mutex_lock(&pixelsMutex);
-        newPixels = true;
-        
+
         vImage_Buffer fromPixels;
         
-        fromPixels.data = pFrom;
+        fromPixels.data = lFrame.ImageBuffer;
         fromPixels.width = pFrame->Width;
         fromPixels.height = pFrame->Height;
         fromPixels.rowBytes = pFrame->Width*2;
         
         vImageConvert_16UToF (&fromPixels,
-                                           &imageBuffer,
-                                           0,
-                                           K,
-                                           kvImageNoFlags
-                                           );
+                              &displayBuffer,
+                              0,
+                              K,
+                              kvImageNoFlags);
+        
 
-        currentFrameCount = pFrame->FrameCount;
-        //printf("Converted: %ul \t%i \t%i \t%i\n", ++numberCapturedFrames, pFrame->FrameCount, pFrame->FrameCount%bracketedExposuresCount, *(int*)(pFrame->Context[1]));
         
-        //pvFrameAncillaryData* aBuffer= (pvFrameAncillaryData*)pFrame->AncillaryBuffer;
+
+/* Ancillary Buffer
+                pvFrameAncillaryData* aBuffer= (pvFrameAncillaryData*)pFrame->AncillaryBuffer;
         
-        //pthread_mutex_unlock(&pixelsMutex);
+        console() << "exposureVal " << &aBuffer->exposureValue << endl;
+         */
         
         delete (UCHAR*)lFrame.ImageBuffer;
         
@@ -960,34 +953,34 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
 
 void lffCinderCaptureApp::renderSceneToFbo(int whichFbo)
 {
-    // console() << "renderSceneToFbo::whichFbo:" << whichFbo << endl;
+    console() << "renderSceneToFbo::whichFbo:" << whichFbo << endl;
     
     // this will restore the old framebuffer binding when we leave this function
 	// on non-OpenGL ES platforms, you can just call mFbo.unbindFramebuffer() at the end of the function
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
     
 	gl::SaveFramebufferBinding bindingSaver;
-
-   /**
-    char * frameLabel = new char[20];
-    std::sprintf(frameLabel, "Bracket %i", whichFbo);
     
-    TextLayout layout;
-    layout.setFont( Font( "Lucida Grande", 16 ) );
-    layout.setColor( Color( 1.0, 1.0, 1.0 ) );
-    layout.addLine(frameLabel);
-    textTextures[whichFbo] = gl::Texture(layout.render( true ) ) ;
-    
-    **/
+    /**
+     char * frameLabel = new char[20];
+     std::sprintf(frameLabel, "Bracket %i", whichFbo);
+     
+     TextLayout layout;
+     layout.setFont( Font( "Lucida Grande", 16 ) );
+     layout.setColor( Color( 1.0, 1.0, 1.0 ) );
+     layout.addLine(frameLabel);
+     textTextures[whichFbo] = gl::Texture(layout.render( true ) ) ;
+     
+     **/
 	// bind the framebuffer - now everything we draw will go there
 	hdrFbos[whichFbo].bindFramebuffer();
     
 	// setup the viewport to match the dimensions of the FBO
 	gl::setViewport( hdrFbos[whichFbo].getBounds() );
-        
+    
     renderHdrTexture();
     
-   // gl::draw(textTextures[whichFbo], hdrFbos[whichFbo].getBounds());
+    // gl::draw(textTextures[whichFbo], hdrFbos[whichFbo].getBounds());
     
     hdrFbos[whichFbo].unbindFramebuffer();
     
@@ -999,12 +992,13 @@ void lffCinderCaptureApp::renderHdrTexture(){
     
     gl::color(1.0, 1.0, 1.0);
     
-    hdrTexture.enableAndBind();
     hdrDebayerShader.bind();
     
     hdrDebayerShader.uniform( "source", 0 );
     hdrDebayerShader.uniform( "sourceSize", Vec4f(cameraWidth, cameraHeight, 1.0/cameraWidth, 1.0/cameraHeight ) );
     hdrDebayerShader.uniform( "firstRed", Vec2f(1,0) );
+    
+    hdrTexture.enableAndBind();
     
     gl::drawSolidRect( Area(0,0,cameraWidth,cameraHeight));
     
@@ -1013,6 +1007,53 @@ void lffCinderCaptureApp::renderHdrTexture(){
     
 }
 
+void lffCinderCaptureApp::setCameraNumberBrackets(int _numberBrackets){
+    char _command[20];
+    sprintf(_command, "N>%i\n",_numberBrackets);
+    console() << sendSerialCommand(std::string(_command)) << endl;
+}
+
+void lffCinderCaptureApp::setCameraBracketEv(int _bracketEv){
+    char _command[20];
+    sprintf(_command, "V>%i\n",_bracketEv);
+    console() << sendSerialCommand(std::string(_command)) << endl;
+}
+
+void lffCinderCaptureApp::setCameraBaseExposure(unsigned long _baseExposure){
+    char _command[20];
+    sprintf(_command, "E>%lu\n",_baseExposure);
+    console() << sendSerialCommand(std::string(_command)) << endl;
+}
+
+void lffCinderCaptureApp::printCameraParameters(){
+    char _command[20];
+    sprintf(_command, "S>\n");
+    console() << sendSerialCommand(std::string(_command)) << endl;
+}
+
+std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
+    
+    std::string _returnString;
+    // write command
+    serial.writeString(_command);
+    
+    usleep(1000*1000);
+    
+    try{
+        // read until newline, to a maximum of BUFSIZE bytes
+        _returnString = serial.readStringUntil('!', SERIAL_BUFSIZE );
+        
+    } catch(SerialTimeoutExc e) {
+        console() << "serial timeout" << endl;
+    }
+    
+    //    console() << "\n" << _command << "COMMAND RETURNED:\n" << _returnString << endl;
+    
+    return _returnString;
+    
+    serial.flush();
+    
+}
 
 lffCinderCaptureApp::~lffCinderCaptureApp(){
     tPvErr errCode;
@@ -1039,5 +1080,4 @@ lffCinderCaptureApp::~lffCinderCaptureApp(){
     GCamera.Abort = false;
 }
 
-
-CINDER_APP_BASIC( lffCinderCaptureApp, RendererGl() )
+CINDER_APP_BASIC( lffCinderCaptureApp, RendererGl(0) )
