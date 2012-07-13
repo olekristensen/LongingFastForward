@@ -12,7 +12,7 @@
 #include <PvApi.h>
 #include <ImageLib.h>
 #include <Accelerate/Accelerate.h>
-
+#include <boost/filesystem.hpp>
 
 #pragma mark Defines
 

@@ -5,20 +5,30 @@
 //  Created by Ole Kristensen on 13/07/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 
 #include "BracketBuffer.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
 
-
 BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     
     frameNumber = 0;
-    
+    framesAddedToAverage = 0;
+    needsUpdate = true;
+    absDifference = 0;
+
     bracketIndex = _bracketIndex;
     width = _width;
     height = _height;
+    
+    
+    // init latest frame
     
     pixels16U = new USHORT [width * height];
     memset(pixels16U, 0xFFFF, width*height);
@@ -37,12 +47,48 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     channel = cinder::Channel32f(vImageFloat.width, vImageFloat.height, vImageFloat.rowBytes, 1, pixelsFloat);
     texture = cinder::gl::Texture(channel);
     
-    needsUpdate = true;
+    
+    // init former frame
+    
+    formerPixels16U = new USHORT [width * height];
+    memset(formerPixels16U, 0, width*height*2);
+    formerVImage16U.data = formerPixels16U;
+    formerVImage16U.width = width;
+    formerVImage16U.height = height;
+    formerVImage16U.rowBytes = width*2;
+
+    
+    // init average frame
+
+    averagePixels16U = new USHORT [width * height];
+    memset(averagePixels16U, 0xFFFF, width*height);
+    averageVImage16U.data = averagePixels16U;
+    averageVImage16U.width = width;
+    averageVImage16U.height = height;
+    averageVImage16U.rowBytes = width*2;
+    
+    averagePixelsFloat = new float [width * height];
+    memset(averagePixelsFloat, 0.0, width*height);
+    averageVImageFloat.data = averagePixelsFloat;
+    averageVImageFloat.width = width;
+    averageVImageFloat.height = height;
+    averageVImageFloat.rowBytes = width*4;
+    
+    averageChannel = cinder::Channel32f(averageVImageFloat.width, averageVImageFloat.height, averageVImageFloat.rowBytes, 1, averagePixelsFloat);
+    averageTexture = cinder::gl::Texture(averageChannel);
+    
+
         
 }
 
 void BracketBuffer::load(tPvFrame * pFrame)
 {
+    
+    USHORT* formerPixelsPointer = formerPixels16U;
+    
+    formerPixels16U = pixels16U;
+    
+    pixels16U = formerPixelsPointer;
     
     // make temporary frame
     
@@ -85,19 +131,29 @@ void BracketBuffer::load(tPvFrame * pFrame)
             }
         }
         
+        //TODO calculate difference
+        
+        
         
         // convert to float for display
         
         const float K = 1.0 / 0xFFF;
         
-        vImageConvert_16UToF (&vImage16U,
-                              &vImageFloat,
-                              0,
-                              K,
-                              kvImageNoFlags);
+        vImageConvert_16UToF (&vImage16U, &vImageFloat, 0, K, kvImageNoFlags);
     
         frameNumber = pFrame->FrameCount;
     
+        // update average frame
+        
+        float averageAlpha = 1.0/(framesAddedToAverage+1.0);
+        
+        cblas_sscal(width*height, 1.0-averageAlpha ,averagePixelsFloat, 1);
+        cblas_saxpy(width*height, averageAlpha, pixelsFloat, 1, averagePixelsFloat, 1);
+        
+        vImageConvert_FTo16U(&averageVImageFloat, &averageVImage16U, 0, K, kvImageNoFlags);
+        
+        framesAddedToAverage++;
+        
         needsUpdate = true;
     }
     
@@ -107,25 +163,53 @@ void BracketBuffer::update()
 {
     if(needsUpdate){    
         texture.update(channel);
+        averageTexture.update(averageChannel);
         needsUpdate =false;
     }
 }
 
-void BracketBuffer::saveFrame(char * filename){
+void BracketBuffer::saveFrame(const char * filename){
     
-    FILE * pFile;
-    pFile = std::fopen (filename,"w");
-    if (pFile!=NULL)
-    {
-        fwrite(pvFrame.ImageBuffer, pvFrame.ImageBufferSize, 1, pFile);
-        fclose (pFile);
-    } else {
-        std::cout << "FAILED: BracketBuffer::saveFrame (" << filename << ")" << std::endl;
-    }
+    fs::path thePath = fs::absolute(fs::path(filename));
+    saveBuffer(thePath, &vImage16U);
+       
+}
+
+void BracketBuffer::saveAverageFrame(const char * filename){
     
-    delete filename;
+    fs::path thePath = fs::absolute(fs::path(filename));
+    saveBuffer(thePath, &averageVImage16U);
     
 }
+
+void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
+    
+    if(filePath.has_parent_path()){
+        if (!fs::exists(filePath.parent_path())) {
+            fs::create_directory(filePath.parent_path());
+            std::cout << "BracketBuffer::saveBuffer CREATEDIR: " << filePath.parent_path() << std::endl;
+
+        }
+    }
+    
+    using namespace std;
+
+    namespace io = boost::iostreams;
+
+    stringstream ss(stringstream::in | stringstream::out | stringstream::binary); //Declare ss
+    ss.write((char *)vImg->data, vImg->rowBytes*height); //Write data to ss
+    
+    io::filtering_streambuf<io::input> buf; //Declare buf
+   // buf.push(io::gzip_compressor()); //Assign compressor to buf
+    buf.push(ss); //Push ss to buf
+    ofstream out(filePath.c_str(), ios_base::out | ios_base::binary); //Declare out
+    io::copy(buf, out); //Copy buf to out
+    
+    //Clean up
+    out.close();
+
+}
+
 
 BracketBuffer::~BracketBuffer() {
     delete pixels16U;

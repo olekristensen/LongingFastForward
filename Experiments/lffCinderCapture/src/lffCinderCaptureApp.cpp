@@ -11,6 +11,7 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
 #include "boost/format.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 #include <unistd.h>
 #include <time.h>
@@ -97,13 +98,14 @@ public:
 	void draw();
     
     void processFrame( tPvFrame* pFrame );
-    void renderBufferToFbo(BracketBuffer* buffer, gl::Fbo* fbo);
+    void renderBeyerTextureToFbo(gl::Texture* tex, gl::Fbo* fbo);
     void renderHdrTexture(gl::Texture *tex);
     
     vector <BracketBuffer*> bracketBuffers;
     vector <BracketBuffer*> averageBuffers;
     
-    vector <gl::Fbo> hdrFbos;
+    vector <gl::Fbo> latestFBOs;
+    vector <gl::Fbo> averageFBOs;
     
     params::InterfaceGl	mParams;
     
@@ -124,6 +126,9 @@ public:
     int cameraNumberBrackets;
     int cameraBracketEv;
     unsigned long cameraBaseExposure;
+    
+    int frameSaveInterval;
+    int averageFrameSaveInterval;
     
     std::string sendSerialCommand(const std::string _command);
     
@@ -526,15 +531,19 @@ void lffCinderCaptureApp::setup()
 	cameraHeight = 1080;
     cameraGain = 0;
     
-    cameraNumberBrackets = 5;
-    cameraBracketEv = 4;
-    cameraBaseExposure = 10ul;
-	
+    cameraNumberBrackets = 9;
+    cameraBracketEv = 2;
+    cameraBaseExposure = 150ul;
+
     // init status vars
     
     justUpdatedBracket = 0;
     lastUpdatedBracket = 0;
     displayBracket = 0;
+
+    frameSaveInterval = 1;
+    averageFrameSaveInterval = 1000;
+
     
     theApp = this;
     
@@ -598,7 +607,8 @@ void lffCinderCaptureApp::setup()
     gl::Fbo::Format hdrFormat;
     hdrFormat.enableDepthBuffer( false );
     for(int i = 0;i<cameraNumberBrackets;i++){
-        hdrFbos.push_back(gl::Fbo( cameraWidth, cameraHeight, hdrFormat ));
+        latestFBOs.push_back(gl::Fbo( cameraWidth, cameraHeight, hdrFormat ));
+        averageFBOs.push_back(gl::Fbo( cameraWidth, cameraHeight, hdrFormat ));
         TextLayout layout;
         layout.setFont( Font( "Lucida Grande", 16 ) );
         layout.setColor( Color( 1.0, 1.0, 1.0 ) );
@@ -619,6 +629,8 @@ void lffCinderCaptureApp::setup()
     // Setup the parameters
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 175, 100 ) );
 	mParams.addParam( "Gain", &cameraGain, "min=0 max=34 step=1 keyIncr=g keyDecr=G" );
+	mParams.addParam( "Frame Saving Interval", &frameSaveInterval, "min=0 max=10000 step=1 keyIncr=s keyDecr=S" );
+	mParams.addParam( "Averaging Frame Saving Interval", &averageFrameSaveInterval, "min=0 max=10000 step=1 keyIncr=a keyDecr=A" );
     mParams.hide();
     
 }
@@ -726,7 +738,8 @@ void lffCinderCaptureApp::update()
             if(wasUpdated){
                 lastUpdatedBracket = justUpdatedBracket;
                 justUpdatedBracket = i;
-                renderBufferToFbo((*iBuffer), &hdrFbos[i]);
+                renderBeyerTextureToFbo(&(*iBuffer)->texture, &latestFBOs[i]);
+                renderBeyerTextureToFbo(&(*iBuffer)->averageTexture, &averageFBOs[i]);
             }
             i++;
         }
@@ -765,13 +778,16 @@ void lffCinderCaptureApp::draw()
     
     if(displayBracket > 0) whichBracket = min(displayBracket, cameraNumberBrackets)-1;
     
-    gl::draw( hdrFbos[whichBracket].getTexture(0) );
+    gl::draw( averageFBOs[whichBracket].getTexture(0) );
     
     for(int i = 0; i < cameraNumberBrackets; i++){
         gl::color(1.0, 1.0, 1.0);
-        gl::Texture myTexture(hdrFbos[i].getTexture(0));
-        myTexture.setFlipped(true);
-        gl::draw( myTexture, Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
+        gl::Texture latestTexture(latestFBOs[i].getTexture(0));
+        latestTexture.setFlipped(true);
+        gl::draw( latestTexture, Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
+        gl::Texture averageTexture(averageFBOs[i].getTexture(0));
+        averageTexture.setFlipped(true);
+        gl::draw( averageTexture, Rectf( 10+(i*(10+windowWidth)), 10+windowHeight+10, windowWidth+10+(i*(10+windowWidth)), (10+windowHeight)*2) );
         gl::enableAlphaBlending( PREMULT );
         gl::color(0.0, 0.0, 0.0);
         gl::draw( textTextures[i], Vec2f( 21+(i*(10+windowWidth)), windowHeight-9 - (textTextures[i].getHeight()/2)));
@@ -783,6 +799,7 @@ void lffCinderCaptureApp::draw()
         gl::draw( textTextures[i], Vec2f( 20+(i*(10+windowWidth)), windowHeight-10 - (textTextures[i].getHeight()/2)));
         gl::disableAlphaBlending( );
     }
+    
 	glDisable( GL_TEXTURE_2D );
     
     
@@ -818,13 +835,30 @@ void lffCinderCaptureApp::draw()
 
 void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
 {
+    
+    tm tm = boost::posix_time::to_tm(boost::posix_time::microsec_clock::universal_time());
+    
     int bufferIndex = (pFrame->FrameCount-1) % cameraNumberBrackets;
     
     bracketBuffers[bufferIndex]->load(pFrame);
+
+    int bracektedFrameNumber = (pFrame->FrameCount/cameraNumberBrackets);
     
+    if(bracektedFrameNumber % frameSaveInterval == 0) {
+    bracketBuffers[bufferIndex]->saveFrame(
+                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/capture_%1$006d-%2$1d.bayer16") % bracektedFrameNumber % (bufferIndex+1) % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_wday ) ).c_str() 
+                                           );
+    }
+    if(bracektedFrameNumber % averageFrameSaveInterval == 0) {
+        bracketBuffers[bufferIndex]->saveAverageFrame(
+                                                      str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/capture_%1$006d-%2$1d_average.bayer16") % bracektedFrameNumber % (bufferIndex+1) % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_wday ) ).c_str() 
+                                               );
+        bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
+    }
+
 }
 
-void lffCinderCaptureApp::renderBufferToFbo(BracketBuffer* buffer, gl::Fbo* fbo)
+void lffCinderCaptureApp::renderBeyerTextureToFbo(gl::Texture * tex, gl::Fbo* fbo)
 {
     
     // this will restore the old framebuffer binding when we leave this function
@@ -842,8 +876,8 @@ void lffCinderCaptureApp::renderBufferToFbo(BracketBuffer* buffer, gl::Fbo* fbo)
      layout.setColor( Color( 1.0, 1.0, 1.0 ) );
      layout.addLine(frameLabel);
      textTextures[whichFbo] = gl::Texture(layout.render( true ) ) ;
-     
-     **/
+    **/
+
 	// bind the framebuffer - now everything we draw will go there
 	fbo->bindFramebuffer();
     
@@ -851,9 +885,9 @@ void lffCinderCaptureApp::renderBufferToFbo(BracketBuffer* buffer, gl::Fbo* fbo)
 	gl::setViewport( fbo->getBounds() );
     gl::setMatricesWindow( fbo->getSize() );
     
-    renderHdrTexture(&(buffer->texture));
+    renderHdrTexture(tex);
     
-    // gl::draw(textTextures[whichFbo], hdrFbos[whichFbo].getBounds());
+    // gl::draw(textTextures[whichFbo], latestFBOs[whichFbo].getBounds());
     
     fbo->unbindFramebuffer();
     

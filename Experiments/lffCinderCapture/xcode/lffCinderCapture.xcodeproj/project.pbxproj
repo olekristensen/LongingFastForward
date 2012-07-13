@@ -89,8 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				00BAE6590E7ED9C10018A608 /* lffCinderCaptureApp.cpp */,
-				7F7FC69515AFDEE9008517BD /* BracketBuffer.cpp */,
 				7F7FC69715AFDEFB008517BD /* BracketBuffer.h */,
+				7F7FC69515AFDEE9008517BD /* BracketBuffer.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
