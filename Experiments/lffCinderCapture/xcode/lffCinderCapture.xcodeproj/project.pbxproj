@@ -24,6 +24,10 @@
 		7F50DFD7159B724A00C487A2 /* libImagelib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F50DFD5159B724A00C487A2 /* libImagelib.a */; };
 		7F50DFD8159B724A00C487A2 /* libPvAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F50DFD6159B724A00C487A2 /* libPvAPI.a */; };
 		7F7FC69615AFDEE9008517BD /* BracketBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7FC69515AFDEE9008517BD /* BracketBuffer.cpp */; };
+		7F7FC6B315B30512008517BD /* file_descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7FC6AE15B30512008517BD /* file_descriptor.cpp */; };
+		7F7FC6B415B30512008517BD /* gzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7FC6AF15B30512008517BD /* gzip.cpp */; };
+		7F7FC6B515B30512008517BD /* mapped_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7FC6B015B30512008517BD /* mapped_file.cpp */; };
+		7F7FC6B615B30512008517BD /* zlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7FC6B115B30512008517BD /* zlib.cpp */; };
 		7FC0A69315AEC35D002DD325 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC0A69215AEC35D002DD325 /* ApplicationServices.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +60,11 @@
 		7F50DFD6159B724A00C487A2 /* libPvAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPvAPI.a; sourceTree = "<group>"; };
 		7F7FC69515AFDEE9008517BD /* BracketBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BracketBuffer.cpp; path = ../src/BracketBuffer.cpp; sourceTree = "<group>"; };
 		7F7FC69715AFDEFB008517BD /* BracketBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BracketBuffer.h; path = ../src/BracketBuffer.h; sourceTree = "<group>"; };
+		7F7FC6AB15B2F912008517BD /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = ../src/Logger.h; sourceTree = "<group>"; };
+		7F7FC6AE15B30512008517BD /* file_descriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_descriptor.cpp; sourceTree = "<group>"; };
+		7F7FC6AF15B30512008517BD /* gzip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gzip.cpp; sourceTree = "<group>"; };
+		7F7FC6B015B30512008517BD /* mapped_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapped_file.cpp; sourceTree = "<group>"; };
+		7F7FC6B115B30512008517BD /* zlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zlib.cpp; sourceTree = "<group>"; };
 		7FC0A69215AEC35D002DD325 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* lffCinderCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lffCinderCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +158,7 @@
 			children = (
 				7F22406A1586D83500ACAD6E /* Resources.h */,
 				32CA4F630368D1EE00C91783 /* lffCinderCapture_Prefix.pch */,
+				7F7FC6AB15B2F912008517BD /* Logger.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -177,6 +187,7 @@
 		7F50DFCC159B724A00C487A2 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				7F7FC6AC15B303BC008517BD /* boost */,
 				7F50DFCD159B724A00C487A2 /* PvApi */,
 			);
 			path = lib;
@@ -224,6 +235,17 @@
 				7F50DFD6159B724A00C487A2 /* libPvAPI.a */,
 			);
 			path = macosx;
+			sourceTree = "<group>";
+		};
+		7F7FC6AC15B303BC008517BD /* boost */ = {
+			isa = PBXGroup;
+			children = (
+				7F7FC6AE15B30512008517BD /* file_descriptor.cpp */,
+				7F7FC6AF15B30512008517BD /* gzip.cpp */,
+				7F7FC6B015B30512008517BD /* mapped_file.cpp */,
+				7F7FC6B115B30512008517BD /* zlib.cpp */,
+			);
+			name = boost;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +311,10 @@
 			files = (
 				00BAE65A0E7ED9C10018A608 /* lffCinderCaptureApp.cpp in Sources */,
 				7F7FC69615AFDEE9008517BD /* BracketBuffer.cpp in Sources */,
+				7F7FC6B315B30512008517BD /* file_descriptor.cpp in Sources */,
+				7F7FC6B415B30512008517BD /* gzip.cpp in Sources */,
+				7F7FC6B515B30512008517BD /* mapped_file.cpp in Sources */,
+				7F7FC6B615B30512008517BD /* zlib.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +324,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BOOST_IOSTREAMS_NO_LIB = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -322,6 +349,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BOOST_IOSTREAMS_NO_LIB = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;

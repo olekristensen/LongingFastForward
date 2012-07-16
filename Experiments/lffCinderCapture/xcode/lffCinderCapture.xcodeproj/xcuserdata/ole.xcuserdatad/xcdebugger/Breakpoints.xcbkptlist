@@ -8,11 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "363910480.654393"
+         timestampString = "364073631.322293"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "923"
-         endingLineNumber = "923">
+         startingLineNumber = "1305"
+         endingLineNumber = "1305"
+         landmarkName = "lffCinderCaptureApp::printCameraParameters()"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

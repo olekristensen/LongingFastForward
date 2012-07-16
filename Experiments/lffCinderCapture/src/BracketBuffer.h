@@ -53,8 +53,8 @@ public:
 
     // former frame
     
-    USHORT * formerPixels16U;
-    vImage_Buffer formerVImage16U;
+    float * formerPixelsFloat;
+    vImage_Buffer formerVImageFloat;
     
     float absDifference; 
         

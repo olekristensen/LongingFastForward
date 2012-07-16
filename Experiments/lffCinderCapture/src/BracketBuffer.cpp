@@ -10,7 +10,10 @@
 #include <sstream>
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/zlib.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include "Logger.h"
+#include "zlib.h"
 
 #include "BracketBuffer.h"
 #include "cinder/gl/Fbo.h"
@@ -50,12 +53,12 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     
     // init former frame
     
-    formerPixels16U = new USHORT [width * height];
-    memset(formerPixels16U, 0, width*height*2);
-    formerVImage16U.data = formerPixels16U;
-    formerVImage16U.width = width;
-    formerVImage16U.height = height;
-    formerVImage16U.rowBytes = width*2;
+    formerPixelsFloat = new float [width * height];
+    memset(formerPixelsFloat, 0.0, width*height);
+    formerVImageFloat.data = formerPixelsFloat;
+    formerVImageFloat.width = width;
+    formerVImageFloat.height = height;
+    formerVImageFloat.rowBytes = width*2;
 
     
     // init average frame
@@ -84,11 +87,10 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
 void BracketBuffer::load(tPvFrame * pFrame)
 {
     
-    USHORT* formerPixelsPointer = formerPixels16U;
-    
-    formerPixels16U = pixels16U;
-    
-    pixels16U = formerPixelsPointer;
+    // copy current frame to former frame
+    cblas_scopy (vImageFloat.height*vImageFloat.width,
+                      pixelsFloat,1,
+                      formerPixelsFloat,1);
     
     // make temporary frame
     
@@ -131,11 +133,7 @@ void BracketBuffer::load(tPvFrame * pFrame)
             }
         }
         
-        //TODO calculate difference
-        
-        
-        
-        // convert to float for display
+        // convert to float for display and calculations
         
         const float K = 1.0 / 0xFFF;
         
@@ -143,6 +141,11 @@ void BracketBuffer::load(tPvFrame * pFrame)
     
         frameNumber = pFrame->FrameCount;
     
+        //TODO calculate difference
+        
+        cblas_saxpy (width*height,-1.0,pixelsFloat,1,formerPixelsFloat,1);
+        absDifference = cblas_sasum (width*height,formerPixelsFloat,1)/(width*1.0*height);
+
         // update average frame
         
         float averageAlpha = 1.0/(framesAddedToAverage+1.0);
@@ -153,7 +156,7 @@ void BracketBuffer::load(tPvFrame * pFrame)
         vImageConvert_FTo16U(&averageVImageFloat, &averageVImage16U, 0, K, kvImageNoFlags);
         
         framesAddedToAverage++;
-        
+                
         needsUpdate = true;
     }
     
@@ -192,6 +195,8 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
         }
     }
     
+    filePath = fs::path(str(boost::format("%s.gzip") % filePath.c_str()));
+
     using namespace std;
 
     namespace io = boost::iostreams;
@@ -199,8 +204,10 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     stringstream ss(stringstream::in | stringstream::out | stringstream::binary); //Declare ss
     ss.write((char *)vImg->data, vImg->rowBytes*height); //Write data to ss
     
+    
     io::filtering_streambuf<io::input> buf; //Declare buf
-   // buf.push(io::gzip_compressor()); //Assign compressor to buf
+    //buf.push(io::zlib_compressor(io::zlib_params( io::zlib::best_speed,io::zlib::deflated,15+16,8,io::zlib::default_strategy,false ))); //Assign compressor to buf
+    //buf.push(io::gzip_compressor() ); //to slow
     buf.push(ss); //Push ss to buf
     ofstream out(filePath.c_str(), ios_base::out | ios_base::binary); //Declare out
     io::copy(buf, out); //Copy buf to out

@@ -14,6 +14,7 @@
 #include <Accelerate/Accelerate.h>
 #include <boost/filesystem.hpp>
 
+
 #pragma mark Defines
 
 #define USHORT unsigned short
@@ -22,7 +23,6 @@
 
 #define ASSERT(x)	        assert(x)
 #define ULONG_PADDING(x)    (((x+3) & ~3) - x)
-
 
 // Packed 12 bit pixels
 typedef struct {

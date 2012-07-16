@@ -10,11 +10,12 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
-#include "boost/format.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include "Logger.h"
 
 #include <unistd.h>
 #include <time.h>
+#include <queue>
+#include <math.h>
 
 #include <dispatch/dispatch.h>
 #include <ApplicationServices/ApplicationServices.h>
@@ -25,7 +26,7 @@
 
 #pragma mark Defines
 
-#define CAMERA_FRAMES_COUNT 30
+#define CAMERA_FRAMES_COUNT 100
 #define CAMERA_STATUS_TEXT_SIZE 512
 
 #define SERIAL_BUFSIZE 1024
@@ -41,21 +42,32 @@ using namespace std;
 
 #pragma mark Types
 
+typedef struct {
+    tPvFrame pFrame;
+    boost::posix_time::ptime bTime;
+} queuedFrame;
+
+typedef struct {
+    boost::filesystem::path filePath;
+    float difference;
+    unsigned long exposureMicros;
+} frameData;
+
 // Ancillary Data
 typedef struct {
-    uint32_t acquisitionCount;
-    uint32_t userValue;
-    uint32_t exposureValue;
-    uint32_t gainValue;
-    uint32_t syncInLevels;
-    uint32_t syncOutLevels;
-    uint32_t counter1value;
-    uint32_t counter2value;
-    uint32_t timer1value;
-    uint32_t timer2value;
-    uint32_t sequenceCount;
-    uint32_t chunkID;
-    uint32_t chunkLength;
+    tPvUint32 acquisitionCount;
+    tPvUint32 userValue;
+    tPvUint32 exposureValue;
+    tPvUint32 gainValue;
+    tPvUint32 syncInLevels;
+    tPvUint32 syncOutLevels;
+    tPvUint32 counter1value;
+    tPvUint32 counter2value;
+    tPvUint32 timer1value;
+    tPvUint32 timer2value;
+    tPvUint32 sequenceCount;
+    tPvUint32 chunkID;
+    tPvUint32 chunkLength;
 } pvFrameAncillaryData;
 
 // Camera's data
@@ -101,23 +113,44 @@ public:
     void renderBeyerTextureToFbo(gl::Texture* tex, gl::Fbo* fbo);
     void renderHdrTexture(gl::Texture *tex);
     
+    // frame history
+    
+    vector <frameData> frameHistory;
+    
+    // buffers
+    
+    queue <queuedFrame*> frameQueue;
+    dispatch_queue_t serialQueue;
+    
+    pthread_t frameProcessingThread;
+    
     vector <BracketBuffer*> bracketBuffers;
     vector <BracketBuffer*> averageBuffers;
     
     vector <gl::Fbo> latestFBOs;
     vector <gl::Fbo> averageFBOs;
     
-    params::InterfaceGl	mParams;
-    
-    void keyDown( KeyEvent event );
-    
     gl::GlslProg hdrDebayerShader;
     
     int justUpdatedBracket;
     int lastUpdatedBracket;
-    int displayBracket;
     
-    vector<gl::Texture>	textTextures;
+    int frameSaveInterval;
+    int averageFrameSaveInterval;
+    
+    // serial stuff
+    
+    Serial serial;
+    
+    std::string sendSerialCommand(const std::string _command);
+    
+    void setCameraNumberBrackets(int _numberBrackets);
+    void setCameraBracketEv(int _bracketEv);
+    void setCameraBaseExposure(unsigned long _baseExposure);
+    void resetBracketingSequenceCounter();
+    void printCameraParameters();
+    
+    // camera
     
     int cameraWidth;
     int cameraHeight;
@@ -127,17 +160,33 @@ public:
     int cameraBracketEv;
     unsigned long cameraBaseExposure;
     
-    int frameSaveInterval;
-    int averageFrameSaveInterval;
+    // interface
     
-    std::string sendSerialCommand(const std::string _command);
+    void keyDown( KeyEvent event );
     
-    void setCameraNumberBrackets(int _numberBrackets);
-    void setCameraBracketEv(int _bracketEv);
-    void setCameraBaseExposure(unsigned long _baseExposure);
-    void printCameraParameters();
+    vector<gl::Texture>	textTextures;
     
-	Serial serial;
+    params::InterfaceGl	mParams;
+    params::InterfaceGl	mStats;
+    
+    string statsCameraFrameComplete;
+    string statsCameraFrameDropped;
+    string statsCameraFrameRate;
+    string statsCameraPacketReceived;
+    string statsCameraPacketMissed;
+    int statsFrameQueueSize;
+    float statsAbsDifference;
+    
+    int displayBracket;
+    bool showBracketBuffers;
+    bool showFullscreen;
+    bool showFullDisplay;
+    bool showFullDisplayAverage;
+    
+    int setNumberBrackets;
+    int setcameraBracketEv;
+    
+    float fps;
     
 };
 
@@ -150,12 +199,19 @@ bool PVAPIinitialised;
 // global app pointer
 lffCinderCaptureApp * theApp;
 
+unsigned long eventFrameTriggerCounter =0;
+unsigned long eventExposureEndCounter =0;
+unsigned long frameDoneCounter =0;
+unsigned long frameProcessedCounter =0;
+
 #pragma mark Global Functions
 
 //Thread start function. Displays camera stats.
 void *ThreadFunc(void *pContext)
 {
     tPvErr Err;
+    
+    float lframeRate;
     
     //StatFramesCompleted increments when a queued frame returns with tPvFrame.Status = ePvErrSuccess
 	//StatFramesDropped increments when a queued frame returns with tPvFrame.Status = ePvErrDataMissing
@@ -168,13 +224,73 @@ void *ThreadFunc(void *pContext)
           ((Err = PvAttrUint32Get(GCamera.Handle,"StatFramesDropped",&GCamera.FrameDropped)) == ePvErrSuccess) &&
 		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsMissed",&GCamera.PacketMissed)) == ePvErrSuccess) &&
 		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsReceived",&GCamera.PacketReceived)) == ePvErrSuccess) &&
-          ((Err = PvAttrFloat32Get(GCamera.Handle,"StatFrameRate",&GCamera.FrameRate)) == ePvErrSuccess))
+          ((Err = PvAttrFloat32Get(GCamera.Handle,"StatFrameRate",&lframeRate)) == ePvErrSuccess))
     {
-        usleep(20*1000);
+        GCamera.FrameRate = (GCamera.FrameRate*0.9) + (lframeRate*0.1);
+        usleep(100*1000);
 	}
     
     return 0;
 }
+
+void F_CameraEventCallback(void*                   Context,
+                           tPvHandle               Camera,
+                           const tPvCameraEvent*	EventList,
+                           unsigned long			EventListLength)
+{
+	//multiple events may have occurred for this one callback
+	for (unsigned long i = 0; i < EventListLength; i++)
+	{
+		switch (EventList[i].EventId) {
+			case 40000:
+				LogStr("EventAcquisitionStart");
+				break;
+			case 40001:
+				LogStr("EventAcquisitionEnd");
+				break;
+			case 40002:
+                LogStr(str( (boost::format("%u EventFrameTrigger") % ++eventFrameTriggerCounter) ));
+				break;
+			case 40003:
+                LogStr(str( (boost::format("%u EventExposureEnd") % ++eventExposureEndCounter) ));
+				break;
+			case 40004:
+				LogStr("EventAcquisitionRecordTrigger");
+				break;
+			case 40010:
+				LogStr("EventSyncIn1Rise");
+				break;
+			case 40011:
+				LogStr("EventSyncIn1Fall");
+				break;
+			case 40012:
+				LogStr("EventSyncIn2Rise");
+				break;
+			case 40013:
+				LogStr("EventSyncIn2Fall");
+				break;
+			case 40014:
+				LogStr("EventSyncIn3Rise");
+				break;
+			case 40015:
+				LogStr("EventSyncIn3Fall");
+				break;
+			case 40016:
+				LogStr("EventSyncIn4Rise");
+				break;
+			case 40017:
+				LogStr("EventSyncIn4Fall");
+				break;
+			case 65534:
+				LogStr("EventOverflow error");
+				break;
+			default:
+                LogStr(str( (boost::format("Event %u") % EventList[i].EventId) ));
+				break;
+		}
+	}
+}
+
 
 // Create a thread to display camera stats. This could also be done in the frame callback.
 // By spawning a new thread, we're able to display stats independent of frames returning. 
@@ -192,13 +308,12 @@ void WaitThread()
 // wait for camera to be plugged in
 void WaitForCamera()
 {
-    printf("Waiting for a camera ");
+    LogStr("Waiting for a camera");
     while((PvCameraCount() == 0) && !GCamera.Abort)
     {
-        printf(".");
+        LogStr(".");
         usleep(250*1000);
     }
-    printf("\n");
 }
 
 // Frame completed callback executes on seperate driver thread.
@@ -213,6 +328,8 @@ void WaitForCamera()
 // on this as a test for a missing camera. 
 void FrameDoneCB(tPvFrame* pFrame)
 { 
+    //LogStr(str( (boost::format("%u Frame %u Done") % ++frameDoneCounter % pFrame->FrameCount) ));
+  
 	// if frame hasn't been cancelled, requeue frame
     if(pFrame->Status != ePvErrCancelled){
         
@@ -220,17 +337,114 @@ void FrameDoneCB(tPvFrame* pFrame)
         {
             pFrame->Context[0] = &gFramestateProcessing;
             theApp->processFrame(pFrame);
+            //LogStr(str( (boost::format("%u Frame %u Procesed") % ++frameProcessedCounter % pFrame->FrameCount) ));
+            
         }
         else
         {
             if (pFrame->Status == ePvErrDataMissing)
-                printf("Dropped packets. Possible improper network card settings:\nSee GigE Installation Guide.");
+                LogStr("Dropped packets.");
             else
-                printf("Frame.Status error: %u\n",pFrame->Status);
+                LogStr(str( (boost::format("Frame.Status error: %u") % pFrame->Status) ));
         }
         pFrame->Context[0] = &gFramestateQueued;
         PvCaptureQueueFrame(GCamera.Handle,pFrame,FrameDoneCB);
     }
+}
+
+// setup event channel
+// return value: true == success, false == fail
+bool EventSetup()
+{
+	unsigned long EventBitmask;
+	tPvErr errCode;
+	
+	// check if events supported with this camera firmware
+	if (PvAttrExists(GCamera.Handle,"EventsEnable1") == ePvErrNotFound)
+	{
+        LogStr("This camera does not support event notifications.");
+        return false;
+	}
+	
+	//Clear all events
+	//EventsEnable1 is a bitmask of all events. Bits correspond to last two digits of EventId.
+	// e.g: Bit 1 is EventAcquisitionStart, Bit 2 is EventAcquisitionEnd, Bit 10 is EventSyncIn1Rise. 
+    if ((errCode = PvAttrUint32Set(GCamera.Handle,"EventsEnable1",0)) != ePvErrSuccess)
+	{
+        LogStr(str( (boost::format("Set EventsEnable1 err: %u") % errCode) ));
+		return false;
+	}
+    
+    
+	//Set individual events (could do in one step with EventsEnable1).
+	if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","AcquisitionStart")) != ePvErrSuccess)
+	{
+        LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
+		return false;
+	}
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+	{
+        LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
+		return false;
+	}
+    
+	if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","AcquisitionEnd")) != ePvErrSuccess)
+	{
+        LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
+		return false;
+	}
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+	{
+        LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
+		return false;
+	}
+    
+	/*
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","FrameTrigger")) != ePvErrSuccess)
+	{
+     LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
+		return false;
+	}
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+	{
+     LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
+		return false;
+	}
+	
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","ExposureEnd")) != ePvErrSuccess)
+	{
+     LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
+		return false;
+	}
+    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+	{
+     LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
+		return false;
+	}
+	*/
+	
+	//Get and print bitmask
+	PvAttrUint32Get(GCamera.Handle,"EventsEnable1", &EventBitmask);
+    LogStr(str( (boost::format("Events set. EventsEnable1 bitmask: %u") % EventBitmask) ));
+    
+    //register callback function
+	if ((errCode = PvCameraEventCallbackRegister(GCamera.Handle,F_CameraEventCallback,NULL)) != ePvErrSuccess)
+    {
+        LogStr(str( (boost::format("PvCameraEventCallbackRegister err: %u") % errCode) ));
+        return false;
+    }     
+	return true;
+}
+
+// unsetup event channel
+void EventUnsetup()
+{
+    // wait so that the "AcquisitionEnd" [from CameraStop()] can be received on the event channel
+    usleep(1000*1000);
+	// clear all events
+	PvAttrUint32Set(GCamera.Handle,"EventsEnable1",0);
+    // unregister callback function
+	PvCameraEventCallbackUnRegister(GCamera.Handle,F_CameraEventCallback);
 }
 
 // open camera, allocate memory
@@ -246,30 +460,31 @@ bool CameraSetup()
 	if ((errCode = PvCameraOpen(GCamera.UID,ePvAccessMaster,&(GCamera.Handle))) != ePvErrSuccess)
 	{
 		if (errCode == ePvErrAccessDenied)
-			printf("PvCameraOpen returned ePvErrAccessDenied:\nCamera already open as Master, or camera wasn't properly closed and still waiting to HeartbeatTimeout.");
+			LogStr("PvCameraOpen returned ePvErrAccessDenied:\nCamera already open as Master, or camera wasn't properly closed and still waiting to HeartbeatTimeout.");
 		else
-			printf("PvCameraOpen err: %u\n", errCode);
+            LogStr(str( (boost::format("PvCameraOpen err: %u") % errCode) ));
 		return false;
 	}
     
 	// Activate Chunk Mode
     if((errCode = PvAttrBooleanSet(GCamera.Handle,"ChunkModeActive", TRUE)) != ePvErrSuccess)
 	{
-		printf("CameraSetup: Failed to activate Chunkmode: %u\n", errCode);
+        LogStr(str( (boost::format("CameraSetup: Failed to activate Chunkmode: %u") % errCode) ));
 		return false;
 	}
     
 	// Calculate frame buffer size
     if((errCode = PvAttrUint32Get(GCamera.Handle,"TotalBytesPerFrame",&FrameSize)) != ePvErrSuccess)
 	{
-		printf("CameraSetup: Get TotalBytesPerFrame err: %u\n", errCode);
+        LogStr(str( (boost::format("CameraSetup: Get TotalBytesPerFrame err: %u") % errCode) ));
 		return false;
 	}
     
     // Calculate ancillary buffer size
     if((errCode = PvAttrUint32Get(GCamera.Handle,"NonImagePayloadSize",&AncillaryBufferSize)) != ePvErrSuccess)
 	{
-		printf("CameraSetup: Get NonImagePayloadSize err: %u\n", errCode);
+		
+        LogStr(str( (boost::format("CameraSetup: Get NonImagePayloadSize err: %u") % errCode) ));
 		return false;
 	}
     
@@ -286,17 +501,19 @@ bool CameraSetup()
 		}
         else
 		{
-			printf("CameraSetup: Failed to allocate Frame buffers.\n");
+			LogStr("CameraSetup: Failed to allocate Frame buffers.");
 			failed = true;
 		}
         GCamera.Frames[i].AncillaryBuffer = new pvFrameAncillaryData;
+        memset(GCamera.Frames[i].AncillaryBuffer, 0, sizeof(AncillaryBufferSize));
+        
         if(GCamera.Frames[i].AncillaryBuffer)
         {
 			GCamera.Frames[i].AncillaryBufferSize = AncillaryBufferSize;
 		}
         else
 		{
-			printf("CameraSetup: Failed to allocate Ancillary buffers.\n");
+			LogStr("CameraSetup: Failed to allocate Ancillary buffers.");
 			failed = true;
 		}
         
@@ -312,11 +529,11 @@ void CameraUnsetup()
 	
     if((errCode = PvCameraClose(GCamera.Handle)) != ePvErrSuccess)
 	{
-		printf("CameraUnSetup: PvCameraClose err: %u\n", errCode);
+        LogStr(str( (boost::format("CameraUnSetup: PvCameraClose err: %u") % errCode) ));
 	}
 	else
 	{
-		printf("Camera closed.\n");
+		LogStr("Camera closed.");
 	}
 	
 	// delete image buffers
@@ -342,14 +559,14 @@ bool CameraStart()
 	// for max allowable PacketSize/MTU/JumboFrameSize. 
 	if((errCode = PvCaptureAdjustPacketSize(GCamera.Handle,8228)) != ePvErrSuccess)
 	{
-		printf("CameraStart: PvCaptureAdjustPacketSize err: %u\n", errCode);
+        LogStr(str( (boost::format("CameraStart: PvCaptureAdjustPacketSize err: %u") % errCode) ));
 		return false;
 	}
     
     // start driver capture stream 
 	if((errCode = PvCaptureStart(GCamera.Handle)) != ePvErrSuccess)
 	{
-		printf("CameraStart: PvCaptureStart err: %u\n", errCode);
+        LogStr(str( (boost::format("CameraStart: PvCaptureStart err: %u") % errCode) ));
 		return false;
 	}
 	
@@ -359,7 +576,7 @@ bool CameraStart()
 	{           
 		if((errCode = PvCaptureQueueFrame(GCamera.Handle,&(GCamera.Frames[i]),FrameDoneCB)) != ePvErrSuccess)
 		{
-			printf("CameraStart: PvCaptureQueueFrame err: %u\n", errCode);
+            LogStr(str( (boost::format("CameraStart: PvCaptureQueueFrame err: %u") % errCode) ));
 			failed = true;
 		}
 	}
@@ -369,13 +586,14 @@ bool CameraStart()
     
 	// set the camera in hardware trigger, continuous mode, and start camera receiving triggers
 	if((PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","SyncIn1") != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"FrameStartTriggerDelay",0) != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"ExposureMode","External") != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"GainMode","Manual") != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"PixelFormat","Bayer12Packed") != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"AcquisitionMode","Continuous") != ePvErrSuccess) ||
        (PvCommandRun(GCamera.Handle,"AcquisitionStart") != ePvErrSuccess))
 	{		
-		printf("CameraStart: failed to set camera attributes\n");
+ 		LogStr("CameraStart: failed to set camera attributes");
 		// clear queued frame
 		PvCaptureQueueClear(GCamera.Handle);
 		// stop driver capture stream
@@ -393,9 +611,9 @@ void CameraStop()
 	
 	//stop camera receiving triggers
 	if ((errCode = PvCommandRun(GCamera.Handle,"AcquisitionStop")) != ePvErrSuccess)
-		printf("AcquisitionStop command err: %u\n", errCode);
+        LogStr(str( (boost::format("AcquisitionStop command err: %u") % errCode) ));
 	else
-		printf("Camera stopped.\n");
+		LogStr("Camera stopped.");
     
     
     //PvCaptureQueueClear aborts any actively written frame with Frame.Status = ePvErrDataMissing
@@ -404,23 +622,23 @@ void CameraStop()
     //Add delay between AcquisitionStop and PvCaptureQueueClear
 	//to give actively written frame time to complete
     
-    printf("Waiting for frame to complete");
+    LogStr("Camera stopped.");
     for (int i = 0; i < 10; i++) {
-        printf(".");
+        LogStr(".");
         usleep(100*1000);
     }
 	
     //clear queued frames. will block until all frames dequeued
 	if ((errCode = PvCaptureQueueClear(GCamera.Handle)) != ePvErrSuccess)
-		printf("PvCaptureQueueClear err: %u\n", errCode);
+        LogStr(str( (boost::format("PvCaptureQueueClear err: %u") % errCode) ));
 	else
-		printf("Queue cleared.\n");  
+		LogStr("Queue cleared.");  
     
 	//stop driver stream
 	if ((errCode = PvCaptureEnd(GCamera.Handle)) != ePvErrSuccess)
-		printf("PvCaptureEnd err: %u\n", errCode);
+        LogStr(str( (boost::format("PvCaptureEnd err: %u") % errCode) ));
 	else
-		printf("Driver stream stopped.\n");
+		LogStr("Driver stream stopped.");
 }
 
 //Setup camera to stream. Spawn a thread to display stats.
@@ -432,13 +650,23 @@ void HandleCameraPlugged(unsigned long UniqueId)
         
         if(CameraSetup())
         {
-            printf("Camera %lu opened\n",UniqueId);   
+            LogStr(str( (boost::format("Camera %lu opened") % UniqueId) ));
             
-            // start streaming from the camera
-            if(CameraStart())
-            {
-                //create a thread to display camera stats. 
-                SpawnThread();                    
+            // setup event channel
+            if(EventSetup())
+			{
+                
+                // start streaming from the camera
+                if(CameraStart())
+                {
+                    //create a thread to display camera stats. 
+                    SpawnThread();                    
+                }
+                else
+                {
+                    //failure. signal main thread to abort
+                    GCamera.Abort = true;
+                }
             }
 			else
 			{
@@ -473,13 +701,13 @@ void CameraEventCB(void* Context,
     {
         case ePvLinkAdd:
         {
-			printf("Event: camera %lu recognized\n",UniqueId);
+            LogStr(str( (boost::format("Event: camera %lu recognized") % UniqueId) ));
             HandleCameraPlugged(UniqueId);
             break;
         }
         case ePvLinkRemove:
         {
-			printf("\nEvent: camera %lu unplugged\n",UniqueId);
+            LogStr(str( (boost::format("Event: camera %lu unplugged") % UniqueId) ));
             HandleCameraUnplugged(UniqueId);
             
             break;
@@ -494,25 +722,80 @@ void PVAPIsetup(){
     tPvErr pvError;
     
     if((pvError = PvInitialize()) != ePvErrSuccess)
-        printf("PvInitialize err: %u\n", pvError);
+        LogStr(str( (boost::format("PvInitialize err: %u") % pvError) ));
     else
     {
         //IMPORTANT: Initialize camera structure. See tPvFrame in PvApi.h for more info.
         memset(&GCamera,0,sizeof(tCamera));
         
-        printf("Waiting for camera discovery...\n");
+        LogStr("Waiting for camera discovery...");
         
         // register camera plugged in callback
         if((pvError = PvLinkCallbackRegister(CameraEventCB,ePvLinkAdd,NULL)) != ePvErrSuccess)
-            printf("PvLinkCallbackRegister err: %u\n", pvError);
+            LogStr(str( (boost::format("PvLinkCallbackRegister err: %u") % pvError) ));
         
         // register camera unplugged callback
         if((pvError = PvLinkCallbackRegister(CameraEventCB,ePvLinkRemove,NULL)) != ePvErrSuccess)
-            printf("PvLinkCallbackRegister err: %u\n", pvError);
+            LogStr(str( (boost::format("PvLinkCallbackRegister err: %u") % pvError) ));
         
         PVAPIinitialised = true;
     }
 }
+
+
+void *processFrameQueue(void *fContext){
+    
+    while (!GCamera.Abort) {
+        
+        while (theApp->frameQueue.size() > 1){
+            
+            queuedFrame * qFrame = theApp->frameQueue.front();
+            
+            tPvFrame pFrame = qFrame->pFrame;
+            
+            tm tm = boost::posix_time::to_tm(qFrame->bTime);
+            boost::posix_time::time_duration duration( qFrame->bTime.time_of_day() );
+            int uTimeMillis = duration.total_milliseconds() %1000;
+            
+            unsigned long frameCount = pFrame.FrameCount;
+            
+            int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
+            int bracektedFrameNumber = ((pFrame.FrameCount-1)/theApp->cameraNumberBrackets);
+            
+            theApp->bracketBuffers[bufferIndex]->load(&pFrame);
+            
+            delete (USHORT*) pFrame.ImageBuffer;
+            
+            theApp->frameQueue.pop();
+            delete qFrame;
+            
+            if(theApp->frameSaveInterval > 0){
+                if(bracektedFrameNumber % theApp->frameSaveInterval == 0) {
+                    theApp->bracketBuffers[bufferIndex]->saveFrame(
+                                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
+                                                           );
+                }
+            }
+            if(theApp->averageFrameSaveInterval > 0){
+                
+                if(bracektedFrameNumber % theApp->averageFrameSaveInterval == 0) {
+                    theApp->bracketBuffers[bufferIndex]->saveAverageFrame(
+                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
+                                                                  );
+                    theApp->bracketBuffers[bufferIndex]->framesAddedToAverage = theApp->averageFrameSaveInterval/2;
+                }
+            }
+            
+            usleep(100);
+        } 
+        
+        usleep(100);
+    }
+    return 0;
+    
+}
+
+
 
 #pragma mark Class methods
 
@@ -520,7 +803,7 @@ void PVAPIsetup(){
 void lffCinderCaptureApp::prepareSettings( Settings *settings )
 {
 	settings->setWindowSize( 1920, 1080 );
-	settings->setFrameRate( -1 );
+	settings->setFrameRate( 15 );
 }
 
 void lffCinderCaptureApp::setup()
@@ -531,25 +814,31 @@ void lffCinderCaptureApp::setup()
 	cameraHeight = 1080;
     cameraGain = 0;
     
-    cameraNumberBrackets = 9;
-    cameraBracketEv = 2;
-    cameraBaseExposure = 150ul;
-
+    cameraNumberBrackets = 2;
+    cameraBracketEv = 3;
+    cameraBaseExposure = 10000ul;
+    
     // init status vars
     
     justUpdatedBracket = 0;
     lastUpdatedBracket = 0;
-    displayBracket = 0;
-
-    frameSaveInterval = 1;
+    displayBracket = 2;
+    
+    showBracketBuffers = false;
+    showFullscreen = false;
+    showFullDisplay = true;
+    showFullDisplayAverage = false;
+    
+    frameSaveInterval = 2;
     averageFrameSaveInterval = 1000;
-
+    
+    PVAPIinitialised = false;
     
     theApp = this;
     
     setWindowPos(0, 20);
     setWindowSize(cameraWidth, cameraHeight);
-    setFrameRate(-1);
+    setFrameRate(15);
     
     gl::enableDepthRead( false ); 
     gl::enableAlphaTest( false );
@@ -616,32 +905,61 @@ void lffCinderCaptureApp::setup()
         textTextures.push_back( gl::Texture( layout.render( true ) ) );
     }
     
-    TextLayout layout;
-    layout.setFont( Font( "Lucida Grande", 16 ) );
-    layout.setColor( Color( 1.0, 1.0, 1.0 ) );
-    layout.addLine("Waiting for camera");
-    textTextures.push_back( gl::Texture( layout.render( true ) ) );
+    // Parameter interface
     
-    // setup PVapi
+	mParams = params::InterfaceGl( "Parameters", Vec2i( 400, 300 ) );
+	mParams.addText( "labelCamera", "label=`Camera`" );
+	mParams.addParam( "Gain", &cameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
+    mParams.addSeparator();	
+	mParams.addText( "labelSaving", "label=`Saving`" );
+	mParams.addParam( "Latest Interval", &frameSaveInterval, "min=0 max=10000 step=1 keyIncr=L keyDecr=l" );
+	mParams.addParam( "Average Interval", &averageFrameSaveInterval, "min=0 max=10000 step=1 keyIncr=A keyDecr=a" );
+    mParams.addSeparator();	
+	mParams.addText( "labelDisplay", "label=`Display`" );
+	mParams.addParam( "Full Screen", &showFullscreen, "key=f" );
+	mParams.addParam( "Full Display", &showFullDisplay,  "key=d" );
+	mParams.addParam( "Full Display is Average", &showFullDisplayAverage, "key=D" );
+    mParams.addParam( "Full Display Bracket Index", &displayBracket, str( boost::format("min=0 max=%1% step=1 keyIncr=g keyDecr=G") %  cameraNumberBrackets ));
+	mParams.addParam( "Buffers", &showBracketBuffers,  "key=b"  );
     
-    PVAPIinitialised = false;
+    // Stats interface
     
-    // Setup the parameters
-	mParams = params::InterfaceGl( "Parameters", Vec2i( 175, 100 ) );
-	mParams.addParam( "Gain", &cameraGain, "min=0 max=34 step=1 keyIncr=g keyDecr=G" );
-	mParams.addParam( "Frame Saving Interval", &frameSaveInterval, "min=0 max=10000 step=1 keyIncr=s keyDecr=S" );
-	mParams.addParam( "Averaging Frame Saving Interval", &averageFrameSaveInterval, "min=0 max=10000 step=1 keyIncr=a keyDecr=A" );
-    mParams.hide();
+    statsCameraFrameComplete = "0";
+    statsCameraFrameDropped = "0";
+    statsCameraFrameRate = "0";
+    statsCameraPacketReceived = "0";
+    statsCameraPacketMissed = "0";
+    statsFrameQueueSize = 0;
+    statsAbsDifference = 0.0;
+    
+
+    mStats = params::InterfaceGl( "Stats", Vec2i( 400, 300 ) );
+    mStats.setOptions("", str( boost::format("position='%1% %2%' refresh=0.1") % 425 % 15 ));
+    mStats.addText( "textFrames", "label=`Camera Frames`" );
+    mStats.addParam( "Complete", &statsCameraFrameComplete, "readonly=true" );
+    mStats.addParam( "Dropped", &statsCameraFrameDropped, "readonly=true" );
+    mStats.addParam( "Rate", &statsCameraFrameRate, "readonly=true" );
+    mStats.addParam( "Queue", &statsFrameQueueSize, "readonly=true" );
+    mStats.addParam( "Difference", &statsAbsDifference, "readonly=true" );
+    mStats.addText( "textCamera", "label=`Camera Packets`" );
+    mStats.addParam( "Received", &statsCameraPacketReceived, "readonly=true" );
+    mStats.addParam( "Missed", &statsCameraPacketMissed, "readonly=true" );
+    mStats.addSeparator();	
+    mStats.addText( "textDisplay", "label=`Display`" );
+    mStats.addParam( "FPS", &fps, "readonly=true" );
+
+    //pthread_create(&frameProcessingThread,NULL,processFrameQueue,(void *)this);
+
+    serialQueue = dispatch_queue_create("gl.longing.frameQueue", NULL);
+
+    //mParams.hide();
     
 }
 
 void lffCinderCaptureApp::keyDown( KeyEvent event )
 {
-	if( event.getCode() == app::KeyEvent::KEY_f ) {
-		setFullScreen( ! isFullScreen() );
-	}
     
-    if( event.getCode() == app::KeyEvent::KEY_s ) {
+    if( event.getCode() == app::KeyEvent::KEY_p ) {
         if(mParams.isVisible())
             mParams.hide();
         else
@@ -690,6 +1008,12 @@ void lffCinderCaptureApp::mouseDown( MouseEvent event )
 
 void lffCinderCaptureApp::update()
 {
+    fps = getAverageFps();
+    
+    if( isFullScreen() !=  showFullscreen) {
+		setFullScreen(showFullscreen);
+	}
+    
     
     if(!PVAPIinitialised){
         
@@ -702,6 +1026,7 @@ void lffCinderCaptureApp::update()
             tPvErr errCode;
             
             CameraStop();
+            EventUnsetup();
             CameraUnsetup();          
             
             // If thread spawned (see HandleCameraPlugged), wait to finish
@@ -709,9 +1034,9 @@ void lffCinderCaptureApp::update()
                 WaitThread(); 
             
             if((errCode = PvLinkCallbackUnRegister(CameraEventCB,ePvLinkAdd)) != ePvErrSuccess)
-                printf("PvLinkCallbackUnRegister err: %u\n", errCode);
+                LogStr(str( (boost::format("PvLinkCallbackUnRegister err: %u") % errCode) ));
             if((errCode = PvLinkCallbackUnRegister(CameraEventCB,ePvLinkRemove)) != ePvErrSuccess)
-                printf("PvLinkCallbackUnRegister err: %u\n", errCode);       
+                LogStr(str( (boost::format("PvLinkCallbackUnRegister err: %u") % errCode) ));
             
             // uninitialize the API
             PvUnInitialize();
@@ -719,44 +1044,52 @@ void lffCinderCaptureApp::update()
             
             GCamera.Abort = false;
             
+            resetBracketingSequenceCounter();
+            
         }
         
         if(GCamera.Handle){
             
             if(PvAttrUint32Set(GCamera.Handle,"GainValue",cameraGain) != ePvErrSuccess)
             {		
-                printf("Camera: failed to set gain value\n");
+                LogStr("Camera: failed to set gain value");
             }
             
         }        
-        
+                
         int i = 0;
+        
+        float lAbsDifferenceSum = 0.0;
         
         for( vector<BracketBuffer*>::iterator iBuffer = bracketBuffers.begin(); iBuffer != bracketBuffers.end(); ++iBuffer ){
             bool wasUpdated = (*iBuffer)->needsUpdate;
             (*iBuffer)->update();
+            lAbsDifferenceSum += (*iBuffer)->absDifference;
             if(wasUpdated){
                 lastUpdatedBracket = justUpdatedBracket;
                 justUpdatedBracket = i;
-                renderBeyerTextureToFbo(&(*iBuffer)->texture, &latestFBOs[i]);
-                renderBeyerTextureToFbo(&(*iBuffer)->averageTexture, &averageFBOs[i]);
+                
+                if (showBracketBuffers || (showFullDisplay && (displayBracket == i+1 || displayBracket == 0))) {
+                    if (showBracketBuffers || !showFullDisplayAverage) {
+                        renderBeyerTextureToFbo(&(*iBuffer)->texture, &latestFBOs[i]);
+                    }
+                    if (showBracketBuffers || showFullDisplayAverage ) {
+                        renderBeyerTextureToFbo(&(*iBuffer)->averageTexture, &averageFBOs[i]);
+                    }
+                }
             }
             i++;
         }
         
-        TextLayout layout;
-        layout.setFont( Font( "Lucida Grande", 16 ) );
-        layout.setColor( Color( 1.0, 1.0, 1.0 ) );
-        layout.addLine(str( boost::format("Frames Completed: %1%") % GCamera.FrameCompleted ));
-        layout.addLine(str( boost::format("Frames Dropped: %1%") % GCamera.FrameDropped ));
-        layout.addLine(str( boost::format("Packets Received: %1%") % GCamera.PacketReceived ));
-        layout.addLine(str( boost::format("Packets Missed: %1%") % GCamera.PacketMissed ));
-        layout.addLine(str( boost::format("Camera Framerate: %1%") % GCamera.FrameRate ));
-        layout.addLine(str( boost::format("Screen FPS: %1%") % getAverageFps() ));
+        // update stats
         
-        layout.addLine("Camera frames:" );
-        textTextures[cameraNumberBrackets] = gl::Texture(layout.render( true ) );
-        
+        statsCameraFrameComplete = str(boost::format("%1%") % GCamera.FrameCompleted );
+        statsCameraFrameDropped = str(boost::format("%1%") % GCamera.FrameDropped );
+        statsCameraFrameRate = str(boost::format("%1%") % GCamera.FrameRate );
+        statsCameraPacketReceived = str(boost::format("%1%") % GCamera.PacketReceived );
+        statsCameraPacketMissed = str(boost::format("%1%") % GCamera.PacketMissed );
+        statsAbsDifference = lAbsDifferenceSum/i;
+
     }
     
 }
@@ -778,56 +1111,49 @@ void lffCinderCaptureApp::draw()
     
     if(displayBracket > 0) whichBracket = min(displayBracket, cameraNumberBrackets)-1;
     
-    gl::draw( averageFBOs[whichBracket].getTexture(0) );
+    // full screen
     
-    for(int i = 0; i < cameraNumberBrackets; i++){
-        gl::color(1.0, 1.0, 1.0);
-        gl::Texture latestTexture(latestFBOs[i].getTexture(0));
-        latestTexture.setFlipped(true);
-        gl::draw( latestTexture, Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
-        gl::Texture averageTexture(averageFBOs[i].getTexture(0));
-        averageTexture.setFlipped(true);
-        gl::draw( averageTexture, Rectf( 10+(i*(10+windowWidth)), 10+windowHeight+10, windowWidth+10+(i*(10+windowWidth)), (10+windowHeight)*2) );
-        gl::enableAlphaBlending( PREMULT );
-        gl::color(0.0, 0.0, 0.0);
-        gl::draw( textTextures[i], Vec2f( 21+(i*(10+windowWidth)), windowHeight-9 - (textTextures[i].getHeight()/2)));
-        if (whichBracket == i) {
+    if(showFullDisplay){
+        if (showFullDisplayAverage) {
+            gl::Texture averageTexture(averageFBOs[whichBracket].getTexture(0));
+            averageTexture.setFlipped(true);
+            gl::draw( averageTexture, Rectf(0,0,getWindowWidth(),getWindowWidth()*(1.0*cameraHeight/cameraWidth) ));
+        } else { 
+            gl::Texture latestTexture(latestFBOs[whichBracket].getTexture(0));
+            latestTexture.setFlipped(true);
+            gl::draw( latestTexture, Rectf(0,0,getWindowWidth(),getWindowWidth()*(1.0*cameraHeight/cameraWidth) ));
+        }
+    }
+    // bracket buffers
+    
+    if(showBracketBuffers){
+        
+        for(int i = 0; i < cameraNumberBrackets; i++){
             gl::color(1.0, 1.0, 1.0);
-        } else {
-            gl::color(0.5, 0.5, 0.5);
+            gl::Texture latestTexture(latestFBOs[i].getTexture(0));
+            latestTexture.setFlipped(true);
+            gl::draw( latestTexture, Rectf( 10+(i*(10+windowWidth)), 10, windowWidth+10+(i*(10+windowWidth)), 10+windowHeight) );
+            gl::Texture averageTexture(averageFBOs[i].getTexture(0));
+            averageTexture.setFlipped(true);
+            gl::draw( averageTexture, Rectf( 10+(i*(10+windowWidth)), 10+windowHeight+10, windowWidth+10+(i*(10+windowWidth)), (10+windowHeight)*2) );
+            gl::enableAlphaBlending( PREMULT );
+            gl::color(0.0, 0.0, 0.0);
+            gl::draw( textTextures[i], Vec2f( 21+(i*(10+windowWidth)), windowHeight-9 - (textTextures[i].getHeight()/2)));
+            if (whichBracket == i) {
+                gl::color(1.0, 1.0, 1.0);
+            } else {
+                gl::color(0.5, 0.5, 0.5);
+            }
+            gl::draw( textTextures[i], Vec2f( 20+(i*(10+windowWidth)), windowHeight-10 - (textTextures[i].getHeight()/2)));
+            gl::disableAlphaBlending( );
         }
-        gl::draw( textTextures[i], Vec2f( 20+(i*(10+windowWidth)), windowHeight-10 - (textTextures[i].getHeight()/2)));
-        gl::disableAlphaBlending( );
     }
+
+    glDisable( GL_TEXTURE_2D );
     
-	glDisable( GL_TEXTURE_2D );
+    float absDiffScaled = sinf(statsAbsDifference*1.570796326794897);
     
-    
-    // draw status text
-    
-    Vec2f textPos = Vec2f(10, getWindowHeight()-25);
-    
-    float bargraphsX = 120;
-    
-    gl::enableAlphaBlending( PREMULT );
-    
-    gl::color(0.0, 0.0, 0.0);
-    gl::draw(textTextures[cameraNumberBrackets], textPos-Vec2f(-1,textTextures[cameraNumberBrackets].getHeight()-1));
-    gl::color(1.0, 1.0, 1.0);
-    gl::draw(textTextures[cameraNumberBrackets], textPos-Vec2f(0,textTextures[cameraNumberBrackets].getHeight()));
-    
-    gl::disableAlphaBlending();
-    
-    for (int i = 0; i < CAMERA_FRAMES_COUNT; i++){
-        tPvFrame * aFrame;
-        aFrame = &GCamera.Frames[i];
-        if(aFrame->Context[0] == &gFramestateQueued){
-            gl::color(0.1, 0.1, 0.1);
-        } else {
-            gl::color(1, 1, 1);
-        }
-        gl::drawSolidRect( Area((bargraphsX+15)+(i*10),getWindowHeight()-38,(bargraphsX+20)+(i*10),getWindowHeight()-28));
-    }
+    gl::drawSolidRect( Area(0,getWindowHeight()-20,getWindowWidth()*absDiffScaled,getWindowHeight()));
     
     params::InterfaceGl::draw();
     
@@ -835,27 +1161,85 @@ void lffCinderCaptureApp::draw()
 
 void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
 {
-    
-    tm tm = boost::posix_time::to_tm(boost::posix_time::microsec_clock::universal_time());
-    
-    int bufferIndex = (pFrame->FrameCount-1) % cameraNumberBrackets;
-    
-    bracketBuffers[bufferIndex]->load(pFrame);
+    queuedFrame * qFrame = new queuedFrame;
 
-    int bracektedFrameNumber = (pFrame->FrameCount/cameraNumberBrackets);
+    qFrame->pFrame.ImageBufferSize = pFrame->ImageBufferSize;
+    qFrame->pFrame.Status = pFrame->Status;
+    qFrame->pFrame.ImageSize = pFrame->ImageSize;
+    qFrame->pFrame.Width = pFrame->Width;
+    qFrame->pFrame.Height = pFrame->Height;
+    qFrame->pFrame.RegionX = pFrame->RegionX;
+    qFrame->pFrame.RegionY = pFrame->RegionY;
+    qFrame->pFrame.Format = pFrame->Format;
+    qFrame->pFrame.BitDepth = pFrame->BitDepth;
+    qFrame->pFrame.BayerPattern = pFrame->BayerPattern;
+    qFrame->pFrame.FrameCount = pFrame->FrameCount;
+    qFrame->pFrame.TimestampLo = pFrame->TimestampLo;
+    qFrame->pFrame.TimestampHi = pFrame->TimestampHi;
     
-    if(bracektedFrameNumber % frameSaveInterval == 0) {
-    bracketBuffers[bufferIndex]->saveFrame(
-                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/capture_%1$006d-%2$1d.bayer16") % bracektedFrameNumber % (bufferIndex+1) % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_wday ) ).c_str() 
-                                           );
-    }
-    if(bracektedFrameNumber % averageFrameSaveInterval == 0) {
-        bracketBuffers[bufferIndex]->saveAverageFrame(
-                                                      str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/capture_%1$006d-%2$1d_average.bayer16") % bracektedFrameNumber % (bufferIndex+1) % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_wday ) ).c_str() 
-                                               );
-        bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
-    }
+    qFrame->pFrame.ImageBuffer = new char*[pFrame->ImageBufferSize];
+    
+    memcpy(qFrame->pFrame.ImageBuffer, pFrame->ImageBuffer, pFrame->ImageBufferSize);
+    
+    //  pvFrameAncillaryData* data = (pvFrameAncillaryData*)pFrame->AncillaryBuffer;
+    //  console() << "Frame " << pFrame->FrameCount << " \t : " <<  data->exposureValue << endl;
+    
+    boost::posix_time::ptime uTime = boost::posix_time::microsec_clock::universal_time();
+    
+    qFrame->bTime = uTime;
+  
+    dispatch_async(serialQueue, ^{
+        
+        statsFrameQueueSize++;
+        
+        tPvFrame pFrame = qFrame->pFrame;
+        
+        tm tm = boost::posix_time::to_tm(qFrame->bTime);
+        boost::posix_time::time_duration duration( qFrame->bTime.time_of_day() );
+        int uTimeMillis = duration.total_milliseconds() %1000;
+        
+        unsigned long frameCount = pFrame.FrameCount;
+        
+        int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
+        int bracektedFrameNumber = ((pFrame.FrameCount-1)/theApp->cameraNumberBrackets);
+        
+        bracketBuffers[bufferIndex]->load(&pFrame);
+        
+        delete (USHORT*) pFrame.ImageBuffer;
+        
+        delete qFrame;
+        
+        if(frameSaveInterval > 0){
+            if(bracektedFrameNumber % frameSaveInterval == 0) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 
+                bracketBuffers[bufferIndex]->saveFrame(
+                                                               str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
+                                                               );
+            });
+                               }
+        }
+        if(averageFrameSaveInterval > 0){
+            
+            if(bracektedFrameNumber % averageFrameSaveInterval == 0) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+
+                bracketBuffers[bufferIndex]->saveAverageFrame(
+                                                                      str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
+                                                                      );
+                bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
+            });
+                               }
+        }
+        
+        statsFrameQueueSize--;
+
+    });
+
+    
+//    frameQueue.push(qFrame);
+    
+    
 }
 
 void lffCinderCaptureApp::renderBeyerTextureToFbo(gl::Texture * tex, gl::Fbo* fbo)
@@ -867,17 +1251,6 @@ void lffCinderCaptureApp::renderBeyerTextureToFbo(gl::Texture * tex, gl::Fbo* fb
     
 	gl::SaveFramebufferBinding bindingSaver;
     
-    /**
-     char * frameLabel = new char[20];
-     std::sprintf(frameLabel, "Bracket %i", whichFbo);
-     
-     TextLayout layout;
-     layout.setFont( Font( "Lucida Grande", 16 ) );
-     layout.setColor( Color( 1.0, 1.0, 1.0 ) );
-     layout.addLine(frameLabel);
-     textTextures[whichFbo] = gl::Texture(layout.render( true ) ) ;
-    **/
-
 	// bind the framebuffer - now everything we draw will go there
 	fbo->bindFramebuffer();
     
@@ -886,8 +1259,6 @@ void lffCinderCaptureApp::renderBeyerTextureToFbo(gl::Texture * tex, gl::Fbo* fb
     gl::setMatricesWindow( fbo->getSize() );
     
     renderHdrTexture(tex);
-    
-    // gl::draw(textTextures[whichFbo], latestFBOs[whichFbo].getBounds());
     
     fbo->unbindFramebuffer();
     
@@ -915,27 +1286,23 @@ void lffCinderCaptureApp::renderHdrTexture(gl::Texture * tex){
 }
 
 void lffCinderCaptureApp::setCameraNumberBrackets(int _numberBrackets){
-    char _command[20];
-    sprintf(_command, "N>%i\n",_numberBrackets);
-    console() << sendSerialCommand(std::string(_command)) << endl;
+    LogStr(sendSerialCommand(str( (boost::format("N>%i\n") % _numberBrackets) )));
+}
+
+void lffCinderCaptureApp::resetBracketingSequenceCounter(){
+    LogStr(sendSerialCommand("0>\n"));
 }
 
 void lffCinderCaptureApp::setCameraBracketEv(int _bracketEv){
-    char _command[20];
-    sprintf(_command, "V>%i\n",_bracketEv);
-    console() << sendSerialCommand(std::string(_command)) << endl;
+    LogStr(sendSerialCommand(str( (boost::format("V>%i\n") % _bracketEv) )));
 }
 
 void lffCinderCaptureApp::setCameraBaseExposure(unsigned long _baseExposure){
-    char _command[20];
-    sprintf(_command, "E>%lu\n",_baseExposure);
-    console() << sendSerialCommand(std::string(_command)) << endl;
+    LogStr(sendSerialCommand(str( (boost::format("E>%i\n") % _baseExposure) )));
 }
 
 void lffCinderCaptureApp::printCameraParameters(){
-    char _command[20];
-    sprintf(_command, "S>\n");
-    console() << sendSerialCommand(std::string(_command)) << endl;
+    LogStr(sendSerialCommand("S>\n"));
 }
 
 std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
@@ -951,15 +1318,13 @@ std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
         _returnString = serial.readStringUntil('!', SERIAL_BUFSIZE );
         
     } catch(SerialTimeoutExc e) {
-        console() << "serial timeout" << endl;
+        LogStr("serial timeout");
     }
-    
-    //    console() << "\n" << _command << "COMMAND RETURNED:\n" << _returnString << endl;
-    
-    return _returnString;
-    
+
     serial.flush();
     
+    return str( (boost::format("Serial command: \"%s\"\n%s") % boost::algorithm::replace_all_copy(_command, "\n", "\\n") % _returnString) );
+       
 }
 
 lffCinderCaptureApp::~lffCinderCaptureApp(){
@@ -968,11 +1333,16 @@ lffCinderCaptureApp::~lffCinderCaptureApp(){
     GCamera.Abort = true;
     
     CameraStop();
+    EventUnsetup();
     CameraUnsetup();          
     
     // If thread spawned (see HandleCameraPlugged), wait to finish
     if(GCamera.ThHandle)
         WaitThread(); 
+    
+    if (frameProcessingThread) {
+        pthread_join(frameProcessingThread,NULL);
+    }
     
     if((errCode = PvLinkCallbackUnRegister(CameraEventCB,ePvLinkAdd)) != ePvErrSuccess)
         printf("PvLinkCallbackUnRegister err: %u\n", errCode);
