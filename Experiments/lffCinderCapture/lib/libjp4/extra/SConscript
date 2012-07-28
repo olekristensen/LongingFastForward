@@ -1,0 +1,38 @@
+from sys import platform, byteorder
+
+Import('env')
+
+# system dependent variables
+if platform == "darwin":
+    env = env.Clone()
+    env.Append(CPPDEFINES=["qMacOS=1", "qWinOS=0", "MAC_ENV=1"])
+    env.Append(LINKFLAGS=["-framework", "CoreServices"])
+elif platform == "linux2":
+    env = env.Clone()
+    env.Append(CPPDEFINES=["qMacOS=0", "qWinOS=0", "UNIX_ENV=1"])
+elif platform == "win32":
+    env = env.Clone(TOOLS=['mingw'])
+    env.Append(CPPDEFINES=["qMacOS=0", "qWinOS=0", "UNIX_ENV=1"])
+    env.Append(CPPPATH=["c:\elphel\expat\Source\lib"])
+    env.Append(LIBPATH=["c:\elphel\expat\Bin"])
+else:
+    print "Unknwon platform."
+    Exit(2)
+
+if byteorder == "big":
+    env.Append(CPPDEFINES=["qDNGBigEndian=1"])
+else:
+    env.Append(CPPDEFINES=["qDNGLittleEndian=1"])
+
+env.Prepend(CPPPATH=["#libjp4/extra/jpeg-6b-jp4", "#libjp4/extra/dng_sdk",
+                     "#libjp4/extra/xmp_sdk/include", "#libjp4/extra/xmp_sdk/common", "#libjp4/extra/md5"])
+
+# DNG SDK
+dng_SRC  = env.Glob("dng_sdk/*.cpp")
+xmp_SRC  = ["#libjp4/extra/xmp_sdk/common/UnicodeConversions.cpp", "#libjp4/extra/xmp_sdk/common/XML_Node.cpp"]
+xmp_SRC += env.Glob("xmp_sdk/XMPCore/*.cpp")
+md5_SRC  = env.Glob("md5/*.cpp")
+
+# exports
+
+env.Export({"extra_ENV":env, "extra_SRC":dng_SRC+xmp_SRC+md5_SRC})

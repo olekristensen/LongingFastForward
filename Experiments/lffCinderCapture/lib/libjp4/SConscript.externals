@@ -1,0 +1,15 @@
+import os
+
+Import("env")
+
+# import PATH variable into SCons (necessary on Mac OS X)
+env.PrependENVPath("PATH", os.environ["PATH"])
+
+# libexif
+env.ParseConfig("pkg-config --cflags --libs-only-L libexif")
+
+# ffmpeg (libraries are added by hand)
+env.ParseConfig("pkg-config --cflags --libs-only-L libavformat")
+env.ParseConfig("pkg-config --cflags --libs-only-L libavcodec")
+
+Export("env")

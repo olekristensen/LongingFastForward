@@ -119,8 +119,8 @@ public:
     
     // buffers
     
-    queue <queuedFrame*> frameQueue;
-    dispatch_queue_t serialQueue;
+    dispatch_queue_t frameSerialQueue;
+    dispatch_queue_t controllerSerialQueue;
     
     pthread_t frameProcessingThread;
     
@@ -129,6 +129,8 @@ public:
     
     vector <gl::Fbo> latestFBOs;
     vector <gl::Fbo> averageFBOs;
+    
+    float histogram[HISTOGRAM_BINS];
     
     gl::GlslProg hdrDebayerShader;
     
@@ -146,7 +148,7 @@ public:
     
     void setCameraNumberBrackets(int _numberBrackets);
     void setCameraBracketEv(int _bracketEv);
-    void setCameraBaseExposure(unsigned long _baseExposure);
+    void setCameraBaseExposure(int _baseExposure);
     void resetBracketingSequenceCounter();
     void printCameraParameters();
     
@@ -158,7 +160,7 @@ public:
     int cameraGain;
     int cameraNumberBrackets;
     int cameraBracketEv;
-    unsigned long cameraBaseExposure;
+    int cameraBaseExposure;
     
     // interface
     
@@ -175,6 +177,7 @@ public:
     string statsCameraPacketReceived;
     string statsCameraPacketMissed;
     int statsFrameQueueSize;
+    int statsCommandQueueSize;
     float statsAbsDifference;
     
     int displayBracket;
@@ -182,9 +185,16 @@ public:
     bool showFullscreen;
     bool showFullDisplay;
     bool showFullDisplayAverage;
+    bool showMeters;
+
+    bool autoExposure;
+    float autoExposureSecondsInterval;
+    double lastAutoExposureSeconds;
     
-    int setNumberBrackets;
-    int setcameraBracketEv;
+    int targetCameraNumberBrackets;
+    int targetCameraBracketEv;
+    int targetCameraGain;
+    int targetCameraBaseExposure;
     
     float fps;
     
@@ -329,7 +339,7 @@ void WaitForCamera()
 void FrameDoneCB(tPvFrame* pFrame)
 { 
     //LogStr(str( (boost::format("%u Frame %u Done") % ++frameDoneCounter % pFrame->FrameCount) ));
-  
+    
 	// if frame hasn't been cancelled, requeue frame
     if(pFrame->Status != ePvErrCancelled){
         
@@ -400,28 +410,28 @@ bool EventSetup()
 	}
     
 	/*
-    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","FrameTrigger")) != ePvErrSuccess)
-	{
+     if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","FrameTrigger")) != ePvErrSuccess)
+     {
      LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
-		return false;
-	}
-    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
-	{
+     return false;
+     }
+     if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+     {
      LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
-		return false;
-	}
-	
-    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","ExposureEnd")) != ePvErrSuccess)
-	{
+     return false;
+     }
+     
+     if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventSelector","ExposureEnd")) != ePvErrSuccess)
+     {
      LogStr(str( (boost::format("Set EventsSelector err: %u") % errCode) ));
-		return false;
-	}
-    if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
-	{
+     return false;
+     }
+     if ((errCode = PvAttrEnumSet(GCamera.Handle,"EventNotification","On")) != ePvErrSuccess)
+     {
      LogStr(str( (boost::format("Set EventsNotification err: %u") % errCode) ));
-		return false;
-	}
-	*/
+     return false;
+     }
+     */
 	
 	//Get and print bitmask
 	PvAttrUint32Get(GCamera.Handle,"EventsEnable1", &EventBitmask);
@@ -743,60 +753,6 @@ void PVAPIsetup(){
 }
 
 
-void *processFrameQueue(void *fContext){
-    
-    while (!GCamera.Abort) {
-        
-        while (theApp->frameQueue.size() > 1){
-            
-            queuedFrame * qFrame = theApp->frameQueue.front();
-            
-            tPvFrame pFrame = qFrame->pFrame;
-            
-            tm tm = boost::posix_time::to_tm(qFrame->bTime);
-            boost::posix_time::time_duration duration( qFrame->bTime.time_of_day() );
-            int uTimeMillis = duration.total_milliseconds() %1000;
-            
-            unsigned long frameCount = pFrame.FrameCount;
-            
-            int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
-            int bracektedFrameNumber = ((pFrame.FrameCount-1)/theApp->cameraNumberBrackets);
-            
-            theApp->bracketBuffers[bufferIndex]->load(&pFrame);
-            
-            delete (USHORT*) pFrame.ImageBuffer;
-            
-            theApp->frameQueue.pop();
-            delete qFrame;
-            
-            if(theApp->frameSaveInterval > 0){
-                if(bracektedFrameNumber % theApp->frameSaveInterval == 0) {
-                    theApp->bracketBuffers[bufferIndex]->saveFrame(
-                                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
-                                                           );
-                }
-            }
-            if(theApp->averageFrameSaveInterval > 0){
-                
-                if(bracektedFrameNumber % theApp->averageFrameSaveInterval == 0) {
-                    theApp->bracketBuffers[bufferIndex]->saveAverageFrame(
-                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
-                                                                  );
-                    theApp->bracketBuffers[bufferIndex]->framesAddedToAverage = theApp->averageFrameSaveInterval/2;
-                }
-            }
-            
-            usleep(100);
-        } 
-        
-        usleep(100);
-    }
-    return 0;
-    
-}
-
-
-
 #pragma mark Class methods
 
 
@@ -811,25 +767,30 @@ void lffCinderCaptureApp::setup()
     // init dynamic camera properties
     
     cameraWidth = 1920;
-	cameraHeight = 1080;
-    cameraGain = 0;
+    cameraHeight = 1080;
     
-    cameraNumberBrackets = 2;
-    cameraBracketEv = 3;
-    cameraBaseExposure = 10000ul;
+    cameraGain = targetCameraGain = 0;
+    cameraNumberBrackets = targetCameraNumberBrackets = 2;
+    cameraBracketEv = targetCameraBracketEv = 3;
+    cameraBaseExposure = targetCameraBaseExposure = 150;
+    
+    autoExposure = true;
+    autoExposureSecondsInterval = 1.0;
+    lastAutoExposureSeconds = 0.0;
     
     // init status vars
     
     justUpdatedBracket = 0;
     lastUpdatedBracket = 0;
-    displayBracket = 2;
+    displayBracket = 1;
     
     showBracketBuffers = false;
     showFullscreen = false;
     showFullDisplay = true;
     showFullDisplayAverage = false;
+    showMeters = false;
     
-    frameSaveInterval = 2;
+    frameSaveInterval = 1000;
     averageFrameSaveInterval = 1000;
     
     PVAPIinitialised = false;
@@ -854,7 +815,7 @@ void lffCinderCaptureApp::setup()
 	
 	try {
 		Serial::Device dev = Serial::findDeviceByNameContains("tty.usbserial-A700exoq");
-		serial = Serial( dev, 9600);
+		serial = Serial( dev, 38400);
 	}
 	catch( ... ) {
 		console() << "There was an error initializing the serial device!" << std::endl;
@@ -909,7 +870,12 @@ void lffCinderCaptureApp::setup()
     
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 400, 300 ) );
 	mParams.addText( "labelCamera", "label=`Camera`" );
-	mParams.addParam( "Gain", &cameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
+    mParams.addParam( "Auto Exposure", &autoExposure, "key=x" );
+    mParams.addParam( "Auto Exposure Interval Sec", &autoExposureSecondsInterval, "min=1 max=120 step=0.1 keyIncr=I keyDecr=i" );
+    mParams.addParam( "Base Exposure", &targetCameraBaseExposure, "min=1 max=500000 step=10 keyIncr=E keyDecr=e" );
+	mParams.addParam( "Gain", &targetCameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
+    mParams.addParam( "Bracket EV Steps", &targetCameraBracketEv, "min=1 max=4 step=1 keyIncr=V keyDecr=v" );
+	// mParams.addParam( "Number Brackets", &targetCameraNumberBrackets, "min=1 max=9 step=1 keyIncr=N keyDecr=n" );
     mParams.addSeparator();	
 	mParams.addText( "labelSaving", "label=`Saving`" );
 	mParams.addParam( "Latest Interval", &frameSaveInterval, "min=0 max=10000 step=1 keyIncr=L keyDecr=l" );
@@ -921,6 +887,7 @@ void lffCinderCaptureApp::setup()
 	mParams.addParam( "Full Display is Average", &showFullDisplayAverage, "key=D" );
     mParams.addParam( "Full Display Bracket Index", &displayBracket, str( boost::format("min=0 max=%1% step=1 keyIncr=g keyDecr=G") %  cameraNumberBrackets ));
 	mParams.addParam( "Buffers", &showBracketBuffers,  "key=b"  );
+	mParams.addParam( "Meters", &showMeters,  "key=m"  );
     
     // Stats interface
     
@@ -930,27 +897,28 @@ void lffCinderCaptureApp::setup()
     statsCameraPacketReceived = "0";
     statsCameraPacketMissed = "0";
     statsFrameQueueSize = 0;
+    statsCommandQueueSize = 0;
     statsAbsDifference = 0.0;
     
-
     mStats = params::InterfaceGl( "Stats", Vec2i( 400, 300 ) );
     mStats.setOptions("", str( boost::format("position='%1% %2%' refresh=0.1") % 425 % 15 ));
     mStats.addText( "textFrames", "label=`Camera Frames`" );
     mStats.addParam( "Complete", &statsCameraFrameComplete, "readonly=true" );
     mStats.addParam( "Dropped", &statsCameraFrameDropped, "readonly=true" );
     mStats.addParam( "Rate", &statsCameraFrameRate, "readonly=true" );
-    mStats.addParam( "Queue", &statsFrameQueueSize, "readonly=true" );
+    mStats.addParam( "Frame Queue", &statsFrameQueueSize, "readonly=true" );
     mStats.addParam( "Difference", &statsAbsDifference, "readonly=true" );
     mStats.addText( "textCamera", "label=`Camera Packets`" );
     mStats.addParam( "Received", &statsCameraPacketReceived, "readonly=true" );
     mStats.addParam( "Missed", &statsCameraPacketMissed, "readonly=true" );
-    mStats.addSeparator();	
+    mStats.addSeparator();
+    mStats.addText( "textSerial", "label=`Serial communication`" );
+    mStats.addParam( "Command Queue", &statsCommandQueueSize, "readonly=true" );
     mStats.addText( "textDisplay", "label=`Display`" );
     mStats.addParam( "FPS", &fps, "readonly=true" );
-
-    //pthread_create(&frameProcessingThread,NULL,processFrameQueue,(void *)this);
-
-    serialQueue = dispatch_queue_create("gl.longing.frameQueue", NULL);
+    
+    frameSerialQueue = dispatch_queue_create("gl.longing.frameQueue", NULL);
+    controllerSerialQueue = dispatch_queue_create("gl.longing.controllerQueue", NULL);
 
     //mParams.hide();
     
@@ -959,11 +927,14 @@ void lffCinderCaptureApp::setup()
 void lffCinderCaptureApp::keyDown( KeyEvent event )
 {
     
-    if( event.getCode() == app::KeyEvent::KEY_p ) {
-        if(mParams.isVisible())
+    if( event.getCode() == app::KeyEvent::KEY_TAB ) {
+        if(mParams.isVisible()){
             mParams.hide();
-        else
+            mStats.hide();
+        } else {
             mParams.show();
+            mStats.show();
+        }
     }
     
     if( event.getCode() == app::KeyEvent::KEY_0 ) {
@@ -996,8 +967,6 @@ void lffCinderCaptureApp::keyDown( KeyEvent event )
     if( event.getCode() == app::KeyEvent::KEY_9 ) {
         displayBracket = 9;
     }
-    
-    
     
 }
 
@@ -1048,24 +1017,21 @@ void lffCinderCaptureApp::update()
             
         }
         
-        if(GCamera.Handle){
-            
-            if(PvAttrUint32Set(GCamera.Handle,"GainValue",cameraGain) != ePvErrSuccess)
-            {		
-                LogStr("Camera: failed to set gain value");
-            }
-            
-        }        
-                
         int i = 0;
         
-        float lAbsDifferenceSum = 0.0;
+        float lAbsDifference = 0.0;
+        
+        int histogramMaxIndex = -1;
         
         for( vector<BracketBuffer*>::iterator iBuffer = bracketBuffers.begin(); iBuffer != bracketBuffers.end(); ++iBuffer ){
             bool wasUpdated = (*iBuffer)->needsUpdate;
             (*iBuffer)->update();
-            lAbsDifferenceSum += (*iBuffer)->absDifference;
             if(wasUpdated){
+                if (i==0) {
+                    cblas_scopy(HISTOGRAM_BINS, (*iBuffer)->histogram,1, histogram,1);
+                    lAbsDifference = (*iBuffer)->absDifference;
+                    histogramMaxIndex = (*iBuffer)->histogramMaxIndex;
+                }
                 lastUpdatedBracket = justUpdatedBracket;
                 justUpdatedBracket = i;
                 
@@ -1081,6 +1047,59 @@ void lffCinderCaptureApp::update()
             i++;
         }
         
+        if(GCamera.Handle){
+            if(cameraGain != targetCameraGain){
+                if(PvAttrUint32Set(GCamera.Handle,"GainValue",targetCameraGain) != ePvErrSuccess)
+                {		
+                    LogStr("Camera: failed to set gain value");
+                } else {
+                    cameraGain = targetCameraGain;
+                }
+            }
+            
+            //TODO: Camera target parametre opdateres
+            
+            //Auto base exposure
+            if(autoExposure){
+                if(getElapsedSeconds() - lastAutoExposureSeconds > autoExposureSecondsInterval){
+                    
+                    float histogramEnd = histogram[HISTOGRAM_BINS-1];
+                    
+                    int targetCameraBaseExposureOffset = MAX(1, targetCameraBaseExposure*0.01);
+                    
+                    if (histogramEnd > 0.0005) {
+                        // overexposed
+                        targetCameraBaseExposure-=targetCameraBaseExposureOffset;
+                    } 
+                    if (histogramEnd < 0.0003) {
+                        // underexposed
+                        targetCameraBaseExposure+=targetCameraBaseExposureOffset;
+                    }
+                    lastAutoExposureSeconds = getElapsedSeconds();
+                }
+            }
+            
+            if(cameraBracketEv != targetCameraBracketEv){
+                setCameraBracketEv(targetCameraBracketEv);
+                cameraBracketEv = targetCameraBracketEv;
+            }
+            
+            if(cameraNumberBrackets != targetCameraNumberBrackets){
+                setCameraNumberBrackets(targetCameraNumberBrackets);
+                cameraNumberBrackets = targetCameraNumberBrackets;
+            }
+            
+            if(cameraBaseExposure != targetCameraBaseExposure){
+                statsCommandQueueSize++;
+                dispatch_async(controllerSerialQueue, ^{
+                setCameraBaseExposure(targetCameraBaseExposure);
+                statsCommandQueueSize--;
+                });
+                cameraBaseExposure = targetCameraBaseExposure;
+            }
+            
+        }        
+        
         // update stats
         
         statsCameraFrameComplete = str(boost::format("%1%") % GCamera.FrameCompleted );
@@ -1088,8 +1107,8 @@ void lffCinderCaptureApp::update()
         statsCameraFrameRate = str(boost::format("%1%") % GCamera.FrameRate );
         statsCameraPacketReceived = str(boost::format("%1%") % GCamera.PacketReceived );
         statsCameraPacketMissed = str(boost::format("%1%") % GCamera.PacketMissed );
-        statsAbsDifference = lAbsDifferenceSum/i;
-
+        statsAbsDifference = lAbsDifference;
+        
     }
     
 }
@@ -1148,12 +1167,43 @@ void lffCinderCaptureApp::draw()
             gl::disableAlphaBlending( );
         }
     }
-
+    
     glDisable( GL_TEXTURE_2D );
     
-    float absDiffScaled = sinf(statsAbsDifference*1.570796326794897);
-    
-    gl::drawSolidRect( Area(0,getWindowHeight()-20,getWindowWidth()*absDiffScaled,getWindowHeight()));
+    if (showMeters){
+        
+        // difference meter
+        
+        float absDiffScaled = sinf(statsAbsDifference*1.570796326794897);
+        
+        gl::enableAlphaBlending();
+        
+        gl::color(0.1, 0.1, 0.1, 0.33);
+        gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10),getWindowHeight()-10));
+        
+        gl::color(1.0, 1.0, 1.0, 0.5);
+        gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10)*absDiffScaled,getWindowHeight()-10));
+        
+        // histogram
+
+        Area histogramArea = Area(
+            10,getWindowHeight()-40, getWindowWidth()-10, (getWindowHeight()-40)*0.66
+        );
+        
+        gl::color(0.1, 0.1, 0.1, 0.33);
+        gl::drawSolidRect(histogramArea);
+
+        gl::color(1.0, 1.0, 1.0,0.5);
+        
+        for(int i=0; i<HISTOGRAM_BINS; i++){
+            float w = 1.0*histogramArea.getWidth()/HISTOGRAM_BINS;
+            float h = histogram[i]*histogramArea.getHeight();
+            gl::drawSolidRect(Area(10+(w*i),histogramArea.y2-h,10+(w*i)+w,histogramArea.y2));
+        }
+        
+        gl::disableAlphaBlending();
+        
+    }
     
     params::InterfaceGl::draw();
     
@@ -1161,8 +1211,9 @@ void lffCinderCaptureApp::draw()
 
 void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
 {
+    
     queuedFrame * qFrame = new queuedFrame;
-
+    
     qFrame->pFrame.ImageBufferSize = pFrame->ImageBufferSize;
     qFrame->pFrame.Status = pFrame->Status;
     qFrame->pFrame.ImageSize = pFrame->ImageSize;
@@ -1187,8 +1238,8 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
     boost::posix_time::ptime uTime = boost::posix_time::microsec_clock::universal_time();
     
     qFrame->bTime = uTime;
-  
-    dispatch_async(serialQueue, ^{
+    
+    dispatch_async(frameSerialQueue, ^{
         
         statsFrameQueueSize++;
         
@@ -1203,6 +1254,8 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
         int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
         int bracektedFrameNumber = ((pFrame.FrameCount-1)/theApp->cameraNumberBrackets);
         
+        // FIXME! histogram-based bufferIndex
+        
         bracketBuffers[bufferIndex]->load(&pFrame);
         
         delete (USHORT*) pFrame.ImageBuffer;
@@ -1212,33 +1265,29 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
         if(frameSaveInterval > 0){
             if(bracektedFrameNumber % frameSaveInterval == 0) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-                bracketBuffers[bufferIndex]->saveFrame(
-                                                               str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
-                                                               );
-            });
-                               }
+                    
+                    bracketBuffers[bufferIndex]->saveFrame(
+                                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
+                                                           );
+                });
+            }
         }
         if(averageFrameSaveInterval > 0){
             
             if(bracektedFrameNumber % averageFrameSaveInterval == 0) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-                bracketBuffers[bufferIndex]->saveAverageFrame(
-                                                                      str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % tm.tm_mon % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
-                                                                      );
-                bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
-            });
-                               }
+                    
+                    bracketBuffers[bufferIndex]->saveAverageFrame(
+                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
+                                                                  );
+                    bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
+                });
+            }
         }
         
         statsFrameQueueSize--;
-
-    });
-
-    
-//    frameQueue.push(qFrame);
-    
+        
+    });    
     
 }
 
@@ -1277,7 +1326,6 @@ void lffCinderCaptureApp::renderHdrTexture(gl::Texture * tex){
     hdrDebayerShader.uniform( "sourceSize", Vec4f(cameraWidth, cameraHeight, 1.0/cameraWidth, 1.0/cameraHeight ) );
     hdrDebayerShader.uniform( "firstRed", Vec2f(1,0) );
     
-    
     gl::drawSolidRect( Area(0,0,cameraWidth,cameraHeight));
     
     hdrDebayerShader.unbind();
@@ -1297,7 +1345,7 @@ void lffCinderCaptureApp::setCameraBracketEv(int _bracketEv){
     LogStr(sendSerialCommand(str( (boost::format("V>%i\n") % _bracketEv) )));
 }
 
-void lffCinderCaptureApp::setCameraBaseExposure(unsigned long _baseExposure){
+void lffCinderCaptureApp::setCameraBaseExposure(int _baseExposure){
     LogStr(sendSerialCommand(str( (boost::format("E>%i\n") % _baseExposure) )));
 }
 
@@ -1308,10 +1356,15 @@ void lffCinderCaptureApp::printCameraParameters(){
 std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
     
     std::string _returnString;
+    
+    serial.flush();
+    
+    // FIXME! intermittent missing bytes from serial stream
+    
     // write command
     serial.writeString(_command);
     
-    usleep(1000*1000);
+    usleep(250*1000);
     
     try{
         // read until newline, to a maximum of BUFSIZE bytes
@@ -1320,11 +1373,9 @@ std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
     } catch(SerialTimeoutExc e) {
         LogStr("serial timeout");
     }
-
-    serial.flush();
     
     return str( (boost::format("Serial command: \"%s\"\n%s") % boost::algorithm::replace_all_copy(_command, "\n", "\\n") % _returnString) );
-       
+    
 }
 
 lffCinderCaptureApp::~lffCinderCaptureApp(){
@@ -1359,7 +1410,6 @@ lffCinderCaptureApp::~lffCinderCaptureApp(){
     for( vector<BracketBuffer*>::iterator iBuffer = bracketBuffers.begin(); iBuffer != bracketBuffers.end(); ++iBuffer )
         delete *iBuffer;
     bracketBuffers.clear();
-    
     
 }
 

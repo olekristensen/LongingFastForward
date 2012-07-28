@@ -1,0 +1,53 @@
+import os
+from sys import platform
+
+Import('env')
+Import('lib_DIR')
+
+env = env.Clone()
+
+# Extras (DNG SDK, XMP SDK)
+env.SConscript("extra/SConscript")
+env.Import('extra_ENV')
+env.Import('extra_SRC')
+
+env = extra_ENV.Clone()
+
+# JP4 modified libjpeg
+jpeg_SRC = Split("jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c jchuff.c "
+                 "jcinit.c jcmainct.c jcmarker.c jcmaster.c jcomapi.c jcparam.c "
+                 "jcphuff.c jcprepct.c jcsample.c jctrans.c jdapimin.c jdapistd.c "
+                 "jdatadst.c jdatasrc.c jdcoefct.c jdcolor.c jddctmgr.c jdhuff.c "
+                 "jdinput.c jdmainct.c jdmarker.c jdmaster.c jdmerge.c jdphuff.c "
+                 "jdpostct.c jdsample.c jdtrans.c jerror.c jfdctflt.c jfdctfst.c "
+                 "jfdctint.c jidctflt.c jidctfst.c jidctint.c jidctred.c jquant1.c "
+                 "jquant2.c jutils.c jmemmgr.c jmemnobs.c")
+
+jpeg_SRC = ["extra/jpeg-6b-jp4/%s" % src for src in jpeg_SRC]
+
+# import PATH variable into SCons (necessary on Mac OS X)
+env.PrependENVPath("PATH", os.environ["PATH"])
+
+# libexif
+env.ParseConfig("pkg-config --cflags --libs-only-L libexif")
+
+# ffmpeg (libraries are added by hand)
+env.ParseConfig("pkg-config --cflags --libs-only-L libavformat")
+env.ParseConfig("pkg-config --cflags --libs-only-L libavcodec")
+
+# libjp4
+libjp4_SRC = ["jp4.cpp", "gamma.cpp", "movie.cpp", "dng.cpp",
+              "jpeg.cpp", "pgm.cpp"] + jpeg_SRC + extra_SRC
+
+env.Append(CPPPATH=["#"])
+
+libjp4 = env.SharedLibrary("jp4", source=libjp4_SRC, LIBS=["libexif",                   # required
+                                                           "libavformat", "libavcodec", # optional (Movie)
+                                                           "libexpat", "libpthread"])   # optional (DNG)
+
+# installation
+env.Install(lib_DIR, libjp4)
+env.Alias("install", lib_DIR)
+
+env.Export("env")
+

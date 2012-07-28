@@ -18,6 +18,7 @@
  * 7        <--->  12 Camera Out 2      Exposing
  * 
  ***/
+
 const boolean debug = false;
 
 const int pinOut_trigger          = 5; 
@@ -40,6 +41,7 @@ double bracketedExposuresMicros[maxBrackets];
 unsigned long bracketedExposuresFactor[maxBrackets];
 
 unsigned long baseExposure = 250;
+boolean makeBracketCalculation = false;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -57,7 +59,7 @@ void setup() {
   pinMode(pinIn_frameReadout, INPUT);
   pinMode(pinIn_exposing, INPUT);
 
-  Serial.begin(9600);
+  Serial.begin(38400);
   inputString.reserve(200);
 
   calculateBrackets();
@@ -71,7 +73,7 @@ void loop()
 {
 
   if(trig){
-     trig = false;
+    trig = false;
     double lDelayMs = bracketedExposuresMillis[exposureNumber];
     double lDelayUs = bracketedExposuresMicros[exposureNumber];
     microsLastTrigger = micros();
@@ -90,7 +92,7 @@ void loop()
     _delay_us(preDelayUs);
   }
 
-  if(stringComplete){
+  if(stringComplete && inputString.endsWith("\n")){
 
     // reset bracketing sequence
     if(inputString.substring(0,2) == "0>"){
@@ -123,13 +125,16 @@ void loop()
     // set base exposure of brackets
     if(inputString.substring(0,2) == "E>"){
       String _s = inputString.substring(2,inputString.length()-1);
-      char charStr[20];
-      _s.toCharArray(charStr, 20);
-      unsigned long _baseExposure = strtoul(charStr, NULL, 10);
-      setBaseExposure(_baseExposure);
+      if(_s.length() > 0){
+        char charStr[20];
+        _s.toCharArray(charStr, 20);
+        unsigned long _baseExposure = strtoul(charStr, NULL, 10);
+        setBaseExposure(_baseExposure);
+      }
       Serial.print("E>");
       Serial.print(baseExposure);
       Serial.println("!");
+
     }
 
     // print status
@@ -150,6 +155,13 @@ void loop()
     inputString = "";
     stringComplete = false;
   }
+
+  if(makeBracketCalculation && exposureNumber == 0){
+    calculateBrackets();
+    makeBracketCalculation=false;
+  }
+
+
 }
 
 void trigger(){
@@ -185,19 +197,19 @@ void calculateBrackets(){
 void setNumberBrackets(int _numberBrackets){
   if(maxBrackets > _numberBrackets){
     numberBrackets = _numberBrackets;
-    calculateBrackets();
+    makeBracketCalculation=true;
   }
 }
 
 void setBracketEv(int _bracketEv){
   bracketEv = _bracketEv;
-  calculateBrackets();
+  makeBracketCalculation=true;
 }
 
 
 void setBaseExposure(unsigned long _baseExposure){
   baseExposure = _baseExposure;
-  calculateBrackets();
+  makeBracketCalculation=true;
 }
 
 void serialEvent() {
@@ -213,4 +225,7 @@ void serialEvent() {
     } 
   }
 }
+
+
+
 

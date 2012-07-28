@@ -11,7 +11,6 @@
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 #include "Logger.h"
 #include "zlib.h"
 
@@ -25,6 +24,7 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     framesAddedToAverage = 0;
     needsUpdate = true;
     absDifference = 0;
+    histogramMaxIndex = 0;
 
     bracketIndex = _bracketIndex;
     width = _width;
@@ -141,11 +141,32 @@ void BracketBuffer::load(tPvFrame * pFrame)
     
         frameNumber = pFrame->FrameCount;
     
-        //TODO calculate difference
+        // calculate difference
         
         cblas_saxpy (width*height,-1.0,pixelsFloat,1,formerPixelsFloat,1);
         absDifference = cblas_sasum (width*height,formerPixelsFloat,1)/(width*1.0*height);
 
+        // calculate histogram
+               
+        vImagePixelCount vipcHistogram[HISTOGRAM_BINS];
+        
+        vImageHistogramCalculation_PlanarF ( &vImageFloat,vipcHistogram,HISTOGRAM_BINS,0.0,1.0,kvImageNoFlags);
+        
+        for(int i = 0; i < HISTOGRAM_BINS; i++){
+            histogram[i] = 1.0*vipcHistogram[i]/(width*height);
+        }
+        
+        // find index of max value
+        
+        float dummy = 0.0;
+        
+        vDSP_maxvi (    histogram,
+                          1,
+                          &dummy,
+                          &histogramMaxIndex,
+                          HISTOGRAM_BINS
+                          );
+                
         // update average frame
         
         float averageAlpha = 1.0/(framesAddedToAverage+1.0);
@@ -187,6 +208,8 @@ void BracketBuffer::saveAverageFrame(const char * filename){
 
 void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     
+    bool compress = false;
+    
     if(filePath.has_parent_path()){
         if (!fs::exists(filePath.parent_path())) {
             fs::create_directory(filePath.parent_path());
@@ -195,8 +218,10 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
         }
     }
     
-    filePath = fs::path(str(boost::format("%s.gzip") % filePath.c_str()));
-
+    if(compress){
+        filePath = fs::path(str(boost::format("%s.gzip") % filePath.c_str()));
+    }
+    
     using namespace std;
 
     namespace io = boost::iostreams;
@@ -206,7 +231,9 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     
     
     io::filtering_streambuf<io::input> buf; //Declare buf
-    //buf.push(io::zlib_compressor(io::zlib_params( io::zlib::best_speed,io::zlib::deflated,15+16,8,io::zlib::default_strategy,false ))); //Assign compressor to buf
+    if(compress){
+        buf.push(io::zlib_compressor(io::zlib_params( io::zlib::best_speed,io::zlib::deflated,15+16,8,io::zlib::default_strategy,false ))); //zlib compression
+    }
     //buf.push(io::gzip_compressor() ); //to slow
     buf.push(ss); //Push ss to buf
     ofstream out(filePath.c_str(), ios_base::out | ios_base::binary); //Declare out

@@ -12,6 +12,10 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Channel.h"
+#include "libjp4/jp4.h"
+
+#define HISTOGRAM_BINS 128
+
 
 namespace fs = boost::filesystem;
 
@@ -51,6 +55,9 @@ public:
     cinder::Channel32f  channel;
     cinder::gl::Texture texture;
 
+    float histogram[HISTOGRAM_BINS];
+    vDSP_Length histogramMaxIndex;
+    
     // former frame
     
     float * formerPixelsFloat;

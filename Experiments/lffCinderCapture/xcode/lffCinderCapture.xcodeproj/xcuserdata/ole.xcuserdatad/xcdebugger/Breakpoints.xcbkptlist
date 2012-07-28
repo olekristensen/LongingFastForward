@@ -8,12 +8,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "364073631.322293"
+         timestampString = "365196661.161101"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1305"
-         endingLineNumber = "1305"
+         startingLineNumber = "1353"
+         endingLineNumber = "1353"
          landmarkName = "lffCinderCaptureApp::printCameraParameters()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../src/lffCinderCaptureApp.cpp"
+         timestampString = "365194502.85734"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1105"
+         endingLineNumber = "1105"
+         landmarkName = "lffCinderCaptureApp::update()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../src/lffCinderCaptureApp.cpp"
+         timestampString = "365194502.85734"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1104"
+         endingLineNumber = "1104"
+         landmarkName = "lffCinderCaptureApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
