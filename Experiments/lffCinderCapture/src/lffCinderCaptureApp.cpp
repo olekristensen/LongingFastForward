@@ -186,7 +186,7 @@ public:
     bool showFullDisplay;
     bool showFullDisplayAverage;
     bool showMeters;
-
+    
     bool autoExposure;
     float autoExposureSecondsInterval;
     double lastAutoExposureSeconds;
@@ -919,7 +919,7 @@ void lffCinderCaptureApp::setup()
     
     frameSerialQueue = dispatch_queue_create("gl.longing.frameQueue", NULL);
     controllerSerialQueue = dispatch_queue_create("gl.longing.controllerQueue", NULL);
-
+    
     //mParams.hide();
     
 }
@@ -1061,19 +1061,25 @@ void lffCinderCaptureApp::update()
             
             //Auto base exposure
             if(autoExposure){
+                
+                int newTargetCameraBaseExposure = targetCameraBaseExposure;
+                
                 if(getElapsedSeconds() - lastAutoExposureSeconds > autoExposureSecondsInterval){
                     
                     float histogramEnd = histogram[HISTOGRAM_BINS-1];
                     
-                    int targetCameraBaseExposureOffset = MAX(1, targetCameraBaseExposure*0.01);
+                    int targetCameraBaseExposureOffset = MAX(1, newTargetCameraBaseExposure*0.01);
                     
                     if (histogramEnd > 0.0005) {
                         // overexposed
-                        targetCameraBaseExposure-=targetCameraBaseExposureOffset;
+                        newTargetCameraBaseExposure-=targetCameraBaseExposureOffset;
                     } 
                     if (histogramEnd < 0.0003) {
                         // underexposed
-                        targetCameraBaseExposure+=targetCameraBaseExposureOffset;
+                        newTargetCameraBaseExposure+=targetCameraBaseExposureOffset;
+                    }
+                    if(newTargetCameraBaseExposure >= 30 && newTargetCameraBaseExposure <= 60000000 ){
+                        targetCameraBaseExposure = newTargetCameraBaseExposure;
                     }
                     lastAutoExposureSeconds = getElapsedSeconds();
                 }
@@ -1092,8 +1098,8 @@ void lffCinderCaptureApp::update()
             if(cameraBaseExposure != targetCameraBaseExposure){
                 statsCommandQueueSize++;
                 dispatch_async(controllerSerialQueue, ^{
-                setCameraBaseExposure(targetCameraBaseExposure);
-                statsCommandQueueSize--;
+                    setCameraBaseExposure(targetCameraBaseExposure);
+                    statsCommandQueueSize--;
                 });
                 cameraBaseExposure = targetCameraBaseExposure;
             }
@@ -1185,14 +1191,14 @@ void lffCinderCaptureApp::draw()
         gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10)*absDiffScaled,getWindowHeight()-10));
         
         // histogram
-
+        
         Area histogramArea = Area(
-            10,getWindowHeight()-40, getWindowWidth()-10, (getWindowHeight()-40)*0.66
-        );
+                                  10,getWindowHeight()-40, getWindowWidth()-10, (getWindowHeight()-40)*0.66
+                                  );
         
         gl::color(0.1, 0.1, 0.1, 0.33);
         gl::drawSolidRect(histogramArea);
-
+        
         gl::color(1.0, 1.0, 1.0,0.5);
         
         for(int i=0; i<HISTOGRAM_BINS; i++){
@@ -1280,7 +1286,7 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
                     bracketBuffers[bufferIndex]->saveAverageFrame(
                                                                   str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
                                                                   );
-                    bracketBuffers[bufferIndex]->framesAddedToAverage = averageFrameSaveInterval;
+                    bracketBuffers[bufferIndex]->framesAddedToAverage = MIN(averageFrameSaveInterval,bracektedFrameNumber);
                 });
             }
         }
