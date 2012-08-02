@@ -26,7 +26,7 @@
 
 #pragma mark Defines
 
-#define CAMERA_FRAMES_COUNT 100
+#define CAMERA_FRAMES_COUNT 50
 #define CAMERA_STATUS_TEXT_SIZE 512
 
 #define SERIAL_BUFSIZE 1024
@@ -102,8 +102,6 @@ class lffCinderCaptureApp : public AppBasic {
 public:
     ~lffCinderCaptureApp();
     
-    void prepareSettings( Settings *settings );
-    
 	void setup();
 	void mouseDown( MouseEvent event );	
 	void update();
@@ -125,12 +123,13 @@ public:
     pthread_t frameProcessingThread;
     
     vector <BracketBuffer*> bracketBuffers;
-    vector <BracketBuffer*> averageBuffers;
+    BracketBuffer * loadBuffer;
     
     vector <gl::Fbo> latestFBOs;
     vector <gl::Fbo> averageFBOs;
     
     float histogram[HISTOGRAM_BINS];
+    int histogramMaxIndex;
     
     gl::GlslProg hdrDebayerShader;
     
@@ -222,7 +221,7 @@ void *ThreadFunc(void *pContext)
     tPvErr Err;
     
     float lframeRate;
-    
+     
     //StatFramesCompleted increments when a queued frame returns with tPvFrame.Status = ePvErrSuccess
 	//StatFramesDropped increments when a queued frame returns with tPvFrame.Status = ePvErrDataMissing
 	//In a situation where a camera returns a frame, but there is no frame queued for it, THESE
@@ -756,12 +755,6 @@ void PVAPIsetup(){
 #pragma mark Class methods
 
 
-void lffCinderCaptureApp::prepareSettings( Settings *settings )
-{
-	settings->setWindowSize( 1920, 1080 );
-	settings->setFrameRate( 15 );
-}
-
 void lffCinderCaptureApp::setup()
 {
     // init dynamic camera properties
@@ -770,12 +763,12 @@ void lffCinderCaptureApp::setup()
     cameraHeight = 1080;
     
     cameraGain = targetCameraGain = 0;
-    cameraNumberBrackets = targetCameraNumberBrackets = 2;
+    cameraNumberBrackets = targetCameraNumberBrackets = 1;
     cameraBracketEv = targetCameraBracketEv = 3;
-    cameraBaseExposure = targetCameraBaseExposure = 150;
+    cameraBaseExposure = targetCameraBaseExposure = 1500;
     
     autoExposure = true;
-    autoExposureSecondsInterval = 1.0;
+    autoExposureSecondsInterval = 10.0;
     lastAutoExposureSeconds = 0.0;
     
     // init status vars
@@ -790,21 +783,21 @@ void lffCinderCaptureApp::setup()
     showFullDisplayAverage = false;
     showMeters = false;
     
-    frameSaveInterval = 1000;
-    averageFrameSaveInterval = 1000;
+    frameSaveInterval = 200;
+    averageFrameSaveInterval = 200;
     
     PVAPIinitialised = false;
     
     theApp = this;
     
     setWindowPos(0, 20);
-    setWindowSize(cameraWidth, cameraHeight);
-    setFrameRate(15);
+    setWindowSize(cameraWidth, cameraHeight*0.8);
+    setFrameRate(5);
     
     gl::enableDepthRead( false ); 
     gl::enableAlphaTest( false );
     gl::enableDepthWrite( false );
-    gl::enableVerticalSync( false );
+    gl::enableVerticalSync( true );
     
     // find the serial device
     
@@ -815,7 +808,7 @@ void lffCinderCaptureApp::setup()
 	
 	try {
 		Serial::Device dev = Serial::findDeviceByNameContains("tty.usbserial-A700exoq");
-		serial = Serial( dev, 38400);
+		serial = Serial( dev, 9600);
 	}
 	catch( ... ) {
 		console() << "There was an error initializing the serial device!" << std::endl;
@@ -848,6 +841,8 @@ void lffCinderCaptureApp::setup()
     
     // make pixel buffers
     
+    loadBuffer = new BracketBuffer(cameraWidth, cameraHeight, 0);
+    
     for(int i = 0;i<cameraNumberBrackets;i++){
         bracketBuffers.push_back(new BracketBuffer(cameraWidth, cameraHeight, i+1));
     }
@@ -871,7 +866,7 @@ void lffCinderCaptureApp::setup()
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 400, 300 ) );
 	mParams.addText( "labelCamera", "label=`Camera`" );
     mParams.addParam( "Auto Exposure", &autoExposure, "key=x" );
-    mParams.addParam( "Auto Exposure Interval Sec", &autoExposureSecondsInterval, "min=1 max=120 step=0.1 keyIncr=I keyDecr=i" );
+    mParams.addParam( "Auto Exposure Interval Sec", &autoExposureSecondsInterval, "min=0.1 max=120 step=0.1 keyIncr=I keyDecr=i" );
     mParams.addParam( "Base Exposure", &targetCameraBaseExposure, "min=1 max=500000 step=10 keyIncr=E keyDecr=e" );
 	mParams.addParam( "Gain", &targetCameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
     mParams.addParam( "Bracket EV Steps", &targetCameraBracketEv, "min=1 max=4 step=1 keyIncr=V keyDecr=v" );
@@ -914,6 +909,7 @@ void lffCinderCaptureApp::setup()
     mStats.addSeparator();
     mStats.addText( "textSerial", "label=`Serial communication`" );
     mStats.addParam( "Command Queue", &statsCommandQueueSize, "readonly=true" );
+    mStats.addSeparator();
     mStats.addText( "textDisplay", "label=`Display`" );
     mStats.addParam( "FPS", &fps, "readonly=true" );
     
@@ -1021,8 +1017,6 @@ void lffCinderCaptureApp::update()
         
         float lAbsDifference = 0.0;
         
-        int histogramMaxIndex = -1;
-        
         for( vector<BracketBuffer*>::iterator iBuffer = bracketBuffers.begin(); iBuffer != bracketBuffers.end(); ++iBuffer ){
             bool wasUpdated = (*iBuffer)->needsUpdate;
             (*iBuffer)->update();
@@ -1105,6 +1099,23 @@ void lffCinderCaptureApp::update()
             }
             
         }        
+        
+        
+        std::string _returnString = "";
+        
+        if(serial.getNumBytesAvailable() > 20){
+            
+            try{
+                // read until newline, to a maximum of BUFSIZE bytes
+                _returnString = serial.readStringUntil('!', SERIAL_BUFSIZE, 0.01 );
+                _returnString += serial.readStringUntil('\n', SERIAL_BUFSIZE, 0.01);
+                // LogStr(_returnString);
+                
+            } catch(SerialTimeoutExc e) {
+                LogStr("serial timeout");
+            }
+        }
+
         
         // update stats
         
@@ -1203,7 +1214,7 @@ void lffCinderCaptureApp::draw()
         
         for(int i=0; i<HISTOGRAM_BINS; i++){
             float w = 1.0*histogramArea.getWidth()/HISTOGRAM_BINS;
-            float h = histogram[i]*histogramArea.getHeight();
+            float h = (histogram[i]/histogram[histogramMaxIndex])*histogramArea.getHeight();
             gl::drawSolidRect(Area(10+(w*i),histogramArea.y2-h,10+(w*i)+w,histogramArea.y2));
         }
         
@@ -1245,25 +1256,37 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
     
     qFrame->bTime = uTime;
     
+    statsFrameQueueSize++;
+    
     dispatch_async(frameSerialQueue, ^{
-        
-        statsFrameQueueSize++;
-        
+                
         tPvFrame pFrame = qFrame->pFrame;
         
         tm tm = boost::posix_time::to_tm(qFrame->bTime);
         boost::posix_time::time_duration duration( qFrame->bTime.time_of_day() );
         int uTimeMillis = duration.total_milliseconds() %1000;
         
+        loadBuffer->load(&pFrame);
+        
         unsigned long frameCount = pFrame.FrameCount;
         
         int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
-        int bracektedFrameNumber = ((pFrame.FrameCount-1)/theApp->cameraNumberBrackets);
+        int bracektedFrameNumber = ((frameCount-1)/theApp->cameraNumberBrackets);
+                
+        float brightnessDifference = 1.0;
         
-        // FIXME! histogram-based bufferIndex
+        if(frameCount > cameraNumberBrackets*2){
+            for(int i = 0; i < theApp->cameraNumberBrackets; i++){
+                float iDiff = fabs(loadBuffer->brightness-bracketBuffers[i]->brightness);
+                if(iDiff < brightnessDifference){
+                    brightnessDifference = iDiff;
+                    bufferIndex = i;
+                }
+            }
+        }
         
-        bracketBuffers[bufferIndex]->load(&pFrame);
-        
+        bracketBuffers[bufferIndex]->updateFrom(loadBuffer);
+                
         delete (USHORT*) pFrame.ImageBuffer;
         
         delete qFrame;
@@ -1284,7 +1307,7 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     
                     bracketBuffers[bufferIndex]->saveAverageFrame(
-                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis) ).c_str() 
+                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_d%11%_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifferenceAverage ) ).c_str() 
                                                                   );
                     bracketBuffers[bufferIndex]->framesAddedToAverage = MIN(averageFrameSaveInterval,bracektedFrameNumber);
                 });
@@ -1340,19 +1363,23 @@ void lffCinderCaptureApp::renderHdrTexture(gl::Texture * tex){
 }
 
 void lffCinderCaptureApp::setCameraNumberBrackets(int _numberBrackets){
-    LogStr(sendSerialCommand(str( (boost::format("N>%i\n") % _numberBrackets) )));
+    string output = sendSerialCommand(str( (boost::format("N>%i\n") % _numberBrackets) ));
+    //LogStr(output);
 }
 
 void lffCinderCaptureApp::resetBracketingSequenceCounter(){
-    LogStr(sendSerialCommand("0>\n"));
+    string output = sendSerialCommand("0>\n");
+    //LogStr(output);
 }
 
 void lffCinderCaptureApp::setCameraBracketEv(int _bracketEv){
-    LogStr(sendSerialCommand(str( (boost::format("V>%i\n") % _bracketEv) )));
+    string output = sendSerialCommand(str( (boost::format("V>%i\n") % _bracketEv) ));
+    //LogStr(output);
 }
 
 void lffCinderCaptureApp::setCameraBaseExposure(int _baseExposure){
-    LogStr(sendSerialCommand(str( (boost::format("E>%i\n") % _baseExposure) )));
+    string output = sendSerialCommand(str( (boost::format("T>%i\n") % _baseExposure) ));
+    //LogStr(output);
 }
 
 void lffCinderCaptureApp::printCameraParameters(){
@@ -1361,26 +1388,10 @@ void lffCinderCaptureApp::printCameraParameters(){
 
 std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
     
-    std::string _returnString;
-    
-    serial.flush();
-    
-    // FIXME! intermittent missing bytes from serial stream
-    
     // write command
     serial.writeString(_command);
-    
-    usleep(250*1000);
-    
-    try{
-        // read until newline, to a maximum of BUFSIZE bytes
-        _returnString = serial.readStringUntil('!', SERIAL_BUFSIZE );
         
-    } catch(SerialTimeoutExc e) {
-        LogStr("serial timeout");
-    }
-    
-    return str( (boost::format("Serial command: \"%s\"\n%s") % boost::algorithm::replace_all_copy(_command, "\n", "\\n") % _returnString) );
+    return str( (boost::format("Serial command: \"%s\"\n") % boost::algorithm::replace_all_copy(_command, "\n", "\\n")) );
     
 }
 
@@ -1416,6 +1427,8 @@ lffCinderCaptureApp::~lffCinderCaptureApp(){
     for( vector<BracketBuffer*>::iterator iBuffer = bracketBuffers.begin(); iBuffer != bracketBuffers.end(); ++iBuffer )
         delete *iBuffer;
     bracketBuffers.clear();
+    
+    
     
 }
 

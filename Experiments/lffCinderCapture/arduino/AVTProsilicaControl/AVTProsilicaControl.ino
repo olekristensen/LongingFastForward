@@ -40,17 +40,22 @@ double bracketedExposuresMillis[maxBrackets];
 double bracketedExposuresMicros[maxBrackets];
 unsigned long bracketedExposuresFactor[maxBrackets];
 
-unsigned long baseExposure = 250;
+unsigned long baseExposure = 150;
+unsigned long baseExposureTarget = 150;
 boolean makeBracketCalculation = false;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
+String commandString = "";
+String numberString = "";
 
 int exposureNumber = 0;
 
 volatile boolean trig = false;
 
 char inByte = 0;
+char inChar[64] = "";
+
 
 void setup() {
   pinMode(pinOut_trigger, OUTPUT);      
@@ -59,9 +64,11 @@ void setup() {
   pinMode(pinIn_frameReadout, INPUT);
   pinMode(pinIn_exposing, INPUT);
 
-  Serial.begin(38400);
-  inputString.reserve(200);
-
+  Serial.begin(9600);
+  inputString.reserve(128);
+  commandString.reserve(128);
+  numberString.reserve(24);
+  
   calculateBrackets();
   attachInterrupt(0,trigger,RISING);
   if(digitalRead(pinIn_frameTriggerReady) == HIGH){
@@ -77,7 +84,9 @@ void loop()
     double lDelayMs = bracketedExposuresMillis[exposureNumber];
     double lDelayUs = bracketedExposuresMicros[exposureNumber];
     microsLastTrigger = micros();
-    noInterrupts();
+    if(lDelayMs < 1){
+      noInterrupts();
+    }
     digitalWrite(pinOut_trigger, HIGH);
     _delay_ms(lDelayMs);
     _delay_us(lDelayUs);
@@ -92,75 +101,111 @@ void loop()
     _delay_us(preDelayUs);
   }
 
-  if(stringComplete && inputString.endsWith("\n")){
+  processSerial();
 
-    // reset bracketing sequence
-    if(inputString.substring(0,2) == "0>"){
-      exposureNumber = 0;
-      Serial.print("0>");
-      Serial.print(exposureNumber);
-      Serial.println("!");
-    }
+  if(stringComplete){
 
-    // set number of brackets
-    if(inputString.substring(0,2) == "N>"){
-      String _s = inputString.substring(2,inputString.length()-1);
-      int _numberBrackets = _s.toInt();
-      setNumberBrackets(_numberBrackets);
-      Serial.print("N>");
-      Serial.print(numberBrackets);
-      Serial.println("!");
-    }
+    while (inputString.indexOf("\n") > 0){
+      int commandEnd = inputString.indexOf("\n");
+      commandString = inputString.substring(0,commandEnd+1);
+      inputString = inputString.substring(commandEnd+1, inputString.length());
 
-    // set EV interval of brackets
-    if(inputString.substring(0,2) == "V>"){
-      String _s = inputString.substring(2,inputString.length()-1);
-      int _bracketEv = _s.toInt();
-      setBracketEv(_bracketEv);
-      Serial.print("V>");
-      Serial.print(bracketEv);
-      Serial.println("!");
-    }
-
-    // set base exposure of brackets
-    if(inputString.substring(0,2) == "E>"){
-      String _s = inputString.substring(2,inputString.length()-1);
-      if(_s.length() > 0){
-        char charStr[20];
-        _s.toCharArray(charStr, 20);
-        unsigned long _baseExposure = strtoul(charStr, NULL, 10);
-        setBaseExposure(_baseExposure);
+      // reset bracketing sequence
+      if(commandString.substring(0,2) == "0>"){
+        exposureNumber = 0;
+        Serial.print("0>");
+        Serial.print(exposureNumber);
+        Serial.println("<");
       }
-      Serial.print("E>");
-      Serial.print(baseExposure);
-      Serial.println("!");
 
-    }
-
-    // print status
-    if(inputString.substring(0,2) == "S>"){
-      Serial.println("S>");
-      for(int i= 0; i < numberBrackets; i++){
-        Serial.print("S> Exponent: 2^");
-        Serial.print((i*bracketEv));
-        Serial.print("\tFactor: ");
-        Serial.print(bracketedExposuresFactor[i]);
-        Serial.print("\tExposure Millis: ");
-        Serial.print(bracketedExposuresMillis[i]);
-        Serial.print("\t + Micros: ");
-        Serial.println(bracketedExposuresMicros[i]);
+      // set number of brackets
+      if(commandString.substring(0,2) == "N>"){
+        numberString = commandString.substring(2,commandString.length()-1);
+        int _numberBrackets = numberString.toInt();
+        numberString = "";
+        setNumberBrackets(_numberBrackets);
+        Serial.print("N>");
+        Serial.print(numberBrackets);
+        Serial.println("<");
       }
-      Serial.println("!");
+
+      // set EV interval of brackets
+      if(commandString.substring(0,2) == "V>"){
+        numberString = commandString.substring(2,commandString.length()-1);
+        int _bracketEv = numberString.toInt();
+        numberString = "";
+        setBracketEv(_bracketEv);
+        Serial.print("V>");
+        Serial.print(bracketEv);
+        Serial.println("<");
+      }
+
+      // set base exposure of brackets
+      if(commandString.substring(0,2) == "E>"){
+        numberString = commandString.substring(2,commandString.length()-1);
+        if(numberString.length() > 0){
+          char charStr[20];
+          numberString.toCharArray(charStr, 20);
+          numberString = "";
+          unsigned long _baseExposure = strtoul(charStr, NULL, 10);
+          setBaseExposure(_baseExposure);
+        }
+        Serial.print("E>");
+        Serial.print(baseExposure);
+        Serial.println("<");
+      }
+
+      // set base exposure running average target of brackets
+      if(commandString.substring(0,2) == "T>"){
+        unsigned long _baseExposureTarget = 0;
+        numberString = commandString.substring(2,commandString.length()-1);
+        if(numberString.length() > 0){
+          char charStr[20];
+          numberString.toCharArray(charStr, 20);
+          numberString = "";
+          _baseExposureTarget = strtoul(charStr, NULL, 10);
+          setBaseExposureTarget(_baseExposureTarget);
+        }
+        Serial.print("T>");
+        Serial.print(baseExposureTarget);
+        Serial.println("<");
+      }
+
+      // print status
+      if(commandString.substring(0,2) == "S>"){
+        Serial.println("S>");
+        for(int i= 0; i < numberBrackets; i++){
+          Serial.print("S> Exponent: 2^");
+          Serial.print((i*bracketEv));
+          Serial.print("\tFactor: ");
+          Serial.print(bracketedExposuresFactor[i]);
+          Serial.print("\tExposure Millis: ");
+          Serial.print(bracketedExposuresMillis[i]);
+          Serial.print("\t + Micros: ");
+          Serial.println(bracketedExposuresMicros[i]);
+        }
+        Serial.println("<");
+      }
+      commandString = "";
     }
+    Serial.println("!");
     inputString = "";
     stringComplete = false;
+    Serial.flush();
+  }
+
+  if(baseExposure != baseExposureTarget && exposureNumber == 0){
+    baseExposure = (baseExposure* 0.97) + (baseExposureTarget * 0.03);
+    if(max(baseExposure,baseExposureTarget)-min(baseExposure,baseExposureTarget) < 1){
+      baseExposure = baseExposureTarget;
+    }
+    makeBracketCalculation = true;
   }
 
   if(makeBracketCalculation && exposureNumber == 0){
     calculateBrackets();
     makeBracketCalculation=false;
   }
-
 
 }
 
@@ -212,20 +257,22 @@ void setBaseExposure(unsigned long _baseExposure){
   makeBracketCalculation=true;
 }
 
-void serialEvent() {
-  while (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read(); 
-    // add it to the inputString:
-    inputString += inChar;
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
-    if (inChar == '\n') {
-      stringComplete = true;
-    } 
-  }
+void setBaseExposureTarget(unsigned long _baseExposureTarget){
+  baseExposureTarget = _baseExposureTarget;
+  makeBracketCalculation=true;
 }
 
+void processSerial(){
+  while (Serial.available() > 0) {
+    int lengthOfCommand = Serial.readBytesUntil('\n', inChar, 64);
+    if(lengthOfCommand > 0){
+      inChar[lengthOfCommand] = '\n';
+      inChar[lengthOfCommand+1] = '\0';
+      inputString += inChar;
+      stringComplete = true;
+    }
+ }
+}
 
 
 

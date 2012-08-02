@@ -20,12 +20,16 @@
 
 BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     
+    K = 1.0 / 0xFFF;
+    
     frameNumber = 0;
     framesAddedToAverage = 0;
     needsUpdate = true;
     absDifference = 0;
+    histogramMax = 0;
     histogramMaxIndex = 0;
-
+    brightness = 0.0;
+    
     bracketIndex = _bracketIndex;
     width = _width;
     height = _height;
@@ -59,10 +63,10 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     formerVImageFloat.width = width;
     formerVImageFloat.height = height;
     formerVImageFloat.rowBytes = width*2;
-
+    
     
     // init average frame
-
+    
     averagePixels16U = new USHORT [width * height];
     memset(averagePixels16U, 0xFFFF, width*height);
     averageVImage16U.data = averagePixels16U;
@@ -80,17 +84,12 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     averageChannel = cinder::Channel32f(averageVImageFloat.width, averageVImageFloat.height, averageVImageFloat.rowBytes, 1, averagePixelsFloat);
     averageTexture = cinder::gl::Texture(averageChannel);
     
-
-        
+    
+    
 }
 
 void BracketBuffer::load(tPvFrame * pFrame)
 {
-    
-    // copy current frame to former frame
-    cblas_scopy (vImageFloat.height*vImageFloat.width,
-                      pixelsFloat,1,
-                      formerPixelsFloat,1);
     
     // make temporary frame
     
@@ -135,52 +134,83 @@ void BracketBuffer::load(tPvFrame * pFrame)
         
         // convert to float for display and calculations
         
-        const float K = 1.0 / 0xFFF;
-        
         vImageConvert_16UToF (&vImage16U, &vImageFloat, 0, K, kvImageNoFlags);
-    
-        frameNumber = pFrame->FrameCount;
-    
-        // calculate difference
         
-        cblas_saxpy (width*height,-1.0,pixelsFloat,1,formerPixelsFloat,1);
-        absDifference = cblas_sasum (width*height,formerPixelsFloat,1)/(width*1.0*height);
-
-        // calculate histogram
-               
+        frameNumber = pFrame->FrameCount;
+        
+        // calculate histogram and brightness
+        
         vImagePixelCount vipcHistogram[HISTOGRAM_BINS];
         
         vImageHistogramCalculation_PlanarF ( &vImageFloat,vipcHistogram,HISTOGRAM_BINS,0.0,1.0,kvImageNoFlags);
         
+        float brightnessSummed = 0.0;
+        
         for(int i = 0; i < HISTOGRAM_BINS; i++){
             histogram[i] = 1.0*vipcHistogram[i]/(width*height);
+            brightnessSummed += (i*histogram[i]);
         }
         
+        brightness = brightnessSummed / HISTOGRAM_BINS;
+        
         // find index of max value
-        
-        float dummy = 0.0;
-        
+                
         vDSP_maxvi (    histogram,
-                          1,
-                          &dummy,
-                          &histogramMaxIndex,
-                          HISTOGRAM_BINS
-                          );
-                
-        // update average frame
-        
-        float averageAlpha = 1.0/(framesAddedToAverage+1.0);
-        
-        cblas_sscal(width*height, 1.0-averageAlpha ,averagePixelsFloat, 1);
-        cblas_saxpy(width*height, averageAlpha, pixelsFloat, 1, averagePixelsFloat, 1);
-        
-        vImageConvert_FTo16U(&averageVImageFloat, &averageVImage16U, 0, K, kvImageNoFlags);
-        
-        framesAddedToAverage++;
-                
-        needsUpdate = true;
+                    1,
+                    &histogramMax,
+                    &histogramMaxIndex,
+                    HISTOGRAM_BINS
+                    );
     }
     
+}
+
+void BracketBuffer::updateFrom(BracketBuffer *  buffer)
+{
+    // copy current frame to former frame
+    cblas_scopy (vImageFloat.height*vImageFloat.width,
+                 pixelsFloat,1,
+                 formerPixelsFloat,1);
+
+    brightness = buffer->brightness;
+    histogramMaxIndex = buffer->histogramMaxIndex;
+    
+    for(int i =0; i < HISTOGRAM_BINS; i++){
+        histogram[i] = buffer->histogram[i];
+    }
+    
+    frameNumber = buffer->frameNumber;
+
+    
+    
+        cblas_ccopy (vImageFloat.height*vImageFloat.width/2,
+                 buffer->pixels16U,1,
+                 pixels16U,1);
+    
+
+    cblas_scopy (vImageFloat.height*vImageFloat.width,
+                 buffer->pixelsFloat,1,
+                 pixelsFloat,1);
+
+    // calculate difference
+    
+    cblas_saxpy (width*height,-1.0,pixelsFloat,1,formerPixelsFloat,1);
+    absDifference = cblas_sasum (width*height,formerPixelsFloat,1)/(width*1.0*height);
+        
+    // update average frame
+    
+    float averageAlpha = 1.0/(framesAddedToAverage+1.0);
+    
+    absDifferenceAverage = (absDifferenceAverage*(1.0-averageAlpha))+(averageAlpha*absDifference);
+    
+    cblas_sscal(width*height, 1.0-averageAlpha ,averagePixelsFloat, 1);
+    cblas_saxpy(width*height, averageAlpha, pixelsFloat, 1, averagePixelsFloat, 1);
+    
+    vImageConvert_FTo16U(&averageVImageFloat, &averageVImage16U, 0, K, kvImageNoFlags);
+        
+    framesAddedToAverage++;
+    
+    needsUpdate = true;
 }
 
 void BracketBuffer::update()
@@ -196,7 +226,7 @@ void BracketBuffer::saveFrame(const char * filename){
     
     fs::path thePath = fs::absolute(fs::path(filename));
     saveBuffer(thePath, &vImage16U);
-       
+    
 }
 
 void BracketBuffer::saveAverageFrame(const char * filename){
@@ -214,7 +244,7 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
         if (!fs::exists(filePath.parent_path())) {
             fs::create_directory(filePath.parent_path());
             std::cout << "BracketBuffer::saveBuffer CREATEDIR: " << filePath.parent_path() << std::endl;
-
+            
         }
     }
     
@@ -223,9 +253,9 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     }
     
     using namespace std;
-
+    
     namespace io = boost::iostreams;
-
+    
     stringstream ss(stringstream::in | stringstream::out | stringstream::binary); //Declare ss
     ss.write((char *)vImg->data, vImg->rowBytes*height); //Write data to ss
     
@@ -241,11 +271,12 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     
     //Clean up
     out.close();
-
+    
 }
 
 
 BracketBuffer::~BracketBuffer() {
+    
     delete pixels16U;
     delete pixelsFloat;
 }

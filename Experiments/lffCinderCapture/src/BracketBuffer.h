@@ -28,6 +28,7 @@ public:
     ~BracketBuffer();
 
     void load(tPvFrame * pFrame);
+    void updateFrom(BracketBuffer *  buffer);
     void update();
     void draw();
     void saveFrame(const char * filename);
@@ -38,6 +39,8 @@ public:
        
     int width;
     int height;
+    
+    float K;
 
     unsigned long frameNumber;
     unsigned long framesAddedToAverage;
@@ -56,7 +59,10 @@ public:
     cinder::gl::Texture texture;
 
     float histogram[HISTOGRAM_BINS];
+    float histogramMax;
     vDSP_Length histogramMaxIndex;
+    
+    float brightness;
     
     // former frame
     
@@ -64,6 +70,7 @@ public:
     vImage_Buffer formerVImageFloat;
     
     float absDifference; 
+    float absDifferenceAverage;
         
     // average frame
     
