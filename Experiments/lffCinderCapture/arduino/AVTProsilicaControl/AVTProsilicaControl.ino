@@ -34,8 +34,6 @@ const int maxBrackets = 10;
 int numberBrackets = 2;
 int bracketEv = 4;
 
-unsigned long microsLastTrigger = 0ul;
-
 double bracketedExposuresMillis[maxBrackets];
 double bracketedExposuresMicros[maxBrackets];
 unsigned long bracketedExposuresFactor[maxBrackets];
@@ -83,7 +81,6 @@ void loop()
     trig = false;
     double lDelayMs = bracketedExposuresMillis[exposureNumber];
     double lDelayUs = bracketedExposuresMicros[exposureNumber];
-    microsLastTrigger = micros();
     if(lDelayMs < 1){
       noInterrupts();
     }

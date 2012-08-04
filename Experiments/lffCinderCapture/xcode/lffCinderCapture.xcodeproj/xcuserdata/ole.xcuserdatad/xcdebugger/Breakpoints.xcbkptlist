@@ -8,24 +8,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "365578042.909742"
+         timestampString = "365740419.323853"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1386"
-         endingLineNumber = "1386"
-         landmarkName = "lffCinderCaptureApp::printCameraParameters()"
-         landmarkType = "5">
+         startingLineNumber = "1489"
+         endingLineNumber = "1489">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "365578042.909742"
+         timestampString = "365740419.323853"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1122"
-         endingLineNumber = "1122"
+         startingLineNumber = "1190"
+         endingLineNumber = "1190"
          landmarkName = "lffCinderCaptureApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +32,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "365578042.909742"
+         timestampString = "365740419.323853"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1121"
-         endingLineNumber = "1121"
+         startingLineNumber = "1189"
+         endingLineNumber = "1189"
          landmarkName = "lffCinderCaptureApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +45,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/BracketBuffer.cpp"
-         timestampString = "365578042.909742"
+         timestampString = "365635223.087899"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "175"
-         endingLineNumber = "175"
+         startingLineNumber = "181"
+         endingLineNumber = "181"
          landmarkName = "BracketBuffer::updateFrom(BracketBuffer * buffer)"
          landmarkType = "5">
       </FileBreakpoint>

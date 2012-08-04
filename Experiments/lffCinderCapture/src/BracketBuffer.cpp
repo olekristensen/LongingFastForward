@@ -26,8 +26,14 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     framesAddedToAverage = 0;
     needsUpdate = true;
     absDifference = 0;
-    histogramMax = 0;
+    histogramMax = 1.0;
     histogramMaxIndex = 0;
+    
+    for(int i=0;i<HISTOGRAM_BINS;i++){
+        histogram[i] = 0.0;
+    }
+    histogram[0] = 1.0;
+    
     brightness = 0.0;
     
     bracketIndex = _bracketIndex;
@@ -238,7 +244,7 @@ void BracketBuffer::saveAverageFrame(const char * filename){
 
 void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     
-    bool compress = false;
+    bool compress = true;
     
     if(filePath.has_parent_path()){
         if (!fs::exists(filePath.parent_path())) {
@@ -249,7 +255,7 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     }
     
     if(compress){
-        filePath = fs::path(str(boost::format("%s.gzip") % filePath.c_str()));
+        filePath = fs::path(str(boost::format("%s.gz") % filePath.c_str()));
     }
     
     using namespace std;
@@ -264,7 +270,6 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
     if(compress){
         buf.push(io::zlib_compressor(io::zlib_params( io::zlib::best_speed,io::zlib::deflated,15+16,8,io::zlib::default_strategy,false ))); //zlib compression
     }
-    //buf.push(io::gzip_compressor() ); //to slow
     buf.push(ss); //Push ss to buf
     ofstream out(filePath.c_str(), ios_base::out | ios_base::binary); //Declare out
     io::copy(buf, out); //Copy buf to out

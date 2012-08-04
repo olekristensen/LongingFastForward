@@ -10,6 +10,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
+
 #include "Logger.h"
 
 #include <unistd.h>
@@ -32,6 +33,8 @@
 #define SERIAL_BUFSIZE 1024
 #define SERIAL_READ_INTERVAL 0.25
 
+//#define USE_SERIAL 1;
+
 static const bool PREMULT = false;
 
 #pragma mark Namespaces
@@ -50,6 +53,7 @@ typedef struct {
 typedef struct {
     boost::filesystem::path filePath;
     float difference;
+    float brightness;
     unsigned long exposureMicros;
 } frameData;
 
@@ -113,12 +117,11 @@ public:
     
     // frame history
     
-    vector <frameData> frameHistory;
+    vector <frameData *> frameHistory;
     
     // buffers
     
     dispatch_queue_t frameSerialQueue;
-    dispatch_queue_t controllerSerialQueue;
     
     pthread_t frameProcessingThread;
     
@@ -138,8 +141,22 @@ public:
     
     int frameSaveInterval;
     int averageFrameSaveInterval;
+    unsigned long lastAverageFrameSaveCount;
+    unsigned long lastframeSaveCount;
+    
+    float averageFrameSaveSeconds;
+    float frameSaveSeconds;
+    
+    boost::posix_time::ptime nextFrameSaveTime;
+    boost::posix_time::ptime nextAverageFrameSaveTime;
+    
+    
+    
+#ifdef USE_SERIAL
     
     // serial stuff
+    
+    dispatch_queue_t controllerSerialQueue;
     
     Serial serial;
     
@@ -150,6 +167,8 @@ public:
     void setCameraBaseExposure(int _baseExposure);
     void resetBracketingSequenceCounter();
     void printCameraParameters();
+    
+#endif
     
     // camera
     
@@ -178,6 +197,7 @@ public:
     int statsFrameQueueSize;
     int statsCommandQueueSize;
     float statsAbsDifference;
+    float statsRecordingIndicator;
     
     int displayBracket;
     bool showBracketBuffers;
@@ -221,7 +241,7 @@ void *ThreadFunc(void *pContext)
     tPvErr Err;
     
     float lframeRate;
-     
+    
     //StatFramesCompleted increments when a queued frame returns with tPvFrame.Status = ePvErrSuccess
 	//StatFramesDropped increments when a queued frame returns with tPvFrame.Status = ePvErrDataMissing
 	//In a situation where a camera returns a frame, but there is no frame queued for it, THESE
@@ -594,9 +614,34 @@ bool CameraStart()
 		return false;
     
 	// set the camera in hardware trigger, continuous mode, and start camera receiving triggers
-	if((PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","SyncIn1") != ePvErrSuccess) ||
-       (PvAttrUint32Set(GCamera.Handle,"FrameStartTriggerDelay",0) != ePvErrSuccess) ||
-       (PvAttrEnumSet(GCamera.Handle,"ExposureMode","External") != ePvErrSuccess) ||
+	if(
+    /* Arduino exposure
+     (PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","SyncIn1") != ePvErrSuccess) ||
+     (PvAttrUint32Set(GCamera.Handle,"FrameStartTriggerDelay",0) != ePvErrSuccess) ||
+     (PvAttrEnumSet(GCamera.Handle,"ExposureMode","External") != ePvErrSuccess) ||
+     //*/
+       
+       //* Camera exposure
+       
+       (PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","FixedRate") != ePvErrSuccess) ||
+       (PvAttrFloat32Set(GCamera.Handle, "FrameRate", 25) != ePvErrSuccess)  ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoRate",1) != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoOutliers",5) != ePvErrSuccess) ||
+       (PvAttrEnumSet(GCamera.Handle,"ExposureAutoAlg","FitRange") != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoTarget",17) != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoMin",30) != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoAdjustTol",1) != ePvErrSuccess) ||
+       (PvAttrUint32Set(GCamera.Handle,"ExposureAutoMax",60*1000*1000) != ePvErrSuccess) ||
+       (PvAttrEnumSet(GCamera.Handle,"ExposureMode","Auto") != ePvErrSuccess) ||
+       //*/
+       
+       /* Software exposure
+        
+        (PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","FixedRate") != ePvErrSuccess) ||
+        (PvAttrFloat32Set(GCamera.Handle, "FrameRate", 25) != ePvErrSuccess)  ||
+        (PvAttrEnumSet(GCamera.Handle,"ExposureMode","Manual") != ePvErrSuccess) ||
+        //*/
+       
        (PvAttrEnumSet(GCamera.Handle,"GainMode","Manual") != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"PixelFormat","Bayer12Packed") != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"AcquisitionMode","Continuous") != ePvErrSuccess) ||
@@ -755,6 +800,7 @@ void PVAPIsetup(){
 #pragma mark Class methods
 
 
+
 void lffCinderCaptureApp::setup()
 {
     // init dynamic camera properties
@@ -778,26 +824,40 @@ void lffCinderCaptureApp::setup()
     displayBracket = 1;
     
     showBracketBuffers = false;
-    showFullscreen = false;
+    showFullscreen = true;
     showFullDisplay = true;
-    showFullDisplayAverage = false;
-    showMeters = false;
+    showFullDisplayAverage = true;
+    showMeters = true;
     
-    frameSaveInterval = 200;
-    averageFrameSaveInterval = 200;
+    frameSaveInterval = 0;
+    lastframeSaveCount = 0;
+    averageFrameSaveInterval = 0;
+    lastAverageFrameSaveCount = 0;
+    
+    frameSaveSeconds = 60*24;       // every hour
+    averageFrameSaveSeconds = 30;   // every 30 seconds
+    
+    nextFrameSaveTime = nextAverageFrameSaveTime = boost::posix_time::microsec_clock::universal_time();
+    
+    for(int i=0; i < HISTOGRAM_BINS; i++){
+        histogram[i] = 0.0;
+    }
+    histogramMaxIndex = 0;
     
     PVAPIinitialised = false;
     
     theApp = this;
     
+    setWindowSize(1280, 700);
     setWindowPos(0, 20);
-    setWindowSize(cameraWidth, cameraHeight*0.8);
-    setFrameRate(5);
+    setFrameRate(25);
     
     gl::enableDepthRead( false ); 
     gl::enableAlphaTest( false );
     gl::enableDepthWrite( false );
     gl::enableVerticalSync( true );
+    
+#ifdef USE_SERIAL
     
     // find the serial device
     
@@ -825,6 +885,8 @@ void lffCinderCaptureApp::setup()
     setCameraNumberBrackets(cameraNumberBrackets);
     setCameraBaseExposure(cameraBaseExposure);
     printCameraParameters();    
+    
+#endif
     
     // load shader
     
@@ -865,16 +927,20 @@ void lffCinderCaptureApp::setup()
     
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 400, 300 ) );
 	mParams.addText( "labelCamera", "label=`Camera`" );
+#ifdef USE_SERIAL
     mParams.addParam( "Auto Exposure", &autoExposure, "key=x" );
     mParams.addParam( "Auto Exposure Interval Sec", &autoExposureSecondsInterval, "min=0.1 max=120 step=0.1 keyIncr=I keyDecr=i" );
     mParams.addParam( "Base Exposure", &targetCameraBaseExposure, "min=1 max=500000 step=10 keyIncr=E keyDecr=e" );
-	mParams.addParam( "Gain", &targetCameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
     mParams.addParam( "Bracket EV Steps", &targetCameraBracketEv, "min=1 max=4 step=1 keyIncr=V keyDecr=v" );
-	// mParams.addParam( "Number Brackets", &targetCameraNumberBrackets, "min=1 max=9 step=1 keyIncr=N keyDecr=n" );
+#endif
+	mParams.addParam( "Gain", &targetCameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
+    // mParams.addParam( "Number Brackets", &targetCameraNumberBrackets, "min=1 max=9 step=1 keyIncr=N keyDecr=n" );
     mParams.addSeparator();	
 	mParams.addText( "labelSaving", "label=`Saving`" );
-	mParams.addParam( "Latest Interval", &frameSaveInterval, "min=0 max=10000 step=1 keyIncr=L keyDecr=l" );
-	mParams.addParam( "Average Interval", &averageFrameSaveInterval, "min=0 max=10000 step=1 keyIncr=A keyDecr=a" );
+	mParams.addParam( "Still Interval", &frameSaveInterval, "readonly=true" );
+	mParams.addParam( "Still Seconds", &frameSaveSeconds, "min=0 max=86400 step=1 " ); // 24*60*60
+	mParams.addParam( "Average Interval", &averageFrameSaveInterval, "readonly=true" );
+	mParams.addParam( "Average Seconds", &averageFrameSaveSeconds, "min=0 max=86400 step=1 " );
     mParams.addSeparator();	
 	mParams.addText( "labelDisplay", "label=`Display`" );
 	mParams.addParam( "Full Screen", &showFullscreen, "key=f" );
@@ -906,17 +972,26 @@ void lffCinderCaptureApp::setup()
     mStats.addText( "textCamera", "label=`Camera Packets`" );
     mStats.addParam( "Received", &statsCameraPacketReceived, "readonly=true" );
     mStats.addParam( "Missed", &statsCameraPacketMissed, "readonly=true" );
+#ifdef USE_SERIAL
     mStats.addSeparator();
     mStats.addText( "textSerial", "label=`Serial communication`" );
     mStats.addParam( "Command Queue", &statsCommandQueueSize, "readonly=true" );
+#endif
     mStats.addSeparator();
     mStats.addText( "textDisplay", "label=`Display`" );
     mStats.addParam( "FPS", &fps, "readonly=true" );
     
     frameSerialQueue = dispatch_queue_create("gl.longing.frameQueue", NULL);
+#ifdef USE_SERIAL
     controllerSerialQueue = dispatch_queue_create("gl.longing.controllerQueue", NULL);
+#endif
     
-    //mParams.hide();
+    mParams.hide();
+    mStats.hide();
+    
+    if( isFullScreen() !=  showFullscreen) {
+		setFullScreen(showFullscreen);
+	}
     
 }
 
@@ -974,12 +1049,7 @@ void lffCinderCaptureApp::mouseDown( MouseEvent event )
 void lffCinderCaptureApp::update()
 {
     fps = getAverageFps();
-    
-    if( isFullScreen() !=  showFullscreen) {
-		setFullScreen(showFullscreen);
-	}
-    
-    
+        
     if(!PVAPIinitialised){
         
         PVAPIsetup();
@@ -1009,8 +1079,9 @@ void lffCinderCaptureApp::update()
             
             GCamera.Abort = false;
             
+#ifdef USE_SERIAL
             resetBracketingSequenceCounter();
-            
+#endif
         }
         
         int i = 0;
@@ -1051,7 +1122,7 @@ void lffCinderCaptureApp::update()
                 }
             }
             
-            //TODO: Camera target parametre opdateres
+#ifdef USE_SERIAL
             
             //Auto base exposure
             if(autoExposure){
@@ -1097,10 +1168,10 @@ void lffCinderCaptureApp::update()
                 });
                 cameraBaseExposure = targetCameraBaseExposure;
             }
+#endif
             
         }        
-        
-        
+#ifdef USE_SERIAL
         std::string _returnString = "";
         
         if(serial.getNumBytesAvailable() > 20){
@@ -1115,7 +1186,7 @@ void lffCinderCaptureApp::update()
                 LogStr("serial timeout");
             }
         }
-
+#endif
         
         // update stats
         
@@ -1125,13 +1196,19 @@ void lffCinderCaptureApp::update()
         statsCameraPacketReceived = str(boost::format("%1%") % GCamera.PacketReceived );
         statsCameraPacketMissed = str(boost::format("%1%") % GCamera.PacketMissed );
         statsAbsDifference = lAbsDifference;
+        statsRecordingIndicator = fmodf(GCamera.FrameCompleted *(0.5/GCamera.FrameRate),1.0);
         
     }
+    if( isFullScreen() !=  showFullscreen) {
+		setFullScreen(showFullscreen);
+	}
+
     
 }
 
 void lffCinderCaptureApp::draw()
 {
+    
     gl::setMatricesWindow( getWindowSize() );
     
     gl::clear( Color( 0.3, 0.3, 0.3 ) );
@@ -1198,7 +1275,7 @@ void lffCinderCaptureApp::draw()
         gl::color(0.1, 0.1, 0.1, 0.33);
         gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10),getWindowHeight()-10));
         
-        gl::color(1.0, 1.0, 1.0, 0.5);
+        gl::color(1.0, 1.0, 1.0, 0.33);
         gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10)*absDiffScaled,getWindowHeight()-10));
         
         // histogram
@@ -1210,7 +1287,7 @@ void lffCinderCaptureApp::draw()
         gl::color(0.1, 0.1, 0.1, 0.33);
         gl::drawSolidRect(histogramArea);
         
-        gl::color(1.0, 1.0, 1.0,0.5);
+        gl::color(1.0, 1.0, 1.0,0.33);
         
         for(int i=0; i<HISTOGRAM_BINS; i++){
             float w = 1.0*histogramArea.getWidth()/HISTOGRAM_BINS;
@@ -1221,6 +1298,16 @@ void lffCinderCaptureApp::draw()
         gl::disableAlphaBlending();
         
     }
+    
+    // recording dot
+    
+    gl::enableAlphaBlending();
+    
+    gl::color(255, 0, 0, cosf(0.75*(statsRecordingIndicator*pi*2)+1));
+    gl::drawSolidCircle(Vec2f(getWindowWidth()-50, 50), 20);
+    gl::color(255, 255, 255, 1.0);
+    gl::disableAlphaBlending();
+    
     
     params::InterfaceGl::draw();
     
@@ -1259,7 +1346,7 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
     statsFrameQueueSize++;
     
     dispatch_async(frameSerialQueue, ^{
-                
+        
         tPvFrame pFrame = qFrame->pFrame;
         
         tm tm = boost::posix_time::to_tm(qFrame->bTime);
@@ -1272,46 +1359,69 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
         
         int bufferIndex = (frameCount-1) % theApp->cameraNumberBrackets;
         int bracektedFrameNumber = ((frameCount-1)/theApp->cameraNumberBrackets);
-                
-        float brightnessDifference = 1.0;
         
-        if(frameCount > cameraNumberBrackets*2){
-            for(int i = 0; i < theApp->cameraNumberBrackets; i++){
-                float iDiff = fabs(loadBuffer->brightness-bracketBuffers[i]->brightness);
-                if(iDiff < brightnessDifference){
-                    brightnessDifference = iDiff;
-                    bufferIndex = i;
+        
+        if(theApp->cameraNumberBrackets > 1){
+            float brightnessDifference = 1.0;
+            
+            if(frameCount > cameraNumberBrackets*2){
+                for(int i = 0; i < theApp->cameraNumberBrackets; i++){
+                    float iDiff = fabs(loadBuffer->brightness-bracketBuffers[i]->brightness);
+                    if(iDiff < brightnessDifference){
+                        brightnessDifference = iDiff;
+                        bufferIndex = i;
+                    }
                 }
             }
         }
         
         bracketBuffers[bufferIndex]->updateFrom(loadBuffer);
-                
+        
         delete (USHORT*) pFrame.ImageBuffer;
         
         delete qFrame;
         
-        if(frameSaveInterval > 0){
-            if(bracektedFrameNumber % frameSaveInterval == 0) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                    
-                    bracketBuffers[bufferIndex]->saveFrame(
-                                                           str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
-                                                           );
-                });
-            }
-        }
-        if(averageFrameSaveInterval > 0){
+        if(qFrame->bTime > nextFrameSaveTime){
             
-            if(bracektedFrameNumber % averageFrameSaveInterval == 0) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                    
-                    bracketBuffers[bufferIndex]->saveAverageFrame(
-                                                                  str( (boost::format("/Users/ole/Pictures/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_d%11%_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifferenceAverage ) ).c_str() 
-                                                                  );
-                    bracketBuffers[bufferIndex]->framesAddedToAverage = MIN(averageFrameSaveInterval,bracektedFrameNumber);
-                });
-            }
+            frameSaveInterval = frameCount - lastframeSaveCount;
+            
+            lastframeSaveCount = frameCount;
+            
+            nextFrameSaveTime = nextFrameSaveTime + boost::posix_time::time_duration( floor(frameSaveSeconds/(60*60)),floor(fmodf(frameSaveSeconds/60, 60)),floor(fmodf(frameSaveSeconds, 60)),fmodf(frameSaveSeconds, 1.0) );
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                bracketBuffers[bufferIndex]->saveFrame(
+                                                       str( (boost::format("/Volumes/Sisamat/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
+                                                       );
+            });
+        }
+        
+        if(qFrame->bTime > nextAverageFrameSaveTime){
+            
+            averageFrameSaveInterval = frameCount - lastAverageFrameSaveCount;
+            
+            lastAverageFrameSaveCount = frameCount;
+            
+            nextAverageFrameSaveTime = nextAverageFrameSaveTime + boost::posix_time::time_duration( floor(averageFrameSaveSeconds/(60*60)),floor(fmodf(averageFrameSaveSeconds/60, 60)),floor(fmodf(averageFrameSaveSeconds, 60)),fmodf(averageFrameSaveSeconds, 1.0) );
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                std::string filePath = str( (boost::format("/Volumes/Sisamat/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_d%11%_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifferenceAverage ) );
+                
+                bracketBuffers[bufferIndex]->saveAverageFrame(filePath.c_str() );
+                /**
+                 frameData * data = new frameData;
+                 data->filePath = boost::filesystem::path(filePath);
+                 data->difference = bracketBuffers[bufferIndex]->absDifferenceAverage;
+                 data->brightness = bracketBuffers[bufferIndex]->brightness;
+                 
+                 data->exposureMicros = cameraBaseExposure;
+                 
+                 frameHistory.push_back(data);
+                 **/
+                bracketBuffers[bufferIndex]->framesAddedToAverage = 0;
+            });
         }
         
         statsFrameQueueSize--;
@@ -1361,7 +1471,7 @@ void lffCinderCaptureApp::renderHdrTexture(gl::Texture * tex){
     tex->unbind();
     tex->disable();
 }
-
+#ifdef USE_SERIAL
 void lffCinderCaptureApp::setCameraNumberBrackets(int _numberBrackets){
     string output = sendSerialCommand(str( (boost::format("N>%i\n") % _numberBrackets) ));
     //LogStr(output);
@@ -1390,10 +1500,12 @@ std::string lffCinderCaptureApp::sendSerialCommand(const std::string _command){
     
     // write command
     serial.writeString(_command);
-        
+    
     return str( (boost::format("Serial command: \"%s\"\n") % boost::algorithm::replace_all_copy(_command, "\n", "\\n")) );
     
 }
+
+#endif
 
 lffCinderCaptureApp::~lffCinderCaptureApp(){
     tPvErr errCode;
