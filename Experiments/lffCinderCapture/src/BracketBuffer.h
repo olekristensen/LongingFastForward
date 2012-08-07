@@ -83,6 +83,8 @@ public:
     cinder::Channel32f  averageChannel;
     cinder::gl::Texture averageTexture;
     
+    unsigned long exposureMicrosecondsAverage;
+    
     bool needsUpdate;
     
     

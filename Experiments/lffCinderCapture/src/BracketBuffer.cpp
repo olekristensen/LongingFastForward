@@ -5,14 +5,18 @@
 //  Created by Ole Kristensen on 13/07/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
 #include "Logger.h"
 #include "zlib.h"
+
+#include <CoreServices/CoreServices.h>
 
 #include "BracketBuffer.h"
 #include "cinder/gl/Fbo.h"
@@ -28,6 +32,8 @@ BracketBuffer::BracketBuffer(int _width, int _height, int _bracketIndex){
     absDifference = 0;
     histogramMax = 1.0;
     histogramMaxIndex = 0;
+    exposureMicroseconds = 0;
+    exposureMicrosecondsAverage = 0;
     
     for(int i=0;i<HISTOGRAM_BINS;i++){
         histogram[i] = 0.0;
@@ -138,6 +144,10 @@ void BracketBuffer::load(tPvFrame * pFrame)
             }
         }
         
+        // exposure
+        tPvUint32 * data = (tPvUint32*) pvFrame.AncillaryBuffer;
+        exposureMicroseconds = Endian32_Swap(data[2]);
+        
         // convert to float for display and calculations
         
         vImageConvert_16UToF (&vImage16U, &vImageFloat, 0, K, kvImageNoFlags);
@@ -180,6 +190,7 @@ void BracketBuffer::updateFrom(BracketBuffer *  buffer)
 
     brightness = buffer->brightness;
     histogramMaxIndex = buffer->histogramMaxIndex;
+    exposureMicroseconds = buffer->exposureMicroseconds;
     
     for(int i =0; i < HISTOGRAM_BINS; i++){
         histogram[i] = buffer->histogram[i];
@@ -214,6 +225,12 @@ void BracketBuffer::updateFrom(BracketBuffer *  buffer)
     
     vImageConvert_FTo16U(&averageVImageFloat, &averageVImage16U, 0, K, kvImageNoFlags);
         
+    // exposure averager
+    
+    double exposureAverager = (exposureMicrosecondsAverage * (1.0-averageAlpha)) + (exposureMicroseconds * averageAlpha);
+    
+    exposureMicrosecondsAverage = round(exposureAverager);
+    
     framesAddedToAverage++;
     
     needsUpdate = true;
@@ -250,7 +267,6 @@ void BracketBuffer::saveBuffer(fs::path filePath, vImage_Buffer * vImg){
         if (!fs::exists(filePath.parent_path())) {
             fs::create_directory(filePath.parent_path());
             std::cout << "BracketBuffer::saveBuffer CREATEDIR: " << filePath.parent_path() << std::endl;
-            
         }
     }
     

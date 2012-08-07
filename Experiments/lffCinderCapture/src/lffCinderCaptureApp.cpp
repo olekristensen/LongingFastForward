@@ -35,7 +35,7 @@
 
 //#define USE_SERIAL 1;
 
-static const bool PREMULT = false;
+static const bool PREMULT = false; 
 
 #pragma mark Namespaces
 
@@ -115,9 +115,15 @@ public:
     void renderBeyerTextureToFbo(gl::Texture* tex, gl::Fbo* fbo);
     void renderHdrTexture(gl::Texture *tex);
     
-    // frame history
+    boost::posix_time::ptime startupTime;
+    boost::posix_time::ptime lastFrameTime;
+    boost::posix_time::ptime lastSaveTime;
     
-    vector <frameData *> frameHistory;
+    // capture path
+    
+    std::string capturePath;
+    bool capturePathUnavailable;
+    ci::fs::space_info capturePathInfo;
     
     // buffers
     
@@ -130,6 +136,10 @@ public:
     
     vector <gl::Fbo> latestFBOs;
     vector <gl::Fbo> averageFBOs;
+    
+    gl::Texture textureErrorCamera;
+    gl::Texture textureRecording;
+    gl::Texture textureStartingUp;
     
     float histogram[HISTOGRAM_BINS];
     int histogramMaxIndex;
@@ -180,6 +190,9 @@ public:
     int cameraBracketEv;
     int cameraBaseExposure;
     
+    bool cameraIsUnplugged;
+    bool startingUp;
+    
     // interface
     
     void keyDown( KeyEvent event );
@@ -198,6 +211,8 @@ public:
     int statsCommandQueueSize;
     float statsAbsDifference;
     float statsRecordingIndicator;
+    
+    int statsNumberDayFolders;
     
     int displayBracket;
     bool showBracketBuffers;
@@ -254,6 +269,7 @@ void *ThreadFunc(void *pContext)
 		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsMissed",&GCamera.PacketMissed)) == ePvErrSuccess) &&
 		  ((Err = PvAttrUint32Get(GCamera.Handle,"StatPacketsReceived",&GCamera.PacketReceived)) == ePvErrSuccess) &&
           ((Err = PvAttrFloat32Get(GCamera.Handle,"StatFrameRate",&lframeRate)) == ePvErrSuccess))
+
     {
         GCamera.FrameRate = (GCamera.FrameRate*0.9) + (lframeRate*0.1);
         usleep(100*1000);
@@ -615,11 +631,17 @@ bool CameraStart()
     
 	// set the camera in hardware trigger, continuous mode, and start camera receiving triggers
 	if(
-    /* Arduino exposure
-     (PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","SyncIn1") != ePvErrSuccess) ||
-     (PvAttrUint32Set(GCamera.Handle,"FrameStartTriggerDelay",0) != ePvErrSuccess) ||
-     (PvAttrEnumSet(GCamera.Handle,"ExposureMode","External") != ePvErrSuccess) ||
-     //*/
+       (PvAttrEnumSet(GCamera.Handle,"GainMode","Manual") != ePvErrSuccess) ||
+       (PvAttrEnumSet(GCamera.Handle,"PixelFormat","Bayer12Packed") != ePvErrSuccess) ||
+       (PvAttrEnumSet(GCamera.Handle,"AcquisitionMode","Continuous") != ePvErrSuccess) ||
+       
+       /* Arduino exposure
+        (PvAttrEnumSet(GCamera.Handle,"FrameStartTriggerMode","SyncIn1") != ePvErrSuccess) ||
+        (PvAttrUint32Set(GCamera.Handle,"FrameStartTriggerDelay",0) != ePvErrSuccess) ||
+        (PvAttrEnumSet(GCamera.Handle,"ExposureMode","External") != ePvErrSuccess) ||
+        (PvAttrEnumSet(GCamera.Handle,"ConfigFileIndex","1") != ePvErrSuccess) ||
+        (PvAttrEnumSet(GCamera.Handle,"ConfigFilePowerup","1") != ePvErrSuccess) ||
+        //*/
        
        //* Camera exposure
        
@@ -633,6 +655,9 @@ bool CameraStart()
        (PvAttrUint32Set(GCamera.Handle,"ExposureAutoAdjustTol",1) != ePvErrSuccess) ||
        (PvAttrUint32Set(GCamera.Handle,"ExposureAutoMax",60*1000*1000) != ePvErrSuccess) ||
        (PvAttrEnumSet(GCamera.Handle,"ExposureMode","Auto") != ePvErrSuccess) ||
+       //(PvAttrEnumSet(GCamera.Handle,"ConfigFileIndex","2") != ePvErrSuccess) ||
+       //(PvAttrEnumSet(GCamera.Handle,"ConfigFilePowerup","2") != ePvErrSuccess) ||
+       (PvCommandRun(GCamera.Handle,"ConfigFileSave") != ePvErrSuccess) ||
        //*/
        
        /* Software exposure
@@ -642,9 +667,6 @@ bool CameraStart()
         (PvAttrEnumSet(GCamera.Handle,"ExposureMode","Manual") != ePvErrSuccess) ||
         //*/
        
-       (PvAttrEnumSet(GCamera.Handle,"GainMode","Manual") != ePvErrSuccess) ||
-       (PvAttrEnumSet(GCamera.Handle,"PixelFormat","Bayer12Packed") != ePvErrSuccess) ||
-       (PvAttrEnumSet(GCamera.Handle,"AcquisitionMode","Continuous") != ePvErrSuccess) ||
        (PvCommandRun(GCamera.Handle,"AcquisitionStart") != ePvErrSuccess))
 	{		
  		LogStr("CameraStart: failed to set camera attributes");
@@ -714,7 +736,9 @@ void HandleCameraPlugged(unsigned long UniqueId)
                 if(CameraStart())
                 {
                     //create a thread to display camera stats. 
-                    SpawnThread();                    
+                    SpawnThread();
+                    theApp->cameraIsUnplugged = false; 
+                    theApp->startingUp = false;
                 }
                 else
                 {
@@ -742,6 +766,8 @@ void HandleCameraUnplugged(unsigned long UniqueId)
     {    
 		//signal main thread to abort
 		GCamera.Abort = true;
+        theApp->cameraIsUnplugged = true; 
+        
     }    
 }
 
@@ -803,6 +829,14 @@ void PVAPIsetup(){
 
 void lffCinderCaptureApp::setup()
 {
+    
+    capturePath = "/Volumes/Sisamat/Captures/";
+    
+    startupTime = boost::posix_time::microsec_clock::universal_time();
+    
+    lastFrameTime = boost::posix_time::min_date_time;
+    lastSaveTime = boost::posix_time::min_date_time;
+    
     // init dynamic camera properties
     
     cameraWidth = 1920;
@@ -817,6 +851,9 @@ void lffCinderCaptureApp::setup()
     autoExposureSecondsInterval = 10.0;
     lastAutoExposureSeconds = 0.0;
     
+    cameraIsUnplugged = true;
+    startingUp = true;
+    
     // init status vars
     
     justUpdatedBracket = 0;
@@ -827,7 +864,7 @@ void lffCinderCaptureApp::setup()
     showFullscreen = true;
     showFullDisplay = true;
     showFullDisplayAverage = true;
-    showMeters = true;
+    showMeters = false;
     
     frameSaveInterval = 0;
     lastframeSaveCount = 0;
@@ -923,6 +960,48 @@ void lffCinderCaptureApp::setup()
         textTextures.push_back( gl::Texture( layout.render( true ) ) );
     }
     
+    // make messsages
+    {
+        TextLayout layout;
+        layout.setFont( Font( "Flama", 120 ) );
+        layout.setColor( Color( 1.0, 1.0, 1.0) );
+        layout.addLine( "Ingen forbindelse");
+        layout.addLine( "til kameraet!");
+        layout.setFont( Font( "Flama", 30 ) );
+        layout.addLine( "\n");
+        layout.addLine( "Prøv at kontrollere netværkskablet mellem kamera og computer");
+        layout.addLine( "og strømforsyningen til kameraet");
+        layout.addLine( "\n");
+        layout.addLine( "Det tager ca. 30 sekunder for kameraet at få forbindelse efter tilslutning.");
+        layout.addLine( "\n");
+        layout.addLine( "+45 6083 4679");
+        layout.addLine( "ole@longing.gl");
+        layout.addLine( "\n");
+        layout.addLine( "Qujanaq :)");
+        
+        textureErrorCamera = gl::Texture( layout.render( true ));
+    }
+    
+    {
+        TextLayout layout;
+        layout.setFont( Font( "Flama", 120 ) );
+        layout.setColor( Color( 1.0, 1.0, 1.0) );
+        layout.addLine( "Starter op");
+        layout.setFont( Font( "Flama", 30 ) );
+        layout.addLine( "\n");
+        layout.addLine( "Venter på forbindelse til kameraet");
+        layout.addLine( "\n");
+        layout.addLine( "Det bør højest tage ca. 1 minut.");
+        layout.addLine( "\n");
+        layout.addLine( "+45 6083 4679");
+        layout.addLine( "ole@longing.gl");
+        layout.addLine( "\n");
+        layout.addLine( "Qujanaq :)");
+        
+        textureStartingUp = gl::Texture( layout.render( true ));
+    }
+    
+    
     // Parameter interface
     
 	mParams = params::InterfaceGl( "Parameters", Vec2i( 400, 300 ) );
@@ -932,6 +1011,9 @@ void lffCinderCaptureApp::setup()
     mParams.addParam( "Auto Exposure Interval Sec", &autoExposureSecondsInterval, "min=0.1 max=120 step=0.1 keyIncr=I keyDecr=i" );
     mParams.addParam( "Base Exposure", &targetCameraBaseExposure, "min=1 max=500000 step=10 keyIncr=E keyDecr=e" );
     mParams.addParam( "Bracket EV Steps", &targetCameraBracketEv, "min=1 max=4 step=1 keyIncr=V keyDecr=v" );
+#endif
+#ifndef USE_SERIAL
+    mParams.addParam( "Exposure", &targetCameraBaseExposure, "readonly=true" );
 #endif
 	mParams.addParam( "Gain", &targetCameraGain, "min=0 max=34 step=1 keyIncr=G keyDecr=g" );
     // mParams.addParam( "Number Brackets", &targetCameraNumberBrackets, "min=1 max=9 step=1 keyIncr=N keyDecr=n" );
@@ -1049,7 +1131,7 @@ void lffCinderCaptureApp::mouseDown( MouseEvent event )
 void lffCinderCaptureApp::update()
 {
     fps = getAverageFps();
-        
+    
     if(!PVAPIinitialised){
         
         PVAPIsetup();
@@ -1122,6 +1204,15 @@ void lffCinderCaptureApp::update()
                 }
             }
             
+            if (abs(cameraBaseExposure-targetCameraBaseExposure) < 3) {
+                if(PvCommandRun(GCamera.Handle,"ConfigFileSave") != ePvErrSuccess){
+                        LogStr("Camera: failed to save config");
+                } else {
+                    cameraBaseExposure = targetCameraBaseExposure;
+                }
+            }
+
+            
 #ifdef USE_SERIAL
             
             //Auto base exposure
@@ -1188,6 +1279,7 @@ void lffCinderCaptureApp::update()
         }
 #endif
         
+        
         // update stats
         
         statsCameraFrameComplete = str(boost::format("%1%") % GCamera.FrameCompleted );
@@ -1202,7 +1294,58 @@ void lffCinderCaptureApp::update()
     if( isFullScreen() !=  showFullscreen) {
 		setFullScreen(showFullscreen);
 	}
-
+    
+    // tjek filesystem
+    
+    if(getElapsedFrames() % 25 == 0){
+        
+        ci::fs::path p (capturePath);
+        
+        capturePathInfo = ci::fs::space(p);
+        
+        try
+        {
+            if (ci::fs::exists(p))    // does p actually exist?
+            {
+                if (ci::fs::is_directory(p))      // is p a directory?
+                {
+                    
+                    int noOfDayFolders = 0;
+                    
+                    typedef vector<ci::fs::path> vec;             // store paths,
+                    vec v;                                // so we can sort them later
+                    
+                    copy(ci::fs::directory_iterator(p), ci::fs::directory_iterator(), back_inserter(v));
+                    
+                    sort(v.begin(), v.end());             // sort, since directory iteration
+                                                          // is not ordered on some file systems
+                    
+                    for (vec::const_iterator it (v.begin()); it != v.end(); ++it)
+                    {
+                        if(ci::fs::is_directory(*it)){
+                            noOfDayFolders++;
+                        }
+                    }
+                    statsNumberDayFolders = noOfDayFolders;
+                    capturePathUnavailable = false;
+                    
+                } else {
+                    capturePathUnavailable = true;
+                }
+            } else {
+                capturePathUnavailable = true;
+            }
+        }
+        
+        catch (const ci::fs::filesystem_error& ex)
+        {
+            cout << ex.what() << '\n';
+        }
+        
+    }
+    
+    
+    
     
 }
 
@@ -1264,51 +1407,131 @@ void lffCinderCaptureApp::draw()
     
     glDisable( GL_TEXTURE_2D );
     
-    if (showMeters){
+    if(startingUp && getElapsedSeconds() < 60){
         
-        // difference meter
+        gl::enableAlphaBlending( PREMULT );
         
-        float absDiffScaled = sinf(statsAbsDifference*1.570796326794897);
+        float blink = 1.0-((0.5*cosf(getElapsedSeconds()*pi*2*2))+0.5);
         
-        gl::enableAlphaBlending();
+        gl::color(0, 1.0, 0, blink);
         
-        gl::color(0.1, 0.1, 0.1, 0.33);
-        gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10),getWindowHeight()-10));
+        gl::drawSolidRect(Area(getWindowWidth()-110,110,getWindowWidth()-50, 50));
         
-        gl::color(1.0, 1.0, 1.0, 0.33);
-        gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10)*absDiffScaled,getWindowHeight()-10));
+        gl::color(1.0, 1.0, 1.0, 1.0);
         
-        // histogram
-        
-        Area histogramArea = Area(
-                                  10,getWindowHeight()-40, getWindowWidth()-10, (getWindowHeight()-40)*0.66
-                                  );
-        
-        gl::color(0.1, 0.1, 0.1, 0.33);
-        gl::drawSolidRect(histogramArea);
-        
-        gl::color(1.0, 1.0, 1.0,0.33);
-        
-        for(int i=0; i<HISTOGRAM_BINS; i++){
-            float w = 1.0*histogramArea.getWidth()/HISTOGRAM_BINS;
-            float h = (histogram[i]/histogram[histogramMaxIndex])*histogramArea.getHeight();
-            gl::drawSolidRect(Area(10+(w*i),histogramArea.y2-h,10+(w*i)+w,histogramArea.y2));
-        }
+        gl::draw(textureStartingUp, Vec2f(70,40));
         
         gl::disableAlphaBlending();
         
+        
+    } else {
+        
+        if(cameraIsUnplugged){
+            
+            gl::enableAlphaBlending( PREMULT );
+            
+            float blink = 1.0-((0.5*cosf(getElapsedSeconds()*pi*2*2))+0.5);
+            
+            gl::color(1.0, 1.0, 0, blink);
+            
+            if(fmodf(getElapsedSeconds(), 10.0) < 1.5){
+                gl::drawSolidRect(getWindowBounds());
+                gl::color(1.0-blink, 1.0-blink, 1.0-blink, 1.0);
+            } else {
+                
+                gl::drawSolidRect(Area(getWindowWidth()-110,110,getWindowWidth()-50, 50));
+                
+                gl::color(1.0, 1.0, 1.0, 1.0);
+            }
+            
+            gl::draw(textureErrorCamera, Vec2f(70,40));
+            
+            gl::disableAlphaBlending();
+            
+        } else { 
+            
+            // recording dot
+            
+            gl::enableAlphaBlending();
+            
+            gl::color(1.0, 0, 0, (0.75*cosf(statsRecordingIndicator*pi*2))+0.75);
+            gl::drawSolidCircle(Vec2f(getWindowWidth()-80, 80), 30);
+            gl::color(1.0, 1.0, 1.0, 1.0);
+            gl::disableAlphaBlending();
+            
+            {
+                TextLayout layout;
+                layout.setFont( Font( "Flama", 120 ) );
+                layout.setColor( Color( 1.0, 1.0, 1.0) );
+                tm tm = boost::posix_time::to_tm(boost::posix_time::second_clock::local_time());
+                
+                layout.addLine( str( (boost::format("%1$02d:%2$02d:%3$02d") % tm.tm_hour % tm.tm_min % tm.tm_sec )));
+                
+                layout.setFont( Font( "Flama", 30 ) );
+                layout.setColor( Color( 1.0, 1.0, 1.0) );
+                layout.addLine( "\n");
+                layout.addLine( str( (boost::format("%1$02d / %2$02d / %3$04d") % tm.tm_mday % (tm.tm_mon+1) % (1900 + tm.tm_year) )));
+                layout.setFont( Font( "FlamaLight", 30 ) );
+                layout.addLine( "\n");
+                layout.addLine( "\n");
+                layout.addLine( "\n");
+                layout.addLine( "\n");
+                layout.addLine( "\n");
+                layout.addLine( str( (boost::format("Har optaget i %1% dage") % statsNumberDayFolders )));
+                layout.addLine( "\n");
+                layout.addLine(str( (boost::format("%1% %% harddiskplads tilbage") % ((capturePathInfo.available*1.0/capturePathInfo.capacity) * 100.0 ) )));
+                layout.addLine( "\n");
+                layout.addLine( "+45 6083 4679");
+                layout.addLine( "ole@longing.gl");
+                
+                textureRecording = gl::Texture( layout.render( true ));
+            }
+            
+            
+            gl::enableAlphaBlending(PREMULT);
+            
+            gl::draw(textureRecording, Vec2f(70,40));
+            
+            gl::disableAlphaBlending();
+            
+            
+            if (showMeters){
+                
+                // difference meter
+                
+                float absDiffScaled = sinf(statsAbsDifference*1.570796326794897);
+                
+                gl::enableAlphaBlending();
+                
+                gl::color(0.1, 0.1, 0.1, 0.33);
+                gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10),getWindowHeight()-10));
+                
+                gl::color(1.0, 1.0, 1.0, 0.33);
+                gl::drawSolidRect( Area(10,getWindowHeight()-30,(getWindowWidth()-10)*absDiffScaled,getWindowHeight()-10));
+                
+                // histogram
+                
+                Area histogramArea = Area(
+                                          10,getWindowHeight()-40, getWindowWidth()-10, (getWindowHeight()-40)*0.66
+                                          );
+                
+                gl::color(0.1, 0.1, 0.1, 0.33);
+                gl::drawSolidRect(histogramArea);
+                
+                gl::color(1.0, 1.0, 1.0,0.33);
+                
+                for(int i=0; i<HISTOGRAM_BINS; i++){
+                    float w = 1.0*histogramArea.getWidth()/HISTOGRAM_BINS;
+                    float h = (histogram[i]/histogram[histogramMaxIndex])*histogramArea.getHeight();
+                    gl::drawSolidRect(Area(10+(w*i),histogramArea.y2-h,10+(w*i)+w,histogramArea.y2));
+                }
+                
+                gl::disableAlphaBlending();
+                
+            }
+            
+        }
     }
-    
-    // recording dot
-    
-    gl::enableAlphaBlending();
-    
-    gl::color(255, 0, 0, cosf(0.75*(statsRecordingIndicator*pi*2)+1));
-    gl::drawSolidCircle(Vec2f(getWindowWidth()-50, 50), 20);
-    gl::color(255, 255, 255, 1.0);
-    gl::disableAlphaBlending();
-    
-    
     params::InterfaceGl::draw();
     
 }
@@ -1331,15 +1554,21 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
     qFrame->pFrame.FrameCount = pFrame->FrameCount;
     qFrame->pFrame.TimestampLo = pFrame->TimestampLo;
     qFrame->pFrame.TimestampHi = pFrame->TimestampHi;
+    qFrame->pFrame.AncillaryBuffer = pFrame->AncillaryBuffer;
+    qFrame->pFrame.AncillaryBufferSize = pFrame->AncillaryBufferSize;
+    qFrame->pFrame.AncillarySize = pFrame->AncillarySize;
     
     qFrame->pFrame.ImageBuffer = new char*[pFrame->ImageBufferSize];
     
     memcpy(qFrame->pFrame.ImageBuffer, pFrame->ImageBuffer, pFrame->ImageBufferSize);
     
-    //  pvFrameAncillaryData* data = (pvFrameAncillaryData*)pFrame->AncillaryBuffer;
-    //  console() << "Frame " << pFrame->FrameCount << " \t : " <<  data->exposureValue << endl;
+    tPvUint32* data = (tPvUint32*) pFrame->AncillaryBuffer;
+    
+    targetCameraBaseExposure = Endian32_Swap(data[2]);
     
     boost::posix_time::ptime uTime = boost::posix_time::microsec_clock::universal_time();
+    
+    lastFrameTime = uTime;
     
     qFrame->bTime = uTime;
     
@@ -1383,6 +1612,8 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
         
         if(qFrame->bTime > nextFrameSaveTime){
             
+            lastSaveTime = qFrame->bTime;
+            
             frameSaveInterval = frameCount - lastframeSaveCount;
             
             lastframeSaveCount = frameCount;
@@ -1391,13 +1622,26 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
-                bracketBuffers[bufferIndex]->saveFrame(
-                                                       str( (boost::format("/Volumes/Sisamat/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) ).c_str() 
-                                                       );
+                std::string filePath;
+                
+                if(cameraNumberBrackets > 1){
+                    
+                    filePath = str( (boost::format("%12%%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d_s%1$06d-b%2$1d_d%11%.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifference) % capturePath );
+                    
+                } else {
+                    filePath = str( (boost::format("%1%%2$04d-%3$02d-%4$02d/%2$04d-%3$02d-%4$02d_%5$02d-%6$02d-%7$02d-%8$04d_n%9%_e%10%_d%11%.bayer16") % capturePath % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % frameCount % bracketBuffers[bufferIndex]->exposureMicroseconds % bracketBuffers[bufferIndex]->absDifference) );
+                    
+                }
+                
+                bracketBuffers[bufferIndex]->saveFrame(filePath.c_str());
+                
             });
         }
         
         if(qFrame->bTime > nextAverageFrameSaveTime){
+            
+            
+            lastSaveTime = qFrame->bTime;
             
             averageFrameSaveInterval = frameCount - lastAverageFrameSaveCount;
             
@@ -1407,9 +1651,16 @@ void lffCinderCaptureApp::processFrame( tPvFrame* pFrame )
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
-                std::string filePath = str( (boost::format("/Volumes/Sisamat/Captures/%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_d%11%_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifferenceAverage ) );
+                std::string filePath;
+                
+                if(cameraNumberBrackets > 1){
+                    filePath = str( (boost::format("%12%%3$04d-%4$02d-%5$02d/%3$04d-%4$02d-%5$02d_%7$02d-%8$02d-%9$02d-%10$04d_c%6$08d-s%1$06d-b%2$1d_d%11%_average.bayer16") % bracektedFrameNumber % bufferIndex % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % frameCount % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % bracketBuffers[bufferIndex]->absDifferenceAverage % capturePath ) );
+                } else {
+                    filePath = str( (boost::format("%1%%2$04d-%3$02d-%4$02d/%2$04d-%3$02d-%4$02d_%5$02d-%6$02d-%7$02d-%8$04d_n%9%_e%10%_d%11%_average.bayer16") % capturePath % (1900 + tm.tm_year) % (tm.tm_mon+1) % tm.tm_mday % tm.tm_hour % tm.tm_min % tm.tm_sec % uTimeMillis % frameCount % bracketBuffers[bufferIndex]->exposureMicrosecondsAverage % bracketBuffers[bufferIndex]->absDifferenceAverage) );
+                }
                 
                 bracketBuffers[bufferIndex]->saveAverageFrame(filePath.c_str() );
+                
                 /**
                  frameData * data = new frameData;
                  data->filePath = boost::filesystem::path(filePath);

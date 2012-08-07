@@ -12,19 +12,8 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1489"
-         endingLineNumber = "1489">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../src/lffCinderCaptureApp.cpp"
-         timestampString = "365740419.323853"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1190"
-         endingLineNumber = "1190"
-         landmarkName = "lffCinderCaptureApp::update()"
+         endingLineNumber = "1489"
+         landmarkName = "lffCinderCaptureApp::draw()"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -45,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/BracketBuffer.cpp"
-         timestampString = "365635223.087899"
+         timestampString = "366001138.188807"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "181"
-         endingLineNumber = "181"
-         landmarkName = "BracketBuffer::updateFrom(BracketBuffer * buffer)"
+         startingLineNumber = "182"
+         endingLineNumber = "182"
+         landmarkName = "BracketBuffer::load(tPvFrame * pFrame)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
